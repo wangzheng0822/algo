@@ -87,7 +87,6 @@ public class SinglyLinkedList {
 
     if (p == head) {
       head = head.next;
-      return;
     }
 
     Node q = head;
