@@ -118,6 +118,22 @@ public class SinglyLinkedList {
     } else {
       q.next = q.next.next;
     }
+
+    // 可重复删除指定value的代码
+    /*
+    if (head != null && head.data == value) {
+    	head = head.next;
+    }
+
+    Node pNode = head;
+    while (pNode != null) {
+    	if (pNode.next.data == data) {
+    		pNode.next = pNode.next.next;
+    		continue;
+    	}
+    	pNode = pNode.next;
+    }
+    */
   }
 
   public void printAll() {
