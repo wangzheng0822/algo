@@ -60,7 +60,8 @@ bool check_circle(typename Node<T>::ptr_t head) {
 }
 
 template <typename T>
-typename Node<T>::ptr_t merge_two_sorted_lists(typename Node<T>::ptr_t lhs, typename Node<T>::ptr_t rhs) {
+typename Node<T>::ptr_t merge_two_sorted_lists(typename Node<T>::ptr_t lhs,
+                                               typename Node<T>::ptr_t rhs) {
     if (nullptr == lhs) { return rhs; }
     if (nullptr == rhs) { return lhs; }
 
@@ -96,7 +97,8 @@ typename Node<T>::ptr_t merge_two_sorted_lists(typename Node<T>::ptr_t lhs, type
 }
 
 template <typename T>
-typename Node<T>::ptr_t deleth_last_Kth(typename Node<T>::ptr_t head, size_t n) {
+typename Node<T>::ptr_t deleth_last_Kth(typename Node<T>::ptr_t head,
+                                                         size_t n) {
     decltype(head) sentry = std::make_shared<Node<T>>();
     sentry->next = head;
     decltype(head) prev = sentry, curr = sentry->next, fast = sentry->next;
