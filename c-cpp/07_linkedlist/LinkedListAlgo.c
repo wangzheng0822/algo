@@ -151,7 +151,7 @@ void test_mergeSortedLinkedList() {
 /** 删除倒数第 K 个结点 */
 
 void deleteLastKth(SinglyLinkedNode** head_ref, int k) {
-    if (*head_ref == NULL) return;
+    if (*head_ref == NULL || k == 0) return;
     
     // 快指针向前移动 k-1
     SinglyLinkedNode* fast = *head_ref;
