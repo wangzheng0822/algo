@@ -133,4 +133,4 @@ typename Node<T>::ptr_t find_middle_node(typename Node<T>::ptr_t head) {
     return slow;
 }
 
-#endif
+#endif  // LINKEDLIST_LINKED_LIST_ALGO_HPP_

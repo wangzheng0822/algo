@@ -19,4 +19,4 @@ struct Node {
     Node() : next(nullptr) {}
 };
 
-#endif
+#endif  // LINKEDLIST_LINKED_LIST_H_
