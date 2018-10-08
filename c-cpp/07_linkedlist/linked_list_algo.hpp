@@ -12,7 +12,6 @@
 #ifndef LINKEDLIST_LINKED_LIST_ALGO_HPP_
 #define LINKEDLIST_LINKED_LIST_ALGO_HPP_
 
-#include <iostream>
 #include <memory>
 
 #include "linked_list.h"
