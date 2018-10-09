@@ -1,7 +1,7 @@
 #import "FourOperation.h"
 #import "ArrayStack.h"
 
-NSDictionary *OptPriority() {
+const NSDictionary *operationPriorityDict() {
     return @{@"*": @1, @"/": @1, @"+": @0, @"-": @0};
 }
 
@@ -62,7 +62,7 @@ NSDictionary *OptPriority() {
 }
 
 - (NSInteger)_getPriority:(NSString *)opt {
-    return [[OptPriority() objectForKey:opt] integerValue];
+    return [[operationPriorityDict() objectForKey:opt] integerValue];
 }
 
 - (BOOL)_topOperationPriorityIsHigherOrEqualToOperation:(NSString *)opt {
