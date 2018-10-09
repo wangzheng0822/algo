@@ -24,7 +24,7 @@ const NSDictionary *parenthesesDict() {
             // 前半部分把与 ele 匹配的括号加入栈
             [_stack push:parenthesesDict()[ele]];
         } else {
-            // 后半部分依次于栈顶的括号匹配
+            // 后半部分检查栈顶的元素与当前元素是否相同
             NSString *topEle = [_stack pop];
             if (![topEle isEqualToString:ele]) {
                 return NO;
