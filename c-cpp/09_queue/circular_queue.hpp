@@ -89,6 +89,7 @@ class CircularQueue {
   public:
     template <typename UnaryFunc>
     void traverse(UnaryFunc do_traverse) {
+        if (0 == capacity_) return;
         for (size_t i = head_; i % capacity_ != tail_; ++i) {
             do_traverse(items_[i % capacity_]);
         }
