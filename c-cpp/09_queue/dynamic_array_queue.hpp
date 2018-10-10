@@ -68,9 +68,7 @@ class DynamicArrayQueue {
         if (capacity_ == tail_ - head_) {
             throw "Push data into a full queue!";
         }
-        if (capacity_ != tail_) {
-            items_[tail_++] = item;
-        } else {
+        if (capacity_ == tail_) {
             // item transport
             for (size_t i = head_; i != tail_; ++i) {
                 items_[i - head_] = items_[i];
@@ -78,6 +76,7 @@ class DynamicArrayQueue {
             tail_ = tail_ - head_;
             head_ = 0;
         }
+        items_[tail_++] = item;
     }
     T head() const {
         if (head_ != tail_) {
