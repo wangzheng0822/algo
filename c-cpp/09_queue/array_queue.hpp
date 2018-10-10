@@ -84,6 +84,14 @@ class ArrayQueue {
             throw "Pop data from an empty queue!";
         }
     }
+
+  public:
+    template <typename UnaryFunc>
+    void traverse(UnaryFunc do_traverse) {
+        for (size_t i = head_; i != tail_; ++i) {
+            do_traverse(items_[i]);
+        }
+    }
 };
 
 #endif  // QUEUE_ARRAY_QUEUE_HPP_
