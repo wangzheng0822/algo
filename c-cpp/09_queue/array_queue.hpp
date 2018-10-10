@@ -30,13 +30,37 @@ class ArrayQueue {
             enqueue(other.items_[i]);
         }
     }
-    // TODO
     ArrayQueue& operator=(const ArrayQueue& rhs) {
+        delete[] items_;
+        head_     = 0;
+        tail_     = 0;
         capacity_ = rhs.capacity_;
-        items_ = new T[capacity_];
+        items_    = new T[capacity_];
         for (size_t i = other.head_; i != other.tail_; ++i) {
             enqueue(other.items_[i]);
         }
+        return *this;
+    }
+    ArrayQueue(ArrayQueue&& other) : items_(other.items_),
+                                     capacity_(other.capacity_),
+                                     head_(other.head_),
+                                     tail_(other.tail_) {
+        other.items_    = nullptr;
+        other.capacity_ = 0;
+        other.head_     = 0;
+        other.tail_     = 0;
+    }
+    ArrayQueue& operator=(ArrayQueue&& rhs) {
+        delete[] items_;
+        items_        = rhs.items_;
+        capacity_     = rhs.capacity_;
+        head_         = rhs.head_;
+        tail_         = rhs.tail_;
+        rhs.items_    = nullptr;
+        rhs.capacity_ = 0;
+        rhs.head_     = 0;
+        rhs.tail_     = 0;
+        return *this;
     }
 };
 
