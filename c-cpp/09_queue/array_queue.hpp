@@ -36,8 +36,8 @@ class ArrayQueue {
         tail_     = 0;
         capacity_ = rhs.capacity_;
         items_    = new T[capacity_];
-        for (size_t i = other.head_; i != other.tail_; ++i) {
-            enqueue(other.items_[i]);
+        for (size_t i = rhs.head_; i != rhs.tail_; ++i) {
+            enqueue(rhs.items_[i]);
         }
         return *this;
     }
