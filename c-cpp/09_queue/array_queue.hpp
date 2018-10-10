@@ -15,8 +15,8 @@ class ArrayQueue {
 
   public:
     ArrayQueue() = delete;
-    ArrayQueue(size_t capacity) : capacity_(capacity) {
-        items_ = new T[capacity];
+    ArrayQueue(const size_t capacity) : capacity_(capacity) {
+        items_ = new T[capacity_];
     }
     ~ArrayQueue() {
         if (nullptr != items_) {
