@@ -62,6 +62,28 @@ class ArrayQueue {
         rhs.tail_     = 0;
         return *this;
     }
+
+  public:
+    bool enqueue(T item) {
+        if (capacity_ == tail_) { return false; }
+        items_[tail_++] = item;
+        return true;
+    }
+    T head() const {
+        if (head_ != tail_) {
+            return items_[head_];
+        } else {
+            throw "Fetch data from an empty queue!";
+        }
+    }
+    bool dequeue() {
+        if (head_ != tail_) {
+            ++head_;
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 #endif  // QUEUE_ARRAY_QUEUE_HPP_
