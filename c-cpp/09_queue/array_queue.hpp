@@ -64,10 +64,11 @@ class ArrayQueue {
     }
 
   public:
-    bool enqueue(T item) {
-        if (capacity_ == tail_) { return false; }
+    void enqueue(T item) {
+        if (capacity_ == tail_) {
+            throw "Push data into a full queue!";
+        }
         items_[tail_++] = item;
-        return true;
     }
     T head() const {
         if (head_ != tail_) {
@@ -76,12 +77,11 @@ class ArrayQueue {
             throw "Fetch data from an empty queue!";
         }
     }
-    bool dequeue() {
+    void dequeue() {
         if (head_ != tail_) {
             ++head_;
-            return true;
         } else {
-            return false;
+            throw "Pop data from an empty queue!";
         }
     }
 };
