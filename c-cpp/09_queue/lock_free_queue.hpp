@@ -24,11 +24,21 @@ class LockFreeQueue {
   public:
     LockFreeQueue() head(new node), tail(head.load()) {}
     LockFreeQueue(const LockFreeQueue&) = delete;
+    LockFreeQueue(LockFreeQueue&& other) : head(other.head.load()), tail(other.tail.load()) {
+        other.head.store(nullptr);
+        other.tail.store(nullptr);
+    }
     LockFreeQueue& operator=(const LockFreeQueue&) = delete;
-    // TODO(Liam Huang): move constructor and move assignment should be well implemented later,
-    //                   and hance marked "delete".
-    LockFreeQueue(LockFreeQueue&&) = delete;
-    LockFreeQueue& operator=(LockFreeQueue&&) = delete;
+    LockFreeQueue& operator=(LockFreeQueue&& rhs) {
+        while (node* const old_head = head.load()) {
+            head.store(old_head->next);
+            delete old_head;
+        }
+        head.store(rhs.head.load());
+        tail.store(rhs.tail.load());
+        rhs.head.store(nullptr);
+        rhs.tail.store(nullptr);
+    }
     ~LockFreeQueue() {
         while (node* const old_head = head.load()) {
             head.store(old_head->next);
