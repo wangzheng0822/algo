@@ -53,6 +53,29 @@ class BlockQueue {
         container_.pop();
         not_full_.notify_one();
     }
+    template <typename Duration>
+    bool put_for(const value_type& item, const Duration& d) {
+        std::unqiue_lock<std::mutex> lock(mutex_);
+        if (not_full_.wait_for(lock, d, [&](){ return not full(); })) {
+            container_.push(item);
+            not_empty_.notify_one();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    template <typename Duration>
+    bool take_for(const Duration& d, value_type& out) {
+        std::unique_lock<std::mutex> lock(mutex_);
+        if (not_empty_.wait_for(lock, d, [&](){ return not empty(); })) {
+            out = container_.front();
+            container_.pop();
+            not_full_.notify_one();
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 #endif  // QUEUE_BLOCK_QUEUE_HPP_
