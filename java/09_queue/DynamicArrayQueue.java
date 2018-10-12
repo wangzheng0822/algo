@@ -3,7 +3,7 @@ package queue;
 /**
  * Created by wangzheng on 2018/10/9.
  */
-public class DynimacArrayQueue {
+public class DynamicArrayQueue {
   // 数组：items，数组大小：n
   private String[] items;
   private int n = 0;
@@ -12,7 +12,7 @@ public class DynimacArrayQueue {
   private int tail = 0;
 
   // 申请一个大小为capacity的数组
-  public DynimacArrayQueue(int capacity) {
+  public DynamicArrayQueue(int capacity) {
     items = new String[capacity];
     n = capacity;
   }
