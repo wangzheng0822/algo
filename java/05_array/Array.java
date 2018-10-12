@@ -11,14 +11,14 @@ public class Array {
     public int data[];
     //定义数组长度
     private int n;
-    //定义中保存的数据个数
+    //定义中实际个数
     private int count;
 
     //构造方法，定义数组大小
     public Array(int capacity){
-        this.data = new int[]{0,1,2,3,4};
+        this.data = new int[capacity];
         this.n = capacity;
-        this.count=capacity;
+        this.count=0;//一开始一个数都没有存所以为0
     }
 
     //根据索引，找到数据中的元素并返回
@@ -49,13 +49,14 @@ public class Array {
     //向数组中插入一个元素
     public boolean insert(int index, int value){
         if (index<0 || index>=count) return false;
-//        if (count == n) return false;不是太懂
-        //数组长度增加1
-        int[] arr = new int[count+1];
+        //当实际存储的个数等于数组的最大长度就不让新增
+        if (count == n) return false;
+        //数组长度增加1。不需要初始化
+        /*int[] arr = new int[count+1];
         for (int i = 0; i < data.length; i++) {
             arr[i] = data[i];
         }
-        data=arr;
+        data=arr;*/
 
         for (int i = count-1; i>=index; --i){
             data[i+1] = data[i];
@@ -66,13 +67,15 @@ public class Array {
     }
 
     public boolean insertToTail(int value) {
-//        if (count == n) return false;不是太懂
+        
+        //当实际存储的个数等于数组的最大长度就不让新增
+        if (count == n) return false;
         //数组长度增加1
-        int[] arr = new int[count+1];
+        /*int[] arr = new int[count+1];
         for (int i = 0; i < data.length; i++) {
             arr[i] = data[i];
         }
-        data=arr;
+        data=arr;*/
         data[count++] = value;
         return true;
     }
