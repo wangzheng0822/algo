@@ -24,3 +24,4 @@ hs_err_pid*
 
 # editor files
 .vscode
+.*.swp
