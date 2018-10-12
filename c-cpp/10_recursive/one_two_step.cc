@@ -7,8 +7,9 @@ class SolutionOFOneTwoStep {
 
   public:
     size_t operator()(size_t steps) {
-        if (result_.end() != result_.find(steps)) {
-            return result_[steps];
+        auto iter = result_.find(steps);
+        if (result_.end() != iter) {  // found.
+            return iter->second;
         } else {
             size_t res = operator()(steps - 1) + operator()(steps - 2);
             result_.insert({steps, res});
