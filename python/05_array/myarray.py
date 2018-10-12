@@ -39,7 +39,10 @@ class MyArray:
 
     def insert_to_tail(self, value: int) -> bool:
         if self._count == self._capacity: return False
-        self._data.append(value)
+        if self._count == len(self._data):
+            self._data.append(value) 
+        else:
+            self._data[self._count] = value
         self._count += 1
         return True
     
@@ -57,4 +60,6 @@ if __name__ == "__main__":
         a.insert_to_tail(i)
     
     a.delete(2)
+    print(a)
+    a.insert_to_tail(7)
     print(a)
