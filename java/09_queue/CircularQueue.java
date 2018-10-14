@@ -36,7 +36,8 @@ public class CircularQueue {
   }
 
   public void printAll() {
-    for (int i = head; i < tail; ++i) {
+    if (0 == n) return;
+    for (int i = head; i % n != tail; ++i) {
       System.out.print(items[i] + " ");
     }
     System.out.println();

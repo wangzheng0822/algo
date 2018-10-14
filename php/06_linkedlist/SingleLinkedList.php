@@ -35,10 +35,17 @@ class SingleLinkedList
      * 初始化单链表
      *
      * SingleLinkedList constructor.
+     *
+     * @param null $head
      */
-    public function __construct()
+    public function __construct($head = null)
     {
-        $this->head = new SingleLinkedListNode();
+        if (null == $head) {
+            $this->head = new SingleLinkedListNode();
+        } else {
+            $this->head = $head;
+        }
+
         $this->length = 0;
     }
 
@@ -126,7 +133,7 @@ class SingleLinkedList
         $preNode = $this->head;
         // 遍历找到前置节点 要用全等判断是否是同一个对象
         // http://php.net/manual/zh/language.oop5.object-comparison.php
-        while ($curNode !== $node) {
+        while ($curNode !== $node && $curNode != null) {
             $preNode = $curNode;
             $curNode = $curNode->next;
         }
@@ -146,18 +153,42 @@ class SingleLinkedList
         }
 
         $curNode = $this->head;
-        while ($curNode->next != null) {
-            echo $curNode->next->data . ' ';
+        // 防止链表带环，控制遍历次数
+        $listLength = $this->getLength();
+        while ($curNode->next != null && $listLength--) {
+            echo $curNode->next->data . ' -> ';
 
             $curNode = $curNode->next;
         }
-        echo PHP_EOL;
+        echo 'NULL' . PHP_EOL;
 
         return true;
     }
 
     /**
-     * 在某个节点后插入新的节点
+     * 输出单链表 当data的数据为可输出类型
+     *
+     * @return bool
+     */
+    public function printListSimple()
+    {
+        if (null == $this->head->next) {
+            return false;
+        }
+
+        $curNode = $this->head;
+        while ($curNode->next != null) {
+            echo $curNode->next->data . ' -> ';
+
+            $curNode = $curNode->next;
+        }
+        echo 'NULL' . PHP_EOL;
+
+        return true;
+    }
+
+    /**
+     * 在某个节点后插入新的节点 (直接插入数据)
      *
      * @param SingleLinkedListNode $originNode
      * @param                      $data
@@ -206,5 +237,56 @@ class SingleLinkedList
         $preNode = $this->getPreNode($originNode);
 
         return $this->insertDataAfter($preNode, $data);
+    }
+
+    /**
+     * 在某个节点后插入新的节点
+     *
+     * @param SingleLinkedListNode $originNode
+     * @param SingleLinkedListNode $node
+     *
+     * @return SingleLinkedListNode|bool
+     */
+    public function insertNodeAfter(SingleLinkedListNode $originNode, SingleLinkedListNode $node)
+    {
+        // 如果originNode为空，插入失败
+        if (null == $originNode) {
+            return false;
+        }
+
+        $node->next = $originNode->next;
+        $originNode->next = $node;
+
+        $this->length++;
+
+        return $node;
+    }
+
+    /**
+     * 构造一个有环的链表
+     */
+    public function buildHasCircleList()
+    {
+        $data = [1, 2, 3, 4, 5, 6, 7, 8];
+
+        $node0 = new SingleLinkedListNode($data[0]);
+        $node1 = new SingleLinkedListNode($data[1]);
+        $node2 = new SingleLinkedListNode($data[2]);
+        $node3 = new SingleLinkedListNode($data[3]);
+        $node4 = new SingleLinkedListNode($data[4]);
+        $node5 = new SingleLinkedListNode($data[5]);
+        $node6 = new SingleLinkedListNode($data[6]);
+        $node7 = new SingleLinkedListNode($data[7]);
+
+        $this->insertNodeAfter($this->head, $node0);
+        $this->insertNodeAfter($node0, $node1);
+        $this->insertNodeAfter($node1, $node2);
+        $this->insertNodeAfter($node2, $node3);
+        $this->insertNodeAfter($node3, $node4);
+        $this->insertNodeAfter($node4, $node5);
+        $this->insertNodeAfter($node5, $node6);
+        $this->insertNodeAfter($node6, $node7);
+
+        $node7->next = $node4;
     }
 }
