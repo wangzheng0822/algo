@@ -33,10 +33,12 @@ class SingleLinkedListNode
 
     /**
      * SingleLinkedListNode constructor.
+     *
+     * @param null $data
      */
-    public function __construct()
+    public function __construct($data = null)
     {
-        $this->data = null;
+        $this->data = $data;
         $this->next = null;
     }
 }

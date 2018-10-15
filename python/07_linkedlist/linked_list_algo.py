@@ -55,7 +55,7 @@ def merge_sorted_list(l1: Node, l2: Node) -> Optional[Node]:
             current = current._next
         current._next = p1 if p1 else p2
         return fake_head._next
-    return p1 or p2
+    return l1 or l2
 
 # Remove nth node from the end
 # 删除倒数第n个节点。假设n大于0

@@ -5,7 +5,9 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Algo_06\\": "06_linkedlist/"
+            "Algo_06\\": "06_linkedlist/",
+            "Algo_07\\": "07_linkedlist/",
+            "Algo_08\\": "08_stack/"
         }
     }
 }
