@@ -11,9 +11,9 @@ public class Sorts {
   public static void bubbleSort(int[] a, int n) {
     if (n <= 1) return;
 
-    // 提前退出标志位
-    boolean flag = false;
     for (int i = 0; i < n; ++i) {
+      // 提前退出标志位
+      boolean flag = false;
       for (int j = 0; j < n - i - 1; ++j) {
         if (a[j] > a[j+1]) { // 交换
           int tmp = a[j];
