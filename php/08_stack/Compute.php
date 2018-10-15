@@ -28,6 +28,13 @@ function expression($str)
                 array_push($operStack, $arr[$i]);
                 break;
             case '*':
+                $arrLen = count($operStack);
+                while ($operStack[$arrLen-1] === '/'){
+                    compute($numStack, $operStack);
+                    $arrLen--;
+                }
+                array_push($operStack, $arr[$i]);
+                break;
             case '/':
             case '(':
                 array_push($operStack, $arr[$i]);
@@ -69,6 +76,9 @@ function compute(&$numStack, &$operStack){
             break;
         case '-':
             array_push($numStack, array_pop($numStack) - $num);
+            break;
+        case '(':
+            throw new \Exception("不匹配的(", 2);
             break;
         
     }
