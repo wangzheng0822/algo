@@ -35,6 +35,7 @@ function expression($str)
                 }
                 array_push($operStack, $arr[$i]);
                 break;
+
             case '/':
             case '(':
                 array_push($operStack, $arr[$i]);
@@ -80,7 +81,6 @@ function compute(&$numStack, &$operStack){
         case '(':
             throw new \Exception("不匹配的(", 2);
             break;
-        
     }
 }
 expression('-1+2-(1+2*3)');
