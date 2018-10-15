@@ -33,7 +33,7 @@ class LinkedList {
             currentNode = currentNode.next
             pos++
         }
-        return currentNode === null ? -1 : pos
+        return currentNode === null ? -1 : currentNode
     }
     // 指定元素向后插入
     insert(newElement, element) {
@@ -69,6 +69,9 @@ class LinkedList {
     }
     // 遍历显示所有节点
     display() {
+        //先检查是否为环
+        if(this.checkCircle()) return false
+
         let currentNode = this.head
         while (currentNode !== null) {
             console.log(currentNode.element)
@@ -87,6 +90,30 @@ class LinkedList {
             currentNode = next
         }
         this.head = root
+    }
+
+    //增强尾插法可读性，便于初学者理解
+    reverseList1(){
+      //head节点即哨兵，作用就是使所有链表，
+      // 包括空链表的头节点不为null,并使对单链表的插入、删除操作不需要区分是否为空表或是否在第一个位置进行，
+      // 从而与其他位置的插入、删除操作一致
+      //所以反转链表的时候不需要带上head节点
+      let currentNode=this.head.next
+      //第一个节点头结点让其指向null
+      let previousNode=null
+      while(currentNode!==null){
+        //务必先保留下一节点的指针地址
+        let nextNode=currentNode.next
+        //第一次是null
+        currentNode.next=previousNode
+        //此时将previousNode赋值为当前节点，
+        // 那么下次循环的时候，方便下次的currentNode指向previousNode
+        previousNode=currentNode
+        //抬走，下一个！
+        currentNode=nextNode
+      }
+    //最后将反转好的链表加上头节点
+    this.head.next=previousNode
     }
 
     // 自己一开始瞎想的。差距啊
@@ -122,6 +149,8 @@ class LinkedList {
     }
     // 删除倒数第k个节点
     removeByIndexFromEnd(index) {
+        //务必先判断是否是 环链表
+        if(this.checkCircle()) return false
         let pos = 1
         this.reverseList()
         let currentNode = this.head.next
