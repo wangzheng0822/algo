@@ -18,7 +18,6 @@ fileprivate func mergeSort<T>(_ a: inout T, from low: T.Index, to high: T.Index)
     let mid = a.index(low, offsetBy: dist/2)
     mergeSort(&a, from: low, to: mid)
     mergeSort(&a, from: a.index(mid, offsetBy: 1), to: high)
-    print(a)
     merge(&a, from: low, through: mid, to: high)
 }
 
@@ -48,7 +47,6 @@ fileprivate func merge<T>(_ a: inout T, from low: T.Index, through mid: T.Index,
     var current = low
     for element in tmp {
         a[current] = element
-        print(element)
         a.formIndex(after: &current)
     }
 }
