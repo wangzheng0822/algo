@@ -27,6 +27,8 @@ func InsertSort(a []int) {
 		for ; j >= 0; j-- {
 			if a[j] > v {
 				a[j+1] = a[j]
+			} else {
+				break
 			}
 		}
 		a[j+1] = v
