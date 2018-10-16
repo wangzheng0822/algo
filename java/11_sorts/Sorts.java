@@ -58,6 +58,9 @@ public class Sorts {
         }
       }
 
+      if (minIndex == i)
+        continue;
+
       // 交换
       int tmp = a[i];
       a[i] = a[minIndex];
