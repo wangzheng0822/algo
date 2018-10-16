@@ -2,20 +2,20 @@
  * 
  * 1）泛型动态数组
  *
- * Author: shi
+ * Author: shi
  */
 
  public class GenericArray<T> {
      private T[] data;
      private int size;
 
-     // 根据传入容量，构造Array
+     // 根据传入容量，构造Array
      public GenericArray(int capacity) {
          data = (T[]) new Object[capacity];
          size = 0;
      }
 
-     // 无参构造方法，默认数组容量为10
+     // 无参构造方法，默认数组容量为10
      public GenericArray() {
          this(10);
      }
