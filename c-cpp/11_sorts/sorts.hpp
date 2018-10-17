@@ -24,4 +24,20 @@ void bubble_sort(FrwdIt first, FrwdIt last, BinaryPred comp = BinaryPred()) {
     }
 }
 
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void insertion_sort(BidirIt first,
+                    BidirIt last,
+                 BinaryPred comp = BinaryPred()) {
+    if (std::distance(first, last) <= 1) { return; }
+    for (auto it = first + 1; it != last; ++it) {
+        const auto target = *it;
+        auto       itt    = it;
+        for (; std::distance(first, itt) > 0 and comp(target, *(itt - 1)); --itt) {
+            *itt = *(itt - 1);
+        }
+        *itt = target;
+    }
+}
+
 #endif  // SORTS_SORTS_HPP_
