@@ -53,7 +53,9 @@ void selection_sort(BidirIt first,
                 tag = itt;
             }
         }
-        std::swap(*it, *tag);
+        if (tag != it) {
+            std::swap(*it, *tag);
+        }
     }
 }
 
