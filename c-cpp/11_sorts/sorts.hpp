@@ -8,9 +8,9 @@
 #include <iterator>
 #include <functional>
 
-template <typename FrwdIt,
-          typename BinaryPred = std::less<typename std::iterator_traits<FrwdIt>::value_type>>
-void bubble_sort(FrwdIt first, FrwdIt last, BinaryPred comp = BinaryPred()) {
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void bubble_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
     if (std::distance(first, last) <= 1) { return; }
     bool flag = true;
     for (auto it = first; flag and it != last; ++it) {
@@ -37,6 +37,23 @@ void insertion_sort(BidirIt first,
             *itt = *(itt - 1);
         }
         *itt = target;
+    }
+}
+
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void selection_sort(BidirIt first,
+                    BidirIt last,
+                 BinaryPred comp = BinaryPred()) {
+    if (std::distance(first, last) <= 1) { return; }
+    for (auto it = first; it != last - 1; ++it) {
+        auto tag = it;
+        for (auto itt = it + 1; itt != last; ++itt) {
+            if (comp(*itt, *tag)) {
+                tag = itt;
+            }
+        }
+        std::swap(*it, *tag);
     }
 }
 

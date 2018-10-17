@@ -20,5 +20,12 @@ int main() {
     }
     std::cout << '\n';
 
+    std::vector<int> c(test_data.begin(), test_data.end());
+    bubble_sort(c.begin(), c.end());
+    for (auto i : c) {
+        std::cout << i << ' ';
+    }
+    std::cout << '\n';
+
     return 0;
 }
