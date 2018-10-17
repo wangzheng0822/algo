@@ -34,6 +34,20 @@ class SortsTests: XCTestCase {
         XCTAssertEqual(a3, [-2, -1, 0, 3, 3, 6, 7, 8, 9, 9])
     }
     
+    func testQuickSort() {
+        var a1 = [1, 1, 1, 1]
+        quickSort(&a1)
+        XCTAssertEqual(a1, [1, 1, 1, 1])
+        
+        var a2 = [4, 3, 2, 1]
+        quickSort(&a2)
+        XCTAssertEqual(a2, [1, 2, 3, 4])
+        
+        var a3 = [3, 6, 9, 7, 8, -1, 9, 3, -2, 0]
+        quickSort(&a3)
+        XCTAssertEqual(a3, [-2, -1, 0, 3, 3, 6, 7, 8, 9, 9])
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
