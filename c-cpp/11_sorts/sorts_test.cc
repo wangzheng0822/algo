@@ -14,15 +14,22 @@ int main() {
     std::cout << '\n';
 
     std::vector<int> b(test_data.begin(), test_data.end());
-    bubble_sort(b.begin(), b.end());
+    insertion_sort(b.begin(), b.end());
     for (auto i : b) {
         std::cout << i << ' ';
     }
     std::cout << '\n';
 
     std::vector<int> c(test_data.begin(), test_data.end());
-    bubble_sort(c.begin(), c.end());
+    selection_sort(c.begin(), c.end());
     for (auto i : c) {
+        std::cout << i << ' ';
+    }
+    std::cout << '\n';
+
+    std::vector<int> d(test_data.begin(), test_data.end());
+    bubble_down_sort(d.begin(), d.end());
+    for (auto i : d) {
         std::cout << i << ' ';
     }
     std::cout << '\n';

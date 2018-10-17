@@ -59,4 +59,16 @@ void selection_sort(BidirIt first,
     }
 }
 
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void bubble_down_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
+    if (std::distance(first, last) <= 1) { return; }
+    for (auto it = first; it != last; ++it) {
+        for (auto itt = it + 1; itt != last; ++itt) {
+            if (comp(*itt, *it)) {
+                std::swap(*it, *itt);
+            }
+        }
+    }
+}
 #endif  // SORTS_SORTS_HPP_
