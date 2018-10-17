@@ -7,9 +7,18 @@
 #include "merge_sort.hpp"
 
 int main() {
-    std::vector<int> test_data{0, -1, 3, 190, -500};
-    merge_sort(test_data.begin(), test_data.end());
-    for (auto i : test_data) {
+    const std::vector<int> test_data{0, -1, 3, 190, -500};
+
+    std::vector<int> a{test_data};
+    merge_sort(a.begin(), a.end());
+    for (auto i : a) {
+        std::cout << i << ' ';
+    }
+    std::cout << std::endl;
+
+    std::vector<int> b{test_data};
+    inplace_merge_sort(b.begin(), b.end());
+    for (auto i : b) {
         std::cout << i << ' ';
     }
     std::cout << std::endl;

@@ -47,5 +47,16 @@ void merge_sort(FrwdIt first, FrwdIt last, BinaryPred comp = BinaryPred()) {
     std::copy(tmp.begin(), tmp.end(), first);
 }
 
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void inplace_merge_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
+    const auto len = std::distance(first, last);
+    if (len <= 1) { return; }
+    auto cut = first + len / 2;
+    merge_sort(first, cut, comp);
+    merge_sort(cut, last, comp);
+    std::inplace_merge(first, cut, last, comp);
+}
+
 #endif  // SORTS_MERGE_SORT_HPP_
 
