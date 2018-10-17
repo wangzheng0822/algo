@@ -31,17 +31,6 @@ OutputIt merge(InputIt1 first1, InputIt1 last1,
     }
     return std::copy(first2, last2, d_first);
 }
-
-template <typename FrwdIt,
-          typename BinaryPred = std::less<typename std::iterator_traits<FrwdIt>::value_type>>
-void inplace_merge(FrwdIt first, FrwdIt middle, FrwdIt last, BinaryPred comp = BinaryPred()) {
-    // with sufficient memory space
-    const auto len = std::distance(first, last);
-    std::vector<typename std::iterator_traits<FrwdIt>::value_type> tmp;
-    tmp.reserve(len);
-    detail::merge(first, middle, middle, last, std::back_inserter(tmp), comp);
-    std::copy(tmp.begin(), tmp.end(), first);
-}
 }  // namespace detail
 
 template <typename FrwdIt,
