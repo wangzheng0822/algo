@@ -26,9 +26,7 @@ void bubble_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
 
 template <typename BidirIt,
           typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
-void insertion_sort(BidirIt first,
-                    BidirIt last,
-                 BinaryPred comp = BinaryPred()) {
+void insertion_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
     if (std::distance(first, last) <= 1) { return; }
     for (auto it = first + 1; it != last; ++it) {
         const auto target = *it;
@@ -42,9 +40,7 @@ void insertion_sort(BidirIt first,
 
 template <typename BidirIt,
           typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
-void selection_sort(BidirIt first,
-                    BidirIt last,
-                 BinaryPred comp = BinaryPred()) {
+void selection_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
     if (std::distance(first, last) <= 1) { return; }
     for (auto it = first; it != last - 1; ++it) {
         auto tag = it;
@@ -71,4 +67,23 @@ void bubble_down_sort(FrwdIt first, FrwdIt last, BinaryPred comp = BinaryPred())
         }
     }
 }
+
+template <typename BidirIt,
+          typename BinaryPred = std::less<typename std::iterator_traits<BidirIt>::value_type>>
+void shell_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPred()) {
+    const size_t len = std::distance(first, last);
+    if (len <= 1) { return; }
+    for (size_t step = len / 2; step >= 1; step /= 2) {
+        for (auto it = first + step; it != last; ++it) {
+            auto target = *it;
+            auto itt    = it - step;
+            for (; std::distance(first, itt) >= 0 and comp(target, *itt); itt -= step) {
+                *(itt + step) = *itt;
+            }
+            *(itt + step) = target;
+        }
+    }
+}
+
 #endif  // SORTS_SORTS_HPP_
+
