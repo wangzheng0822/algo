@@ -11,8 +11,8 @@ from typing import List
 def bubble_sort(a: List[int]):
     if len(a) <= 1: return
     
-    made_swap = False
     for i in range(len(a)):
+        made_swap = False
         for j in range(len(a) - i - 1):
             if a[j] > a[j+1]:
                 a[j], a[j+1] = a[j+1], a[j]
