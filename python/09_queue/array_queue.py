@@ -21,7 +21,7 @@ class ArrayQueue:
                 return False
             else:
                 for i in range(0, self._tail - self._head):
-                    self._data[i] = self._items[i + self._head]
+                    self._items[i] = self._items[i + self._head]
                 self._tail = self._tail - self._head
                 self._head = 0
         
