@@ -49,6 +49,7 @@ public class Sorts {
   // 选择排序，a表示数组，n表示数组大小
   public static void selectionSort(int[] a, int n) {
     if (n <= 1) return;
+<<<<<<< HEAD
     for (int i = 0; i < n; ++i) {
       // 查找最小值
       int minIndex = i;
@@ -56,10 +57,23 @@ public class Sorts {
       for (int j = i; j < n; ++j) {
         if (a[j] < minValue) {
           minValue = a[j];
+=======
+    for (int i = 0; i < n - 1; ++i) {
+      // 查找最小值
+      int minIndex = i;
+      for (int j = i + 1; j < n; ++j) {
+        if (a[j] < a[minIndex]) {
+>>>>>>> upstream/master
           minIndex = j;
         }
       }
 
+<<<<<<< HEAD
+=======
+      if (minIndex == i)
+        continue;
+
+>>>>>>> upstream/master
       // 交换
       int tmp = a[i];
       a[i] = a[minIndex];
