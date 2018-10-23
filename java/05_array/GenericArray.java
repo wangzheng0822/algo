@@ -1,21 +1,21 @@
 /**
- * 
+ *
  * 1）泛型动态数组
  *
- * Author: shi
+ * Author: shi
  */
 
  public class GenericArray<T> {
      private T[] data;
      private int size;
 
-     // 根据传入容量，构造Array
+     // 根据传入容量，构造Array
      public GenericArray(int capacity) {
          data = (T[]) new Object[capacity];
          size = 0;
      }
 
-     // 无参构造方法，默认数组容量为10
+     // 无参构造方法，默认数组容量为10
      public GenericArray() {
          this(10);
      }
@@ -57,7 +57,7 @@
          return false;
      }
 
-     // 获取对应元素的下标, 未找到，返回 -1 
+     // 获取对应元素的下标, 未找到，返回 -1
      public int find(T e) {
          for ( int i = 0; i < size; i++) {
              if (data[i].equals(e)) {
@@ -66,12 +66,12 @@
          }
          return -1;
      }
-     
+
 
      // 在 index 位置，插入元素e, 时间复杂度 O(m+n)
      public void add(int index, T e) {
          checkIndex(index);
-         // 如果当前元素个数等于数组容量，则将数组扩容为原来的2倍
+         // 如果当前元素个数等于数组容量，则将数组扩容为原来的2倍
          if (size == data.length) {
              resize(2 * data.length);
          }
@@ -96,7 +96,7 @@
      // 删除 index 位置的元素，并返回
      public T remove(int index) {
          checkIndex(index);
-         
+
          T ret = data[index];
          for (int i = index + 1; i < size; i++) {
              data[i - 1] = data[i];
@@ -158,7 +158,7 @@
 
      private void checkIndex(int index) {
         if (index < 0 || index > size) {
-            throw new IllegalArgumentException("Add failed! Require index >=0 and index <= size.");
+            throw new IllegalArgumentException("Add failed! Require index >=0 and index <= size.");
         }
      }
  }
