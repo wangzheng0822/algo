@@ -53,8 +53,8 @@ void inplace_merge_sort(BidirIt first, BidirIt last, BinaryPred comp = BinaryPre
     const auto len = std::distance(first, last);
     if (len <= 1) { return; }
     auto cut = first + len / 2;
-    merge_sort(first, cut, comp);
-    merge_sort(cut, last, comp);
+    inplace_merge_sort(first, cut, comp);
+    inplace_merge_sort(cut, last, comp);
     std::inplace_merge(first, cut, last, comp);
 }
 
