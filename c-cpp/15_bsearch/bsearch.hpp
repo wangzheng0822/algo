@@ -10,6 +10,9 @@
 
 enum class BsearchPolicy { FIRST, LAST, UNSPECIFIED };
 
+// Liam Huang: The algorithm works right with iterators that meet the ForwardIterator requirement,
+//             but with a bad time complexity. For better performance, iterators should meet
+//             the RandomAccessIterator requirement.
 template <typename IterT,
           typename ValueT = typename std::iterator_traits<IterT>::value_type,
           typename Compare>
