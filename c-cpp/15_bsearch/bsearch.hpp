@@ -12,7 +12,7 @@ enum class BsearchPolicy { FIRST, LAST, UNSPECIFIED };
 
 template <typename IterT,
           typename ValueT = typename std::iterator_traits<IterT>::value_type,
-          typename Compare = std::less<ValueT>>
+          typename Compare>
 IterT bsearch(IterT first,
               IterT last,
              ValueT target,
@@ -50,12 +50,13 @@ IterT bsearch(IterT first,
 }
 
 template <typename IterT,
-          typename ValueT = typename std::iterator_traits<IterT>::value_type>
+          typename ValueT = typename std::iterator_traits<IterT>::value_type,
+          typename Compare = std::less<ValueT>>
 IterT bsearch(IterT first,
               IterT last,
              ValueT target,
       BsearchPolicy policy = BsearchPolicy::UNSPECIFIED) {
-	return bsearch(first, last, target, std::less<ValueT>(), policy);
+	return bsearch(first, last, target, Compare(), policy);
 }
 
 #endif  // BSEARCH_BSEARCH_HPP_
