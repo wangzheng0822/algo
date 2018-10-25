@@ -79,6 +79,12 @@ if __name__ == "__main__":
     for i in range(6):
         a.insert_to_tail(i)
     
+<<<<<<< HEAD
+    a.delete(2)
+    print(a)
+    a.insert_to_tail(7)
+    print(a)
+=======
     print('origin',a)
     a.delete(4)
     print ('delete ',a)
@@ -86,3 +92,4 @@ if __name__ == "__main__":
     a.insert(100,10000)
     print (a)
 
+>>>>>>> upstream/master
