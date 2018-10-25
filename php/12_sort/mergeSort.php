@@ -1,6 +1,6 @@
 <?php
 
-    $arr = [1, 5, 8, 6, 7, 9];
+    $arr = [4, 5, 6, 1, 3, 2];
     $length = count($arr);
 
     $p = 0;
@@ -46,16 +46,19 @@ function merge(array $left, array $right)
 
     } while ($i < $leftLength && $j < $rightLength);
 
+
     $start = $i;
     $end = $leftLength;
+    $copyArr = $left;
 
     if ($j < $rightLength) {
         $start = $j;
         $end = $rightLength;
+        $copyArr = $right;
     }
 
     for (; $start < $end; $start++) {
-        $tmp[] = $right[$start];
+        $tmp[] = $copyArr[$start];
     }
 
     return $tmp;
