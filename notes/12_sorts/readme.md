@@ -72,9 +72,98 @@ OutputIt merge(InputIt1 first1, InputIt1 last1,
     * 由于 `comp` 是严格偏序，所以 `!comp(*first2, *first1)` 时，取用 `first1` 的元素放入 `d_first` 保证了算法稳定性
 * 时间复杂度
     * 定义 $T(n)$ 表示问题规模为 $n$ 时算法的耗时，
-    * 有递推公式：$T(n) = 2T(1/2) + n$
+    * 有递推公式：$T(n) = 2T(n/2) + n$
     * 展开得 $T(n) = 2^{k}T(1) + k * n$
     * 考虑 $k$ 是递归深度，它的值是 $\log_2 n$，因此 $T(n) = n + n\log_2 n$
     * 因此，归并排序的时间复杂度为 $\Theta(n\log n)$
 * 空间复杂度
     * 一般来说，空间复杂度是 $\Theta(n)$
+
+## 快速排序（quick sort，快排）
+
+原理：
+
+* 在待排序区间 `[first, last)` 中选取一个元素，称为主元（pivot，枢轴）
+* 对待排序区间进行划分，使得 `[first, cut)` 中的元素满足 `comp(element, pivot)` 而 `[cut, last)` 中的元素不满足 `comp(element, pivot)`
+* 对划分的两个区间，继续划分，直到区间 `[first, last)` 内不足 2 个元素
+
+![快排分区示例](https://static001.geekbang.org/resource/image/4d/81/4d892c3a2e08a17f16097d07ea088a81.jpg)
+
+显然，这又是一个递归：
+
+* 终止条件：区间 `[first, last)` 内不足 2 个元素
+* 递归公式：`quick_sort(first, last) = quick_sort(first, cut) + quick_sort(cut, last)`
+
+```cpp
+template <typename IterT, typename T = typename std::iterator_traits<IterT>::value_type>
+void quick_sort(IterT first, IterT last) {
+    if (std::distance(first, last) > 1) {
+        IterT prev_last = std::prev(last);
+        IterT cut = std::partition(first, prev_last, [prev_last](T v) { return v < *prev_last; });
+        std::iter_swap(cut, prev_last);
+        quick_sort(first, cut);
+        quick_sort(cut, last);
+    }
+}
+```
+
+> 一点优化（Liam Huang）：通过将 `if` 改为 `while` 同时修改 `last` 迭代器的值，可以节省一半递归调用的开销。
+
+```cpp
+template <typename IterT, typename T = typename std::iterator_traits<IterT>::value_type>
+void quick_sort(IterT first, IterT last) {
+    while (std::distance(first, last) > 1) {
+        IterT prev_last = std::prev(last);
+        IterT cut = std::partition(first, prev_last, [prev_last](T v) { return v < *prev_last; });
+        std::iter_swap(cut, prev_last);
+        quick_sort(cut, last);
+        last = cut;
+    }
+}
+```
+
+如果不要求空间复杂度，分区函数实现起来很容易。
+
+![非原地分区](https://static001.geekbang.org/resource/image/66/dc/6643bc3cef766f5b3e4526c332c60adc.jpg)
+
+若要求原地分区，则不那么容易了。下面的实现实现了原地分区函数，并且能将所有相等的主元排在一起。
+
+```cpp
+template <typename BidirIt,
+          typename T = typename std::iterator_traits<BidirIt>::value_type,
+          typename Compare = std::less<T>>
+std::pair<BidirIt, BidirIt> inplace_partition(BidirIt first,
+                                              BidirIt last,
+                                             const T& pivot,
+                                           Compare comp = Compare()) {
+    BidirIt last_less, last_greater, first_equal, last_equal;
+    for (last_less = first, last_greater = first, first_equal = last;
+                                         last_greater != first_equal; ) {
+        if (comp(*last_greater, pivot)) {
+            std::iter_swap(last_greater++, last_less++);
+        } else if (comp(pivot, *last_greater)) {
+            ++last_greater;
+        } else {  // pivot == *last_greater
+            std::iter_swap(last_greater, --first_equal);
+        }
+    }
+    const auto cnt = std::distance(first_equal, last);
+    std::swap_ranges(first_equal, last, last_less);
+    first_equal    = last_less;
+    last_equal     = first_equal + cnt;
+    return {first_equal, last_equal};
+}
+```
+
+### 算法分析
+
+* 稳定性
+    * 由于 `inplace_partition` 使用了大量 `std::iter_swap` 操作，所以不是稳定排序
+* 时间复杂度
+    * 定义 $T(n)$ 表示问题规模为 $n$ 时算法的耗时，
+    * 有递推公式：$T(n) = 2T(n/2) + n$（假定每次分割都是均衡分割）
+    * 展开得 $T(n) = 2^{k}T(1) + k * n$
+    * 考虑 $k$ 是递归深度，它的值是 $\log_2 n$，因此 $T(n) = n + n\log_2 n$
+    * 因此，快速排序的时间复杂度为 $\Theta(n\log n)$
+* 空间复杂度
+    * 一般来说，空间复杂度是 $\Theta(1)$，因此是原地排序算法
