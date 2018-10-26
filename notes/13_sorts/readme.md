@@ -54,3 +54,20 @@
 * 使用条件
     * $k < n$
     * 待排序数据的 key 是非负整数
+
+## 基数排序（Radix Sort）
+
+基数排序适用于等长数据的排序。对于不等长数据，可以在较短的数据后面做 padding，使得数据等长。
+
+* 先就 least significant digit 进行稳定排序——通常可以用桶排序或者计数排序；时间复杂度 $O(n)$
+* 而后依次向 greatest significant digit 移动，进行稳定排序
+
+![基数排序示例](https://static001.geekbang.org/resource/image/df/0c/df0cdbb73bd19a2d69a52c54d8b9fc0c.jpg)
+
+### 算法分析
+
+* 时间复杂度
+    * 对每一位的排序时间复杂度是 $O(n)$
+    * 总共 $k$ 位，因此总的时间复杂度是 $O(kn)$；考虑到 $k$ 是常数，因此总的时间复杂度是 $O(n)$
+* 使用条件
+    * 等长数据
