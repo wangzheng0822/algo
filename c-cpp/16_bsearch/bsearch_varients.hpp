@@ -1,5 +1,5 @@
 /**
- * Created by Liam Huang (Liam0205) on 2018/10/24.
+ * Created by Liam Huang (Liam0205) on 2018/10/26.
  */
 
 #ifndef BSEARCH_BSEARCH_VARIENTS_HPP_
