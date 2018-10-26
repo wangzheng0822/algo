@@ -8,7 +8,7 @@
 #include <iterator>
 #include <functional>
 
-enum class BsearchPolicy { UNSPECIFIED, FIRST, LAST, FIRST_NOT_LESS, LAST_NOT_LARGER };
+enum class BsearchPolicy { UNSPECIFIED, FIRST, LAST, FIRST_NOT_LESS, LAST_NOT_GREATER };
 
 // Liam Huang: The algorithm works right with iterators that meet the ForwardIterator requirement,
 //             but with a bad time complexity. For better performance, iterators should meet
@@ -35,7 +35,7 @@ IterT bsearch(IterT first,
             } else {
                 first = mid + 1;
             }
-        } else if (policy == BsearchPolicy::LAST_NOT_LARGER) {
+        } else if (policy == BsearchPolicy::LAST_NOT_GREATER) {
             if (comp(target, *mid)) {
                 last = mid;
             } else {
