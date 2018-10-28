@@ -17,7 +17,11 @@
 * findMiddleNode 求链表的中间结点
 
 #### 08_stack
+<<<<<<< HEAD
+* 链栈实现
+=======
 * 链栈实现
 
 #### 09_stack
 * 队列链表实现
+>>>>>>> upstream/master
