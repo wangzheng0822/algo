@@ -29,6 +29,14 @@ class skiplist : public std::list<T, Allocator> {
     using reverse_iterator       = typename container_type::reverse_iterator;
     using const_reverse_iterator = typename container_type::const_reverse_iterator;
 
+  private:
+    template <typename T, typename Iter>
+    struct IndexNode {
+        IndexNode(const T& data_, Iter down_) : data(data_), down(down_) {}
+        const T    data;
+        const Iter down;
+    };
+
   public:
     skiplist() : container_type() {}
     explicit skiplist(const allocator_type& alloc) : container_type(alloc) {}
