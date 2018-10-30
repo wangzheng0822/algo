@@ -12,13 +12,14 @@
 #include <random>
 #include <initializer_list>
 #include <limits>
+#include <iostream>
 
 template <typename Value>
 class skiplist {
   public:
     using value_type = Value;
     using hash_type  = std::hash<value_type>;
-    using key_type   = std::result_of_t<Hash()(value_type)>>;
+    using key_type   = typename hash_type::result_type;
     using size_type  = size_t;
 
   private:
@@ -39,18 +40,21 @@ class skiplist {
     const double PROBABILITY                           = 0.5;
     const unsigned int seed                            =
         std::chrono::system_clock::now().time_since_epoch().count();
+    mutable
     std::default_random_engine generator               = std::default_random_engine(seed);
+    mutable
     std::binomial_distribution<size_type> distribution =
         std::binomial_distribution<size_type>(MAX_LEVEL - 1, PROBABILITY);
     node_type* head                                    = nullptr;
     node_type* nil                                     = nullptr;
+    static const value_type default_value;
 
   public:
     skiplist() {
         key_type head_key = std::numeric_limits<key_type>::min();
         key_type nil_key  = std::numeric_limits<key_type>::max();
         head = new node_type(head_key, MAX_LEVEL);
-        nil  = new node_type(nilkey,   MAX_LEVEL);
+        nil  = new node_type(nil_key,  MAX_LEVEL);
         std::fill(head->forwards.begin(), head->forwards.end(), nil);
     }
     skiplist(std::initializer_list<value_type> init) : skiplist() {
@@ -72,7 +76,7 @@ class skiplist {
     }
     ~skiplist() {
         node_type* node = head;
-        while (nullptr != node->forwards[0]) {
+        while (nullptr != node and nullptr != node->forwards[0]) {
             node_type* tmp = node;
             node = node->forwards[0];
             delete tmp;
@@ -89,7 +93,7 @@ class skiplist {
     static size_type get_node_level(const node_type* node) {
         return node->forwards.size();
     }
-    static node_type* make_node(value_type&& v, const size_type lv) const {
+    static node_type* make_node(const value_type& v, const size_type lv) {
         return new node_type(v, lv);
     }
     /**
@@ -99,10 +103,10 @@ class skiplist {
     node_type* get_first_equal(const value_type& v) const {
         const key_type target = hash_type()(v);
         node_type* x = head;
-        for (size_type i = get_node_level(head) - 1; i > 0; --i) {
-            while (x->forwards[i]->key < target or
-                    x->forwards[i]->key == target and x->forwards[i]->value != v) {
-                x = x->forwards[i];
+        for (size_type i = get_node_level(head); i > 0; --i) {
+            while (x->forwards[i - 1]->key < target or
+                    x->forwards[i - 1]->key == target and x->forwards[i - 1]->value != v) {
+                x = x->forwards[i - 1];
             }
         }
         return x->forwards[0];
@@ -117,12 +121,12 @@ class skiplist {
         const key_type target = hash_type()(v);
         std::vector<node_type*> results(get_node_level(head), nullptr);
         node_type* x = head;
-        for (size_type i = get_node_level(head) - 1; i > 0; --i) {
-            while (x->forwards[i]->key < target or
-                    x->forwards[i]->key == target and x->forwards[i]->value != v) {
-                x = x->forwards[i];
+        for (size_type i = get_node_level(head); i > 0; --i) {
+            while (x->forwards[i - 1]->key < target or
+                    x->forwards[i - 1]->key == target and x->forwards[i - 1]->value != v) {
+                x = x->forwards[i - 1];
             }
-            results[i] = x;
+            results[i - 1] = x;
         }
         return results;
     }
@@ -132,6 +136,8 @@ class skiplist {
         node_type* x = get_first_equal(target);
         if (nullptr != x and nil != x and x->value == target) {
             return x->value;
+        } else {
+            return default_value;
         }
     }
     void  insert(const value_type& value) {
@@ -146,15 +152,35 @@ class skiplist {
     void  erase(const value_type& value) {
         std::vector<node_type*> preds = get_predecessors(value);
 
-        node_type node                = preds[0]->forwards[0];
+        node_type* node               = preds[0]->forwards[0];
         if (node == nil or node->value != value) { return; }
 
         for (size_type i = 0; i != get_node_level(node); ++i) {
-            preds[i]->forward[i] = node->forward[i];
+            preds[i]->forwards[i] = node->forwards[i];
         }
         delete node;
     }
+    void  print(std::ostream& os) const {
+        node_type* list = head->forwards[0];
+        os << "{";
+
+        while (list != nil) {
+            os << "key: " << list->key << " value: " << list->value
+               << " level: " << get_node_level(list);
+
+            list = list->forwards[0];
+
+            if (list != nil) os << " : ";
+
+            os << "\n";
+        }
+        os << "}\n";
+    }
 };
+
+template <typename Value>
+const typename skiplist<Value>::value_type skiplist<Value>::default_value =
+    typename skiplist<Value>::value_type();
 
 #endif  // SKIPLIST_SKIPLIST_HPP_
 
