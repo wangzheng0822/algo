@@ -5,67 +5,50 @@
 #ifndef SKIPLIST_SKIPLIST_HPP_
 #define SKIPLIST_SKIPLIST_HPP_
 
-#include <list>
-#include <iterator>
-#include <memory>
-#include <initializer_list>
-#include <utility>
-#include <random>
+#include <functional>
+#include <type_traits>
+#include <vector>
 #include <chrono>
-#include <algorithm>
+#include <random>
+#include <initializer_list>
 
-template <typename T,
-          typename Allocator = std::allocator<T>>
-class skiplist : public std::list<T, Allocator> {
+template <typename Value>
+class skiplist {
   public:
-    using container_type         = std::list<T, Allocator>;
-    using value_type             = typename container_type::value_type;
-    using allocator_type         = typename container_type::allocator_type;
-    using size_type              = typename container_type::size_type;
-    using difference_type        = typename container_type::difference_type;
-    using reference              = typename container_type::reference;
-    using const_reference        = typename container_type::const_reference;
-    using pointer                = typename container_type::pointer;
-    using const_pointer          = typename container_type::const_pointer;
-    using iterator               = typename container_type::iterator;
-    using const_iterator         = typename container_type::const_iterator;
-    using reverse_iterator       = typename container_type::reverse_iterator;
-    using const_reverse_iterator = typename container_type::const_reverse_iterator;
+    using value_type = Value;
+    using hash_type  = std::hash<value_type>;
+    using key_type   = std::result_of_t<Hash()(value_type)>>;
+    using size_type  = size_t;
 
   private:
-    static const size_type MAX_LEVEL                   = 16;
-    mutable size_type level_count                      = 1;
-    const unsigned int seed                            = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator               = std::default_random_engine(seed);
-    std::binomial_distribution<size_type> distribution = std::binomial_distribution<size_type>(MAX_LEVEL, 0.5);
+    struct InternalNode {
+        value_type     value;
+        const key_type key;
+        std::vector<InternalNode*> forwards;  // pointers to successor nodes
 
-  private:
-    template <typename Value, typename Iter>
-    struct IndexNode {
-        IndexNode(const Value& data_, Iter down_) : data(data_), down(down_) {}
-        const Value data;
-        const Iter  down;
+        InternalNode(value_type&& v, const size_type lv)
+            : value(v), key(Hash()(value)), forwards(lv, nullptr) {}
     };
+    using node_type = InternalNode;
+
+  private:
+    const size_type MAX_LEVEL                          = 16;
+    const double PROBABILITY                           = 0.5;
+    mutable size_type level_count                      = 1;
+    const unsigned int seed                            =
+        std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator               = std::default_random_engine(seed);
+    std::binomial_distribution<size_type> distribution =
+        std::binomial_distribution<size_type>(MAX_LEVEL, PROBABILITY);
 
   public:
     skiplist() : container_type() {}
-    explicit skiplist(const allocator_type& alloc) : container_type(alloc) {}
-    skiplist(       size_type count,
-              const_reference value,
-        const allocator_type& alloc = allocator_type()) :
-        container_type(count, value, alloc) {}
-    explicit skiplist(size_type count, const allocator_type& alloc = allocator_type()) :
-        container_type(count, alloc) {}
-    template<typename InputIt>
-    skiplist(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) :
-        container_type(first, last, alloc) {}
+    skiplist(size_type count, const_reference value);
     skiplist(const skiplist& other);
     skiplist(const skiplist& other, const allocator_type& alloc);
     skiplist(skiplist&& other);
     skiplist(skiplist&& other, const allocator_type& alloc);
-    skiplist(std::initializer_list<value_type> init,
-                         const allocator_type& alloc = allocator_type()) :
-        container_type(std::forward<std::initializer_list<value_type>>(init), alloc) {}
+    skiplist(std::initializer_list<value_type> init);
     ~skiplist() {}
 
   public:
@@ -76,9 +59,9 @@ class skiplist : public std::list<T, Allocator> {
     inline size_type get_random_level() { return distribution(generator); }
 
   public:
-    iterator find(const value_type& target);
-    iterator insert(const value_type& value);
-    iterator erase(const value_type& value);
+    const value_type& find(const value_type& target);
+    void  insert(const value_type& value);
+    void  erase(const value_type& value);
 };
 
 #endif  // SKIPLIST_SKIPLIST_HPP_
