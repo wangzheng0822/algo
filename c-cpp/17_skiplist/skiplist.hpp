@@ -10,6 +10,9 @@
 #include <memory>
 #include <initializer_list>
 #include <utility>
+#include <random>
+#include <chrono>
+#include <algorithm>
 
 template <typename T,
           typename Allocator = std::allocator<T>>
@@ -30,11 +33,18 @@ class skiplist : public std::list<T, Allocator> {
     using const_reverse_iterator = typename container_type::const_reverse_iterator;
 
   private:
-    template <typename T, typename Iter>
+    static const size_type MAX_LEVEL                   = 16;
+    mutable size_type level_count                      = 1;
+    const unsigned int seed                            = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator               = std::default_random_engine(seed);
+    std::binomial_distribution<size_type> distribution = std::binomial_distribution<size_type>(MAX_LEVEL, 0.5);
+
+  private:
+    template <typename Value, typename Iter>
     struct IndexNode {
-        IndexNode(const T& data_, Iter down_) : data(data_), down(down_) {}
-        const T    data;
-        const Iter down;
+        IndexNode(const Value& data_, Iter down_) : data(data_), down(down_) {}
+        const Value data;
+        const Iter  down;
     };
 
   public:
@@ -56,11 +66,19 @@ class skiplist : public std::list<T, Allocator> {
     skiplist(std::initializer_list<value_type> init,
                          const allocator_type& alloc = allocator_type()) :
         container_type(std::forward<std::initializer_list<value_type>>(init), alloc) {}
-    ~skiplist();
+    ~skiplist() {}
 
   public:
     skiplist& operator=(const skiplist& other);
     skiplist& operator=(skiplist&& other);
+
+  private:
+    inline size_type get_random_level() { return distribution(generator); }
+
+  public:
+    iterator find(const value_type& target);
+    iterator insert(const value_type& value);
+    iterator erase(const value_type& value);
 };
 
 #endif  // SKIPLIST_SKIPLIST_HPP_

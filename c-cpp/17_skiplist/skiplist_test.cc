@@ -8,5 +8,8 @@ int main() {
     }
     std::cout << std::endl;
 
+    for (size_t i = 0; i != 20; ++i)
+        std::cout << test.get_random_level() << std::endl;
+
     return 0;
 }
