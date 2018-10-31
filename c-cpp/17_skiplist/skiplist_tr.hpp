@@ -47,18 +47,18 @@ class random_level {
 }  // namespace skiplist_detail
 
 template <typename Value,
-          typename Compare = std::less<Value>,
           typename Hash = std::hash<Value>>
 class skiplist {
   public:
-    using value_type = Value;
-    using compare    = Compare;
-    using size_type  = size_t;
-    using hasher     = Hash;
-    using hash_type  = typename Hash::result_type;
-    using node_type  = skiplist_detail::InternalNode<hash_type, value_type>;
-    using container  = std::list<node_type>;
-    using iterator   = typename container::iterator;
+    using value_type     = Value;
+    using size_type      = size_t;
+    using hasher         = Hash;
+    using hash_type      = typename Hash::result_type;
+    using compare        = std::less<hash_type>;
+    using node_type      = skiplist_detail::InternalNode<hash_type, value_type>;
+    using container      = std::list<node_type>;
+    using iterator       = typename container::iterator;
+    using const_iterator = typename container::const_iterator;
     static_assert(std::is_same<iterator, typename node_type::iterator>::value,
             "STATIC ASSERT FAILED! iterator type differs.");
 
@@ -117,10 +117,28 @@ class skiplist {
         for (auto it : std::next(cont_.begin())->forwards) {
             assert(it == cont_.end());
         }
-        std::cerr << "all assert in init() success!\n";
+        std::cerr << "UT_DEBUG: all assert in init() success!\n";
 #endif
 
         return;
+    }
+    /**
+     * @brief   return a const_iterator points to the last element
+     *          such that its hash_key <= target_hash_key
+     */
+    const_iterator find_helper(const hash_type& key) const {
+        const_iterator iter = cont_.begin();
+        for (size_type i = 0; i != max_lv_; ++i) {
+            size_type focus = max_lv_ - 1 - i;
+            // invariant: iter->key <= key
+            for (const_iterator forward = iter->forwards[focus];
+                    forward != cont_.end() and not compare()(forward->key, key);
+                    forward = iter->forwards[focus]) {
+                iter = forward;
+            }
+            // result: iter->key <= key and iter->forwards[focus]->key > key
+        }
+        return iter;
     }
 
   public:
@@ -129,6 +147,31 @@ class skiplist {
     }
     bool empty() const {
         return size() == 0;
+    }
+    iterator begin() {
+        return cont_.begin();
+    }
+    const_iterator begin() const {
+        return cont_.cbegin();
+    }
+    const_iterator cbegin() const {
+        return cont_.cbegin();
+    }
+    iterator end() {
+        return cont_.end();
+    }
+    const_iterator end() const {
+        return cont_.cend();
+    }
+    const_iterator cend() const {
+        return cont_.cend();
+    }
+
+  public:
+    const_iterator find(const value_type& target) const {
+        const hash_type key = hasher()(target);
+        const_iterator iter = find_helper(key);
+        return (iter->key == key) ? iter : cont_.end();
     }
 };
 

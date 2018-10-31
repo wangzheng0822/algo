@@ -23,6 +23,11 @@ int main() {
     // 2. UT for skiplist(), init(), size(), empty()
     skiplist<std::string> sl_default;
     assert(sl_default.empty());
+
+    // 3. UT for find() [nonexist element]
+    auto search = sl_default.find("nonexist");
+    assert(search == sl_default.cend());
+    assert(search == sl_default.end());
     return 0;
 }
 
