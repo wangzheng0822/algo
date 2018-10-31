@@ -10,14 +10,27 @@
 #include <list>
 #include <functional>
 #include <type_traits>
+#include <random>
 
 namespace skiplist_detail {
 template <typename Key, typename Value>
 struct InternalNode {
-    const Key                                               key;
-    std::multiset<Value>                                    values;
     using iterator = typename std::list<InternalNode>::iterator;
+    const Key             key;
+    std::multiset<Value>  values;
     std::vector<iterator> forwards;
+};
+
+template <typename IntType>
+class random_level {
+  private:
+    mutable std::random_device                  rd;
+    mutable std::mt19937                        gen = std::mt19937(rd());
+    mutable std::binomial_distribution<IntType> dist;
+
+  public:
+    random_level(IntType max_level, double prob) : dist(max_level - 1, prob) {}
+    inline IntType operator()() const { return dist(gen); }
 };
 }  // namespace skiplist_detail
 
@@ -36,6 +49,14 @@ class skiplist {
     using iterator   = typename container::iterator;
     static_assert(std::is_same<iterator, typename node_type::iterator>::value,
             "STATIC ASSERT FAILED! iterator type differs.");
+
+  private:
+    size_type                       max_lv_ = 16;
+    double                          prob_   = 0.5;
+    mutable random_level<size_type> rl_;
+
+  public:
+    skiplist() : rl_(max_lv_, prob_) {}
 };
 
 #endif  // SKIPLIST_SKIPLIST_TR_HPP_
