@@ -1,6 +1,7 @@
 /**
  * Created by Liam Huang (Liam0205) on 2018/10/30.
  */
+#include <assert.h>
 
 #include <iostream>
 #include <map>
@@ -19,6 +20,9 @@ int main() {
         std::cout << p.first << ' ' << std::string(p.second / 100, '*') << '\n';
     }
 
+    // 2. UT for skiplist(), init(), size(), empty()
+    skiplist<std::string> sl_default;
+    assert(sl_default.empty());
     return 0;
 }
 
