@@ -46,6 +46,8 @@ class random_level {
 };
 }  // namespace skiplist_detail
 
+enum class erase_policy { ALL, SINGLE };
+
 template <typename Value,
           typename Hash = std::hash<Value>>
 class skiplist {
@@ -63,7 +65,7 @@ class skiplist {
             "STATIC ASSERT FAILED! iterator type differs.");
 
   private:
-    size_type                                        max_lv_ = 16;
+    size_type                                        max_lv_ = 8;
     double                                           prob_   = 0.5;
     mutable skiplist_detail::random_level<size_type> rl_;
     container                                        cont_;
@@ -117,7 +119,7 @@ class skiplist {
         for (auto it : std::next(cont_.begin())->forwards) {
             assert(it == cont_.end());
         }
-        std::cerr << "UT_DEBUG: all assert in init() success!\n";
+        std::cerr << "UT_DEBUG: all assert in init_internally() success!\n";
 #endif
 
         return;
@@ -127,18 +129,83 @@ class skiplist {
      *          such that its hash_key <= target_hash_key
      */
     const_iterator find_helper(const hash_type& key) const {
-        const_iterator iter = cont_.begin();
+#ifdef LIAM_UT_DEBUG_
+        std::cerr << "Keys contained in the list: ";
+        for (auto node : cont_) {
+            std::cerr << node.key << ' ';
+        }
+        std::cerr << '\n';
+        std::cerr << "Target key: " << key << '\n';
+#endif
+        const_iterator iter = begin();
         for (size_type i = 0; i != max_lv_; ++i) {
             size_type focus = max_lv_ - 1 - i;
             // invariant: iter->key <= key
-            for (const_iterator forward = iter->forwards[focus];
-                    forward != cont_.end() and not compare()(forward->key, key);
-                    forward = iter->forwards[focus]) {
-                iter = forward;
+            while (not compare()(key, iter->forwards[focus]->key)) {
+#ifdef LIAM_UT_DEBUG_
+                std::cerr << "i: " << i << " focus: " << focus << ". "
+                          << "since iter->forwards[focus]->key[" << iter->forwards[focus]->key
+                          << "] <= key[" << key << "], ";
+#endif
+                iter = iter->forwards[focus];
+#ifdef LIAM_UT_DEBUG_
+                std::cerr << "step forward iter to [" << iter->key << "]\n";
+#endif
             }
-            // result: iter->key <= key and iter->forwards[focus]->key > key
+            // result: iter->key <= key < iter->forwards[focus]->key
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "The following fact holds at level " << focus
+                      << ": iter->key[" << iter->key << "] <= key["
+                      << key << "] < iter->forwards[focus]->key[" << iter->forwards[focus]->key
+                      <<"].\n";
+#endif
         }
         return iter;
+    }
+    std::vector<iterator> find_predecessors(const hash_type& key, const size_type& lv) {
+#ifdef LIAM_UT_DEBUG_
+        std::cerr << "Keys contained in the list: ";
+        for (auto node : cont_) {
+            std::cerr << node.key << ' ';
+        }
+        std::cerr << '\n';
+        std::cerr << "Target key: " << key << '\n';
+#endif
+        std::vector<iterator> res;
+        res.resize(lv + 1);
+        iterator iter = begin();
+        for (size_type i = 0; i != max_lv_; ++i) {
+            size_type focus = max_lv_ - 1 - i;
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "i: " << i << " focus: " << focus << ".\n";
+#endif
+            // invariant: iter->key < key
+            while (compare()(iter->forwards[focus]->key, key)) {
+#ifdef LIAM_UT_DEBUG_
+                std::cerr << "since iter->forwards[focus]->key[" << iter->forwards[focus]->key
+                          << "] < key[" << key << "], ";
+#endif
+                iter = iter->forwards[focus];
+#ifdef LIAM_UT_DEBUG_
+                std::cerr << "step forward iter to [" << iter->key << "]\n";
+#endif
+            }
+            // result: iter->key < key <= iter->forwards[focus]->key
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "The following fact holds at level " << focus
+                      << ": iter->key[" << iter->key << "] < key[" << key
+                      << "] <= iter->forwards[focus]->key[" << iter->forwards[focus]->key
+                      <<"].\n";
+#endif
+            if (focus < lv + 1) {
+                res[focus] = iter;
+#ifdef LIAM_UT_DEBUG_
+                std::cerr << "predecessor at level [" << focus
+                          << "] has been recorded, while level upper limit is " << lv <<".\n";
+#endif
+            }
+        }
+        return res;
     }
 
   public:
@@ -169,9 +236,92 @@ class skiplist {
 
   public:
     const_iterator find(const value_type& target) const {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "finding [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+#endif
         const hash_type key = hasher()(target);
         const_iterator iter = find_helper(key);
         return (iter->key == key) ? iter : cont_.end();
+    }
+    void insert(const value_type& target) {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "inserting [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+#endif
+        const hash_type key = hasher()(target);
+        const size_type lv  = rl_();
+        std::vector<iterator> predecessors = find_predecessors(key, lv);
+        if (predecessors[0]->forwards[0]->key == key) {  // key already in skiplist
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "key [" << key << "] already in the skiplist, insert directly!\n";
+#endif
+            predecessors[0]->forwards[0]->values.insert(target);
+            return;
+        } else {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "key [" << key << "] not in the skiplist, insert a new node!\n";
+#endif
+            node_type node(key);
+            node.forwards.resize(lv + 1);
+            node.values.insert(target);
+            iterator inserted = cont_.insert(predecessors[0]->forwards[0], std::move(node));
+            for (size_type i = 0; i != lv + 1; ++i) {
+                inserted->forwards[i]        = predecessors[i]->forwards[i];
+                predecessors[i]->forwards[i] = inserted;
+            }
+#ifdef LIAM_UT_DEBUG_
+            assert(inserted->forwards[0] == std::next(inserted));
+#endif
+            return;
+        }
+    }
+    void erase(const value_type& target,
+              const erase_policy policy = erase_policy::ALL) {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "erasing [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+#endif
+        const hash_type key = hasher()(target);
+        std::vector<iterator> predecessors = find_predecessors(key, max_lv_);
+        if (predecessors[0]->forwards[0]->key == key) {  // hit
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "key [" << key << "] is in the skiplist!\n";
+#endif
+            iterator found = predecessors[0]->forwards[0];
+            for (auto iter = found->values.begin(); iter != found->values.end(); ) {
+                if (policy == erase_policy::ALL) {
+                    if (*iter == target) {
+                        iter = found->values.erase(iter);
+                    } else {
+                        ++iter;
+                    }
+                } else if (policy == erase_policy::SINGLE) {
+                    if (*iter == target) {
+                        found->values.erase(iter);
+                        break;
+                    }
+                }
+            }
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "target(s) removed!\n";
+#endif
+            if (found->values.empty()) {
+                const size_type lvp1 = found->forwards.size();  // lv plus 1
+                for (size_type i = 0; i != lvp1; ++i) {
+                    predecessors[i]->forwards[i] = found->forwards[i];
+                }
+                cont_.erase(found);
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "empty node removed!\n";
+#endif
+                return;
+            } else {
+                return;
+            }
+        } else {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "key [" << key << "] is not in the skiplist, do nothing!\n";
+#endif
+            return;
+        }
     }
 };
 
