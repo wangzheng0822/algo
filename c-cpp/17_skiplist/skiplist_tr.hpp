@@ -49,7 +49,8 @@ class random_level {
 enum class erase_policy { ALL, SINGLE };
 
 template <typename Value,
-          typename Hash = std::hash<Value>>
+          typename Hash = std::hash<Value>,
+          size_t Factor = 2>
 class skiplist {
   public:
     using value_type     = Value;
@@ -65,7 +66,7 @@ class skiplist {
             "STATIC ASSERT FAILED! iterator type differs.");
 
   private:
-    size_type                                        max_lv_ = 8;
+    size_type                                        max_lv_ = 2;
     double                                           prob_   = 0.5;
     mutable skiplist_detail::random_level<size_type> rl_;
     container                                        cont_;
@@ -233,11 +234,41 @@ class skiplist {
     const_iterator cend() const {
         return cont_.cend();
     }
+    void grow(const size_type new_max_lv) {
+        if (max_lv_ < new_max_lv) {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "grow from [" << max_lv_ << "] to ["
+                      << new_max_lv << "]!\n";
+#endif
+            max_lv_ = new_max_lv;
+
+            iterator tail = std::prev(cont_.end());
+            auto beg_tail = tail->forwards.end();
+            tail->forwards.resize(max_lv_, cont_.end());
+
+            iterator head = cont_.begin();
+            auto beg_head = head->forwards.end();
+            head->forwards.resize(max_lv_, tail);
+
+            return;
+        } else {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "abandon growing!\n";
+#endif
+            return;
+        }
+    }
+    void grow() {
+        grow(Factor * max_lv_);
+    }
+    size_type capability() const {
+        return std::pow(Factor, max_lv_);
+    }
 
   public:
     const_iterator find(const value_type& target) const {
 #ifdef LIAM_UT_DEBUG_
-            std::cerr << "finding [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+            std::cerr << "finding [" << target << "]!\n";
 #endif
         const hash_type key = hasher()(target);
         const_iterator iter = find_helper(key);
@@ -245,8 +276,14 @@ class skiplist {
     }
     void insert(const value_type& target) {
 #ifdef LIAM_UT_DEBUG_
-            std::cerr << "inserting [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+            std::cerr << "inserting [" << target << "]!\n";
 #endif
+        if (size() > static_cast<double>(Factor - 1) / Factor * capability()) {
+#ifdef LIAM_UT_DEBUG_
+            std::cerr << "size[" << size() << "], Factor[" << Factor << "], capability[" << capability() << "]!\n";
+#endif
+            grow();
+        }
         const hash_type key = hasher()(target);
         const size_type lv  = rl_();
         std::vector<iterator> predecessors = find_predecessors(key, lv);
@@ -277,7 +314,7 @@ class skiplist {
     void erase(const value_type& target,
               const erase_policy policy = erase_policy::ALL) {
 #ifdef LIAM_UT_DEBUG_
-            std::cerr << "erasing [" << target << "]!!!!!!!!!!!!!!!!!!!!\n";
+            std::cerr << "erasing [" << target << "]!\n";
 #endif
         const hash_type key = hasher()(target);
         std::vector<iterator> predecessors = find_predecessors(key, max_lv_);

@@ -23,6 +23,12 @@ int main() {
     // 2. UT for skiplist(), init_internally(), size(), empty()
     skiplist<std::string> sl_default;
     assert(sl_default.empty());
+    // 2.1. UT for grow with abandon
+    sl_default.grow(1);
+    assert(sl_default.capability() == 4);
+    // 2.2. UT for grow
+    sl_default.grow(10);
+    assert(sl_default.capability() == 1024);
 
     // 3. UT for constructor of initializer_list and InputIt, init_internally(), insert(),
     // find_predecessors()
@@ -81,7 +87,7 @@ int main() {
     assert(search != sl.cend());
     assert(search != sl.end());
     assert(search->values.count("world") == 2);
-    // 7.1. same word
+    // 7.1. same word, also UT for grow()
     search = sl.find("hello");
     assert(search == sl.cend());
     assert(search == sl.end());
