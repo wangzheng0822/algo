@@ -101,16 +101,13 @@ class skiplist {
     void init_internally() {
         const hash_type tail_key = std::numeric_limits<hash_type>::max();
         node_type tail(tail_key);
-        tail.forwards.resize(max_lv_);
-        std::fill(tail.forwards.begin(), tail.forwards.end(), cont_.end());
-        cont_.insert(cont_.begin(), std::move(tail));
+        tail.forwards.resize(max_lv_, cont_.end());
+        iterator tail_iter = cont_.insert(cont_.begin(), std::move(tail));
 
         const hash_type head_key = std::numeric_limits<hash_type>::min();
         node_type head(head_key);
-        head.forwards.resize(max_lv_);
+        head.forwards.resize(max_lv_, tail_iter);
         cont_.insert(cont_.begin(), std::move(head));
-        std::fill(cont_.begin()->forwards.begin(), cont_.begin()->forwards.end(),
-                std::next(cont_.begin()));
 
 #ifdef LIAM_UT_DEBUG_
         assert(cont_.begin()->key == head_key);
@@ -363,4 +360,3 @@ class skiplist {
 };
 
 #endif  // SKIPLIST_SKIPLIST_TR_HPP_
-
