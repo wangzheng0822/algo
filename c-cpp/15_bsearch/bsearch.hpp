@@ -8,19 +8,16 @@
 #include <iterator>
 #include <functional>
 
-enum class BsearchPolicy { FIRST, LAST, UNSPECIFIED };
-
 // Liam Huang: The algorithm works right with iterators that meet the ForwardIterator requirement,
 //             but with a bad time complexity. For better performance, iterators should meet
 //             the RandomAccessIterator requirement.
 template <typename IterT,
           typename ValueT = typename std::iterator_traits<IterT>::value_type,
-          typename Compare>
+          typename Compare = std::less<ValueT>>
 IterT bsearch(IterT first,
               IterT last,
              ValueT target,
-            Compare comp,
-      BsearchPolicy policy = BsearchPolicy::UNSPECIFIED) {
+            Compare comp = Compare()) {
     IterT result = last;
     while (std::distance(first, last) > 0) {
         IterT mid = first + std::distance(first, last) / 2;
@@ -29,37 +26,11 @@ IterT bsearch(IterT first,
         } else if (comp(target, *mid)) {
             last = mid;
         } else {  // equal
-            if (policy == BsearchPolicy::FIRST) {
-                if (mid == first or comp(*(mid - 1), *mid)) {
-                    result = mid;
-                    break;
-                } else {
-                    last = mid;
-                }
-            } else if (policy == BsearchPolicy::LAST) {
-                if (std::distance(mid, last) == 1 or comp(*mid, *(mid + 1))) {
-                    result = mid;
-                    break;
-                } else {
-                    first = mid + 1;
-                }
-            } else {
-                result = mid;
-                break;
-            }
+            result = mid;
+            break;
         }
     }
     return result;
-}
-
-template <typename IterT,
-          typename ValueT = typename std::iterator_traits<IterT>::value_type,
-          typename Compare = std::less<ValueT>>
-IterT bsearch(IterT first,
-              IterT last,
-             ValueT target,
-      BsearchPolicy policy = BsearchPolicy::UNSPECIFIED) {
-	return bsearch(first, last, target, Compare(), policy);
 }
 
 #endif  // BSEARCH_BSEARCH_HPP_

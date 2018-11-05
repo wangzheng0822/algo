@@ -5,18 +5,7 @@
 
 import Foundation
 
-class Node<T> {
-    var value: T?
-    var next: Node?
-    
-    init(value: T) {
-        self.value = value
-    }
-}
-
-struct QueueBasedOnLinkedList<T>: Queue {
-    typealias Element = T
-    
+struct QueueBasedOnLinkedList<Element>: Queue {
     /// 队首
     var head: Node<Element>?
     /// 队尾
@@ -27,10 +16,15 @@ struct QueueBasedOnLinkedList<T>: Queue {
     var isEmpty: Bool { return head == nil }
     
     var size: Int {
-        var count = 0
+        if isEmpty {
+            return 0
+        }
+        
+        var count = 1 // head 本身算一个
         while head?.next != nil {
             count += 1
         }
+        
         return count
     }
     
