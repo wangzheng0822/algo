@@ -41,7 +41,7 @@ void insert_head(struct single_list_head *head, struct single_list *elem)
 	insert(&head->head, elem);
 }
 
-struct single_list* delete(struct single_list **prev)
+struct single_list* del(struct single_list **prev)
 {
 	struct single_list *tmp;
 
@@ -53,12 +53,12 @@ struct single_list* delete(struct single_list **prev)
 	tmp->next = NULL;
 
 	return tmp;
-}
+};
 
 struct single_list* delete_head(struct single_list_head* head)
 {
-	return delete(&head->head);
-}
+	return del(&head->head);
+};
 
 struct single_list** search(struct single_list_head* head, int target)
 {
@@ -70,7 +70,7 @@ struct single_list** search(struct single_list_head* head, int target)
 		;
 
 	return prev;
-}
+};
 
 void reverse(struct single_list_head* head)
 {
@@ -117,7 +117,7 @@ struct single_list* middle(struct single_list_head* head)
 	}
 
 	return NULL;
-}
+};
 
 int main()
 {
@@ -153,7 +153,7 @@ int main()
 	else
 		printf("The list not contains 2\n");
 
-	delete(prev);
+	del(prev);
 	prev = search(&head, 2);
 	printf("After remove 2\n");
 	if ((*prev) && ((*prev)->val == 2))
@@ -173,4 +173,3 @@ int main()
 
 	return 0;
 }
-
