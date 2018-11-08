@@ -99,15 +99,16 @@ int LinkedHashMap_insert(LinkedHashMap *h,void *key,void *data)
 
 	if(cur == NULL)
 	{
-		/*链表节点满时，取*/
+		/*链表节点满时，取表头节点，从当前哈希表和双向链表中都删除*/
         if(h->nel_max == h->nel)
 		{
 			cur = LinkedHashMap_delete(h,list_entry(h->header.next,LiskedHashMapNode,Dlist_node)->key);
 
 			assert(cur != NULL);
+			/*释放节点key 和data的内容*/
 			h->hash_node_free(cur,0);
 		}
-		else/*链表不满时*/
+		else/*链表不满时，创建新的节点*/
 		{
 		    cur = (LiskedHashMapNode *)malloc(sizeof(LiskedHashMapNode));
 	        if (cur == NULL)
