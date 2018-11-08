@@ -33,7 +33,7 @@ int insert(struct array *array, int elem)
 	}
 
 	if (idx < array->used)
-		memmove(&array->arr[array->used], &array->arr[idx],
+		memmove(&array->arr[idx+1], &array->arr[idx],
 			(array->used - idx) * sizeof(int));
 
 	array->arr[idx] = elem;
