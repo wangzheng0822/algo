@@ -11,6 +11,9 @@
 #include<assert.h>
 #include"listhash.h"
 
+#ifdef MEMORY_TEST
+#include<mcheck.h>
+#endif
 
 hashtab * hashtab_create(int size,hash_key_func hash_value,
 		keycmp_func keycmp,hash_node_free_func hash_node_free)
@@ -71,7 +74,8 @@ void hashtab_destory(hashtab *h)
 		}
 		h->htables[i] = NULL;
 	}
-
+	
+    free(h->htables);
 	free(h);
 	return;
 }
@@ -92,6 +96,7 @@ int hashtab_insert(hashtab * h,void *key,void *data)
 	/*获取hash 数值*/
 	hvalue = h->hash_value(h,key);
 	cur = h->htables[hvalue];
+
     /*hash桶中元素是从小到大排列的，找到要插入的位置*/
 	while((cur != NULL) && (h->keycmp(h,key,cur->key) > 0))
 	{
@@ -253,6 +258,7 @@ void hashtab_node_free(hashtab_node*node)
 	ptmp = container(node->key,struct test_node,key);
 
 	free(ptmp);
+	free(node);
 }
 
 int main ()
@@ -264,6 +270,10 @@ int main ()
 	hashtab_node * node = NULL;
 	struct test_node *p = NULL;
     hashtab *h = NULL;
+    #ifdef MEMORY_TEST
+	setenv("MALLOC_TRACE","1.txt",1);
+    mtrace();
+    #endif
 
 	h = hashtab_create(5,hashtab_hvalue,hashtab_keycmp,hashtab_node_free);
     assert(h!= NULL);
@@ -284,6 +294,7 @@ int main ()
         res = hashtab_insert(h,p->key,p->data);
 		if (res != 0)
 		{
+			free(p);
 			printf("\r\n key[%s],data[%s] insert failed %d",p->key,p->data,res);
 		}
 		else
@@ -345,6 +356,9 @@ int main ()
 	}
 
 	hashtab_destory(h);
+    #ifdef MEMORY_TEST
+    muntrace();
+    #endif
 	return 0;
 
 }
