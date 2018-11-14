@@ -69,6 +69,24 @@ public class BinarySearchTree {
     else pp.right = child;
   }
 
+  public Node findMin() {
+    if (tree == null) return null;
+    Node p = tree;
+    while (p.left != null) {
+      p = p.left;
+    }
+    return p;
+  }
+
+  public Node findMax() {
+    if (tree == null) return null;
+    Node p = tree;
+    while (p.right != null) {
+      p = p.right;
+    }
+    return p;
+  }
+  
   public static class Node {
     private int data;
     private Node left;
