@@ -78,13 +78,9 @@ function compute(&$numStack, &$operStack){
         case '-':
             array_push($numStack, array_pop($numStack) - $num);
             break;
-<<<<<<< HEAD
-        
-=======
         case '(':
             throw new \Exception("不匹配的(", 2);
             break;
->>>>>>> upstream/master
     }
 }
 expression('-1+2-(1+2*3)');
