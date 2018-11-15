@@ -28,8 +28,6 @@ function expression($str)
                 array_push($operStack, $arr[$i]);
                 break;
             case '*':
-<<<<<<< HEAD
-=======
                 $arrLen = count($operStack);
                 while ($operStack[$arrLen-1] === '/'){
                     compute($numStack, $operStack);
@@ -38,7 +36,6 @@ function expression($str)
                 array_push($operStack, $arr[$i]);
                 break;
 
->>>>>>> upstream/master
             case '/':
             case '(':
                 array_push($operStack, $arr[$i]);
