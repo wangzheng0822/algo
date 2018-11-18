@@ -63,9 +63,10 @@ class SinglyLinkedList():
             Node
         '''
         node = self.__head
-        while node != None and node.data != value:
+        if node != None and node.data != value:
             node = node.next
-        return node
+        else:
+            return node
 
     def find_by_index(self, index):
         '''按照索引值在列表中查找.
@@ -176,6 +177,45 @@ class SinglyLinkedList():
         if not_found == False:
             pro.next = node.next
 
+    def delete_last_N_node(self, n):
+        '''删除链表中倒数第N个节点.
+        主体思路：
+            设置快、慢两个指针，快指针先行，慢指针不动；当快指针跨了N步以后，快、慢指针同时往链表尾部移动，
+            当快指针到达链表尾部的时候，慢指针所指向的就是链表的倒数第N个节点
+        参数:
+            n:需要删除的倒数第N个序数
+        '''
+        fast = self.__head
+        slow = self.__head
+        step = 0
+
+        while step <= n:
+            fast = fast.next
+            step += 1
+
+        while fast.next != None:
+            tmp = slow
+            fast = fast.next
+            slow = slow.next
+
+        tmp.next = slow.next
+
+    def find_mid_node(self):
+        '''查找链表中的中间节点.
+        主体思想:
+            设置快、慢两种指针，快指针每次跨两步，慢指针每次跨一步，则当快指针到达链表尾部的时候，慢指针指向链表的中间节点
+        返回:
+            node:链表的中间节点
+        '''
+        fast = self.__head
+        slow = self.__head
+
+        while fast.next != None:
+            fast = fast.next.next
+            slow = slow.next
+
+        return slow
+
     def create_node(self, value):
         '''创建一个存储value值的Node节点.
         参数:
@@ -195,3 +235,50 @@ class SinglyLinkedList():
             print(str(pos.data) + ' --> ', end='')
             pos = pos.next
         print(str(pos.data))
+
+    def reversed_self(self):
+        '''翻转链表自身.'''
+        if self.__head == None or self.__head.next == None:  # 如果链表为空，或者链表只有一个节点
+            return
+
+        pre = self.__head
+        node = self.__head.next
+        while node != None:
+            pre, node = self.__reversed_with_two_node(pre, node)
+
+        self.__head.next = None
+        self.__head = pre
+
+    def __reversed_with_two_node(self, pre, node):
+        '''翻转相邻两个节点.
+        参数:
+            pre:前一个节点
+            node:当前节点
+        返回:
+            (pre,node):下一个相邻节点的元组
+        '''
+        tmp = node.next
+        node.next = pre
+        pre = node  # 这样写有点啰嗦，但是能让人更能看明白
+        node = tmp
+        return (pre, node)
+
+    def has_ring(self):
+        '''检查链表中是否有环.
+        主体思想：
+            设置快、慢两种指针，快指针每次跨两步，慢指针每次跨一步，如果快指针没有与慢指针相遇而是顺利到达链表尾部
+            说明没有环；否则，存在环
+        返回:
+            True:有环
+            False:没有环
+        '''
+        fast = self.__head
+        slow = self.__head
+
+        while fast.next != None and fast != None:
+            fast = fast.next
+            slow = slow.next
+            if fast == slow:
+                return True
+
+        return False
