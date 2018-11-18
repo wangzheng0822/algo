@@ -218,15 +218,15 @@ public class SinglyLinkedList {
            Node rightLink = null;
            if(q.next == null){
                //　p 一定为整个链表的中点，且节点数目为奇数
-               leftLink = inverseLinkList(p);
+               rightLink = p.next;
+               leftLink = inverseLinkList(p).next;
                System.out.println("左边第一个节点"+leftLink.data);
-               System.out.println("右边第一个节点"+p.next.data);
-               rightLink = p;
+               System.out.println("右边第一个节点"+rightLink.data);
 
            }else{
                //p q　均为中点
+               rightLink = p.next;
                leftLink = inverseLinkList(p);
-               rightLink = q;
            }
            return TFResult(leftLink, rightLink);
 
@@ -306,29 +306,31 @@ public class SinglyLinkedList {
         SinglyLinkedList link = new SinglyLinkedList(); 
         System.out.println("hello");
         //int data[] = {1};
+        //int data[] = {1,2};
         //int data[] = {1,2,3,1};
-        int data[] = {1,2,4,5};
+        //int data[] = {1,2,5};
         //int data[] = {1,2,2,1};
-        //int data[] = {1,2,5,2,1};
+       // int data[] = {1,2,5,2,1};
+        int data[] = {1,2,5,3,1};
 
         for(int i =0; i < data.length; i++){
             //link.insertToHead(data[i]);
             link.insertTail(data[i]);
         }
-        link.printAll();
-        Node p = link.inverseLinkList_head(link.head);
-        while(p != null){
-            System.out.println("aa"+p.data);
-            p = p.next;
-        }
+       // link.printAll();
+       // Node p = link.inverseLinkList_head(link.head);
+       // while(p != null){
+       //     System.out.println("aa"+p.data);
+       //     p = p.next;
+       // }
 
-        //System.out.println("打印原始:");
-        //link.printAll();
-        //if (link.palindrome()){
-        //    System.out.println("回文");
-        //}else{
-        //    System.out.println("不是回文");
-        //}
+        System.out.println("打印原始:");
+        link.printAll();
+        if (link.palindrome()){
+            System.out.println("回文");
+        }else{
+            System.out.println("不是回文");
+        }
     }
 
 }
