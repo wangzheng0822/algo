@@ -22,7 +22,7 @@
                 hash+=key.charCodeAt(i);
             }
             //为了得到比较小的数值，我们会用hash和任意数除余
-            return hash%37;
+            return hash%30;
         }
         //向散列表增加一个新的项
         put(key,value){
@@ -38,6 +38,13 @@
         get(key){
             console.log(this.table[this.loseHashCode(key)])
         }
+        print(){
+            for (var i=0;i<this.table.length;++i){
+                if (this.table[i]!==undefined){
+                    console.log(i+':'+this.table[i]);
+                }
+            }
+        }
     }
     var hash = new HashTable();
     hash.put('Gandalf', 'gandalf@email.com');
@@ -46,6 +53,9 @@
     hash.remove('Gandalf')
     hash.get('Gandalf')
     hash.get('Tyrion')
+    hash.print()
+
+    //
 </script>
 </body>
 </html>
