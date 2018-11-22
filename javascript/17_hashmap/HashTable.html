@@ -22,7 +22,7 @@
                 hash+=key.charCodeAt(i);
             }
             //为了得到比较小的数值，我们会用hash和任意数除余
-            return hash%30;
+            return hash%37;
         }
         //向散列表增加一个新的项
         put(key,value){
