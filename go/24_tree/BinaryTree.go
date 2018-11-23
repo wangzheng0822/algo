@@ -63,3 +63,35 @@ func (this *BinaryTree) PostOrderTraverse() {
 		fmt.Printf("%+v ", s2.Pop().(*Node).data)
 	}
 }
+
+//use one stack, pre cursor to traverse from post order
+func (this *BinaryTree) PostOrderTraverse2() {
+	r := this.root
+	s := NewArrayStack()
+
+	//point to last visit node
+	var pre *Node
+
+	s.Push(r)
+
+	for !s.IsEmpty() {
+		r = s.Top().(*Node)
+		if (r.left == nil && r.right == nil) ||
+			(pre != nil && (pre == r.left || pre == r.right)) {
+
+			fmt.Printf("%+v ", r.data)
+			s.Pop()
+			pre = r
+		} else {
+			if r.right != nil {
+				s.Push(r.right)
+			}
+
+			if r.left != nil {
+				s.Push(r.left)
+			}
+
+		}
+
+	}
+}
