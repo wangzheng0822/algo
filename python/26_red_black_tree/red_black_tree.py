@@ -253,7 +253,7 @@ class RedBlackTree:
                     # 注意，因为p可能是红或黑，所以不能直接赋值颜色，只能copy
                     b.color = p.color               # case 4
                     p.set_black()                   # case 4
-                    b.left.set_black()             # case 4
+                    b.left.set_black()              # case 4
                     self.rotate_r(p)                # case 4
                     # trick, 调整结束跳出while
                     n = self.root                   # case 4
@@ -329,7 +329,7 @@ class RedBlackTree:
 
         if node.left is self.black_leaf:
             return
-            # raise Exception('try rotate left , but the node "{}" has no left child'.format(node.val))
+            # raise Exception('try rotate right , but the node "{}" has no left child'.format(node.val))
 
         p = self.parent(node)
         x = node
