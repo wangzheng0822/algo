@@ -6,9 +6,7 @@
 import Foundation
 
 /// 用数组实现的队列
-struct ArrayQueue<T>: Queue {
-    typealias Element = T
-    
+struct ArrayQueue<Element>: Queue {
     /// 数组
     private var items: [Element]
     /// 数组最大长度
@@ -78,9 +76,7 @@ struct ArrayQueue<T>: Queue {
 
 /// 使用2个数组实现无界队列，用到 Swift 中 Array 较多的方法
 /// 来源：《iOS 面试之道》（故胤道长，唐巧）
-struct ArrayQueue2<T>: Queue {
-    typealias Element = T
-    
+struct ArrayQueue2<Element>: Queue {
     /// 输入数组，主要负责入队
     var inArray = [Element]()
     /// 输出数组，主要负责出队
