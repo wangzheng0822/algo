@@ -12,7 +12,7 @@ class BinaryHeap:
     def __init__(self, data=None):
         self._data = []
         if type(data) is list:
-            map(self._type_assert, data)
+            self._type_assert(data)
             self._data = data
             # self.heapify()
 
@@ -140,8 +140,10 @@ class BinaryHeap:
         return True
 
     @staticmethod
-    def _type_assert(num):
-        assert type(num) is int
+    def _type_assert(nums):
+        assert type(nums) is list
+        for n in nums:
+            assert type(n) is int
 
     @staticmethod
     def _draw_heap(data):
