@@ -22,7 +22,7 @@ class BinaryHeapSort(BinaryHeap):
         if length <= 1:
             return
 
-        map(self._type_assert, nums)
+        self._type_assert(nums)
 
         # heapify
         self._heapify(nums, length-1)
