@@ -9,12 +9,14 @@ class BinaryHeap:
     """
     大顶堆
     """
-    def __init__(self, data=None):
+    def __init__(self, data=None, capacity=100):
         self._data = []
+        self._capacity = capacity
         if type(data) is list:
+            if len(data) > self._capacity:
+                raise Exception('Heap oversize, capacity:{}, data size:{}'.format(self._capacity, len(data)))
             self._type_assert(data)
             self._data = data
-            # self.heapify()
 
         self._length = len(self._data)
 
@@ -78,8 +80,11 @@ class BinaryHeap:
         :param num:
         :return:
         """
-        if self._insert(self._data, num):
-            self._length += 1
+        if self._length < self._capacity:
+            if self._insert(self._data, num):
+                self._length += 1
+                return True
+        return False
 
     @staticmethod
     def _insert(data, num):
@@ -108,18 +113,30 @@ class BinaryHeap:
 
         return True
 
-    def delete_root(self):
+    def get_top(self):
         """
-        删除根节点
+        取堆顶
         :return:
         """
-        if self._delete_root(self._data):
+        if self._length <= 0:
+            return None
+        return self._data[0]
+
+    def remove_top(self):
+        """
+        取堆顶
+        :return:
+        """
+        ret = None
+        if self._length > 0:
+            ret = self._remove_top(self._data)
             self._length -= 1
+        return ret
 
     @staticmethod
-    def _delete_root(data):
+    def _remove_top(data):
         """
-        删除根节点内部实现
+        取堆顶内部实现
         :param data:
         :return:
         """
@@ -127,17 +144,17 @@ class BinaryHeap:
 
         length = len(data)
         if length == 0:
-            return False
+            return None
 
         data[0], data[-1] = data[-1], data[0]
-        data.pop()
+        ret = data.pop()
         length -= 1
 
         # length == 0 or == 1, return
         if length > 1:
             BinaryHeap._heap_down(data, 0, length-1)
 
-        return True
+        return ret
 
     @staticmethod
     def _type_assert(nums):
@@ -186,11 +203,15 @@ if __name__ == '__main__':
     print(bh)
 
     # insert
-    bh.insert(8)
     print('--- insert ---')
+    if bh.insert(8):
+        print('insert success')
+    else:
+        print('insert fail')
     print(bh)
 
-    # delete_root
-    bh.delete_root()
-    print('--- delete root ---')
+    # get top
+    print('--- get top ---')
+    print('get top of the heap: {}'.format(bh.get_top()))
+    bh.remove_top()
     print(bh)
