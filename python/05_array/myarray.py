@@ -59,6 +59,32 @@ class MyArray:
         self._count += 1
         return True
 
+    def insert_v2(self, index: int, value: int) -> bool:
+        """
+        支持任意位置插入
+        :param index:
+        :param value:
+        :return:
+        """
+        # 数组空间已满
+        if self._capacity == self._count:
+            return False
+
+        # 插入位置大于当前的元素个数，可以插入最后的位置
+        if index >= self._count:
+            self._data.append(value)
+        elif index < 0:
+            # 位置小于 0 可以插入第 ０ 个位置
+            self._data.insert(0, value)
+        else:
+            # 挪动 index 至 _count 位到 index+1 至 _count+1 位
+            # 插入第 index
+            self._data[index+1:self._count+1] = self._data[index:self._count]
+            self._data[index] = value
+
+        self._count += 1
+        return True
+
     def insert_to_tail(self, value: int) -> bool:
 
         if self._count == self._capacity:
