@@ -6,9 +6,7 @@
 import Foundation
 
 /// 循环队列
-struct CircularQueue<T>: Queue {
-    typealias Element = T
-
+struct CircularQueue<Element>: Queue {
     /// 数组
     private var items: [Element]
     /// 数组最大长度
