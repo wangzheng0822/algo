@@ -73,15 +73,14 @@ class MyArray:
         # 插入位置大于当前的元素个数，可以插入最后的位置
         if index >= self._count:
             self._data.append(value)
+        elif index < 0:
+            # 位置小于 0 可以插入第 ０ 个位置
+            self._data.insert(0, value)
         else:
-            if index < 0:
-                # 位置小于 0 可以插入第 ０ 个位置
-                self._data.insert(0, value)
-            else:
-                # 挪动 index 至 _count 位到 index+1 至 _count+1 位
-                # 插入第 index
-                self._data[index+1:self._count+1] = self._data[index:self._count]
-                self._data[index] = value
+            # 挪动 index 至 _count 位到 index+1 至 _count+1 位
+            # 插入第 index
+            self._data[index+1:self._count+1] = self._data[index:self._count]
+            self._data[index] = value
 
         self._count += 1
         return True
