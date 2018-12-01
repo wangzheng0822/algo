@@ -55,3 +55,15 @@
 #### 装载因子（load factor）
 
 $\text{load factor} = \frac{size()}{capacity()}$
+
+### 链表法
+
+所有散列值相同的 key 以链表的形式存储在同一个槽位中。
+
+![](https://static001.geekbang.org/resource/image/a4/7f/a4b77d593e4cb76acb2b0689294ec17f.jpg)
+
+插入时，不论是否有冲突，直接插入目标位置的链表。
+
+查找时，遍历目标位置的链表来查询。
+
+删除时，遍历目标位置的链表来删除。
