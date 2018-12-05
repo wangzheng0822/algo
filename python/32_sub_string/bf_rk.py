@@ -90,11 +90,11 @@ if __name__ == '__main__':
 
     print('--- time consume ---')
     t = time()
-    print('result:', bf(m_str, p_str))
+    print('[bf] result:', bf(m_str, p_str))
     print('[bf] time cost: {0:.5}s'.format(time()-t))
 
     t = time()
-    print('result:', rk(m_str, p_str))
+    print('[rk] result:', rk(m_str, p_str))
     print('[rk] time cost: {0:.5}s'.format(time()-t))
 
     print('')
