@@ -46,7 +46,7 @@ def _move_by_good_suffix(bad_character_index: int, suffix: List[int], prefix: Li
     return len(suffix)
 
 
-def bm(s: str, pattern: str,) -> int:
+def bm(s: str, pattern: str) -> int:
     bc = _generate_bad_character_table(pattern)
     prefix, suffix = _generate_good_suffix_table(pattern)
     n, m = len(s), len(pattern)
