@@ -43,7 +43,7 @@ def _move_by_good_suffix(bad_character_index: int, suffix: List[int], prefix: Li
     # Test from k - 1
     for r, can_match_prefix in enumerate(reversed(prefix[:k]), bad_character_index + 2): 
         if can_match_prefix: return r
-    return len(suffix) + 1
+    return len(suffix)
 
 
 def bm(s: str, pattern: str,) -> int:
@@ -71,3 +71,7 @@ if __name__ == "__main__":
     s = "Here is a simple example"
     pattern = "example"
     print(bm(s, pattern))
+
+    s = "abcdcccdc"
+    pattern = "cccd"
+    print(s.find(pattern) == bm(s, pattern))
