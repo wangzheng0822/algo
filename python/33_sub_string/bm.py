@@ -109,7 +109,7 @@ def move_by_gs(j, m, suffix, prefix):
         for r in range(j+2, m):     # 2. 后缀子串从长到短搜索
             if prefix[m-r]:
                 return r
-        return m + 1                # 3. 其他情况
+        return m                    # 3. 其他情况
 
 
 if __name__ == '__main__':
