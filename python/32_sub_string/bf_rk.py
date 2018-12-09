@@ -33,9 +33,6 @@ def simple_hash(s, start, end):
     """
     计算子串的哈希值
     每个字符取acs-ii码后求和
-    注意：
-    ord('a') ~ ord('z') : 97 ~ 122
-    ord('A') ~ ord('Z') : 65 ~ 90
     :param s:
     :param start:
     :param end:
@@ -45,12 +42,7 @@ def simple_hash(s, start, end):
 
     ret = 0
     for c in s[start: end+1]:
-        if ord('A') <= ord(c) <= ord('Z'):
-            ret += ord(c) - ord('A') + 26
-        elif ord('a') <= ord(c) <= ord('z'):
-            ret += ord(c) - ord('a')
-        else:
-            raise Exception('This char \'{}\' is not supported'.format(c))
+        ret += ord(c)
     return ret
 
 
