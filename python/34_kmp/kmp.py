@@ -9,7 +9,6 @@ from typing import List
 def kmp(s: int, pattern: int) -> int:
     m = len(pattern)
     partial_match_table = _get_partial_match_table(pattern)
-    print(partial_match_table)
     j = 0
     for i in range(len(s)):
         while j >= 0 and s[i] != pattern[j]:
