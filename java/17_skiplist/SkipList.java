@@ -21,13 +21,13 @@ public class SkipList {
   public Node find(int value) {
     Node p = head;
     for (int i = levelCount - 1; i >= 0; --i) {
-      while (p.forwords[i] != null && p.forwords[i].data < value) {
-        p = p.forwords[i];
+      while (p.forwards[i] != null && p.forwards[i].data < value) {
+        p = p.forwards[i];
       }
     }
 
-    if (p.forwords[0] != null && p.forwords[0].data == value) {
-      return p.forwords[0];
+    if (p.forwards[0] != null && p.forwards[0].data == value) {
+      return p.forwards[0];
     } else {
       return null;
     }
@@ -46,16 +46,16 @@ public class SkipList {
     // record every level largest value which smaller than insert value in update[]
     Node p = head;
     for (int i = level - 1; i >= 0; --i) {
-      while (p.forwords[i] != null && p.forwords[i].data < value) {
-        p = p.forwords[i];
+      while (p.forwards[i] != null && p.forwards[i].data < value) {
+        p = p.forwards[i];
       }
       update[i] = p;// use update save node in search path
     }
 
     // in search path node next node become new node forwords(next)
     for (int i = 0; i < level; ++i) {
-      newNode.forwords[i] = update[i].forwords[i];
-      update[i].forwords[i] = newNode;
+      newNode.forwards[i] = update[i].forwards[i];
+      update[i].forwards[i] = newNode;
     }
 
     // update node hight
@@ -66,16 +66,16 @@ public class SkipList {
     Node[] update = new Node[levelCount];
     Node p = head;
     for (int i = levelCount - 1; i >= 0; --i) {
-      while (p.forwords[i] != null && p.forwords[i].data < value) {
-        p = p.forwords[i];
+      while (p.forwards[i] != null && p.forwards[i].data < value) {
+        p = p.forwards[i];
       }
       update[i] = p;
     }
 
-    if (p.forwords[0] != null && p.forwords[0].data == value) {
+    if (p.forwards[0] != null && p.forwards[0].data == value) {
       for (int i = levelCount - 1; i >= 0; --i) {
-        if (update[i].forwords[i] != null && update[i].forwords[i].data == value) {
-          update[i].forwords[i] = update[i].forwords[i].forwords[i];
+        if (update[i].forwards[i] != null && update[i].forwards[i].data == value) {
+          update[i].forwards[i] = update[i].forwards[i].forwards[i];
         }
       }
     }
@@ -95,17 +95,16 @@ public class SkipList {
 
   public void printAll() {
     Node p = head;
-    while (p.forwords[0] != null) {
-      System.out.print(p.forwords[0] + " ");
-      p = p.forwords[0];
+    while (p.forwards[0] != null) {
+      System.out.print(p.forwards[0] + " ");
+      p = p.forwards[0];
     }
     System.out.println();
   }
 
   public class Node {
     private int data = -1;
-    // 以数组形式维护下一个结点的指针
-    private Node forwords[] = new Node[MAX_LEVEL];
+    private Node forwards[] = new Node[MAX_LEVEL];
     private int maxLevel = 0;
 
     @Override
