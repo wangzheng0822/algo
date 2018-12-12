@@ -282,7 +282,7 @@ Point 2: 2, 4
 Point 3: 8, 1
 Point 4: 2, 9
 
-也可以用之前的 puh() 等操作方法来操作对象数组
+也可以用之前的 push() 等操作方法来操作对象数组
 ```
 var p5 = new Point(11,13);
 point.push(p5);

@@ -1,0 +1,14 @@
+{
+    "name": "algo/php",
+    "description": "数据结构与算法之美php实现",
+    "type": "project",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Algo_06\\": "06_linkedlist/",
+            "Algo_07\\": "07_linkedlist/",
+            "Algo_08\\": "08_stack/",
+            "Algo_09\\": "09_queue/"
+        }
+    }
+}
