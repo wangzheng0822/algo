@@ -1,9 +1,0 @@
-# main files
-main.*
-
-# executives
-a.out
-
-# objective files
-*.o
-*.obj

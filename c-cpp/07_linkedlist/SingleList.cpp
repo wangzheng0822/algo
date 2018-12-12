@@ -6,7 +6,7 @@ using namespace std;
 
 class CElement;
 /***
- * @brief µ¥Á´±íÈİÆ÷
+ * @brief å•é“¾è¡¨å®¹å™¨
 */
 class CSingleList
 {
@@ -15,61 +15,61 @@ public:
     ~CSingleList();
 
     /**
-     * @brief ²åÈë..Á´±íÄ©Î²²åÈë
-     * @return ³É¹¦·µ»Ø·Ç¿ÕÖ¸Õë,·ñÔòÊ§°Ü
+     * @brief æ’å…¥..é“¾è¡¨æœ«å°¾æ’å…¥
+     * @return æˆåŠŸè¿”å›éç©ºæŒ‡é’ˆ,å¦åˆ™å¤±è´¥
     */
     CElement* Insert(void* lpData, int iDataSize);
     /**
-     * @brief ²åÈë..Á´±íÖ¸¶¨Î»ÖÃ²åÈë
-     * @return ³É¹¦·µ»Ø·Ç¿ÕÖ¸Õë,·ñÔòÊ§°Ü
+     * @brief æ’å…¥..é“¾è¡¨æŒ‡å®šä½ç½®æ’å…¥
+     * @return æˆåŠŸè¿”å›éç©ºæŒ‡é’ˆ,å¦åˆ™å¤±è´¥
     */
     CElement* Insert(CElement* lpElement, void* lpData, int iDataSize);
     /**
-     * @brief É¾³ı
+     * @brief åˆ é™¤
     */
     void Delete(CElement*);
 
     /**
-     * @brief Á´Ê×
+     * @brief é“¾é¦–
     */
     CElement* Begin();
     /**
-     * @brief ÏÂÒ»¸öÔªËØ
+     * @brief ä¸‹ä¸€ä¸ªå…ƒç´ 
     */
     CElement* Next();
     /***
-     * @brief Á´Î²
+     * @brief é“¾å°¾
     */
     CElement* End();
 
     /**
-     * @brief ÊÇ·ñÊÇ¿ÕÁ´±í
-     * @return ¿Õ·µ»ØTRUE£¬·ñÔò·µ»ØFALSE
+     * @brief æ˜¯å¦æ˜¯ç©ºé“¾è¡¨
+     * @return ç©ºè¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE
     */
     bool Empty();
 
     /**
-     * @brief ·´×ª
+     * @brief åè½¬
     */
     void Reverse();
 
     /**
-     * @brief ¼ì²â»·
-     * @return ·µ»ØTRUEÊ±±íÊ¾Á´±í´æÔÚ»·,·ñÔò²»´æÔÚ»·.
+     * @brief æ£€æµ‹ç¯
+     * @return è¿”å›TRUEæ—¶è¡¨ç¤ºé“¾è¡¨å­˜åœ¨ç¯,å¦åˆ™ä¸å­˜åœ¨ç¯.
     */
     bool CheckCircle();
 
     /**
-     * @brief ºÏ²¢2¸öÓĞĞòµÄÁ´±í
+     * @brief åˆå¹¶2ä¸ªæœ‰åºçš„é“¾è¡¨
     */
     void Merge(CSingleList& lst, std::function<int(void* t1, void* t2)>);
 
     /**
-     * @brief É¾³ıµ¹ÊıµÚK¸ö½áµã
+     * @brief åˆ é™¤å€’æ•°ç¬¬Kä¸ªç»“ç‚¹
     */
     void DeleteLastKth(int k);
     /**
-     * @brief ÇóÖĞ¼ä½Úµã
+     * @brief æ±‚ä¸­é—´èŠ‚ç‚¹
     */
     CElement* Center();
 private:
@@ -80,18 +80,18 @@ private:
 	CSingleList(CSingleList const & rhs);
 	CSingleList& operator= (CSingleList const& rhs);
 private:
-    /**Í·½áµã*/
+    /**å¤´ç»“ç‚¹*/
     CElement* m_lpHead;
-    /**ÉÚ±ø*/
+    /**å“¨å…µ*/
     CElement* m_lpSentinel;
-    /**¿Õ½áµã£¬ÓÃÓÚEnd()·µ»Ø */
+    /**ç©ºç»“ç‚¹ï¼Œç”¨äºEnd()è¿”å› */
     CElement* m_lpNull;
-    /**µ±Ç°½áµã. Ã¶¾ÙÊ±Ê¹ÓÃ. */
+    /**å½“å‰ç»“ç‚¹. æšä¸¾æ—¶ä½¿ç”¨. */
     CElement* m_lpCur;
 };
 
 /***
- * @brief µ¥Á´±í½áµãÔªËØ.
+ * @brief å•é“¾è¡¨ç»“ç‚¹å…ƒç´ .
 */
 class CElement
 {
@@ -101,11 +101,11 @@ protected:
     ~CElement();
 public:
     /***
-     * @brief »ñÈ¡Êı¾İÖ¸Õë
+     * @brief è·å–æ•°æ®æŒ‡é’ˆ
     */
     void* GetDataPtr();
 protected:
-    /**ÏÂÒ»¸ö½áµã*/
+    /**ä¸‹ä¸€ä¸ªç»“ç‚¹*/
     CElement* m_lpNext;
     void* m_lpData;
 };
@@ -113,7 +113,7 @@ protected:
 
 void CreateList(CSingleList& lst)
 {
-    //Ñ­»·²åÈëÔªËØµ½Á´±íÎ²
+    //å¾ªç¯æ’å…¥å…ƒç´ åˆ°é“¾è¡¨å°¾
     for(int i=1; i<10;i++)
     {
         int* p = new int();
@@ -134,15 +134,15 @@ void PrintList(CSingleList& lst)
 int main()
 {
     {
-        /// Á´±íµÄ»ù±¾²Ù×÷£¬²åÈë/Ã¶¾Ù/É¾³ı
+        /// é“¾è¡¨çš„åŸºæœ¬æ“ä½œï¼Œæ’å…¥/æšä¸¾/åˆ é™¤
         CSingleList lst;
         CElement* lpElement = NULL;
         CreateList(lst);
 
-        std::cout<<"Ã¶¾ÙÁ´±íµ±Ç°µÄÔªËØ"<<std::endl;
+        std::cout<<"æšä¸¾é“¾è¡¨å½“å‰çš„å…ƒç´ "<<std::endl;
         PrintList(lst);
 
-        std::cout<<"²éÕÒÖ¸¶¨ÔªËØ,²¢ÔÚÖ¸¶¨ÔªËØºóÃæ²åÈëĞÂÔªËØ"<<std::endl;
+        std::cout<<"æŸ¥æ‰¾æŒ‡å®šå…ƒç´ ,å¹¶åœ¨æŒ‡å®šå…ƒç´ åé¢æ’å…¥æ–°å…ƒç´ "<<std::endl;
         lpElement = lst.Begin();
         while(lpElement != lst.End())
         {
@@ -157,10 +157,10 @@ int main()
             }
         }
 
-        std::cout<<"Ã¶¾ÙÁ´±íµ±Ç°µÄÔªËØ"<<std::endl;
+        std::cout<<"æšä¸¾é“¾è¡¨å½“å‰çš„å…ƒç´ "<<std::endl;
         PrintList(lst);
 
-        std::cout<<"²éÕÒÖ¸¶¨ÔªËØ(Êı×ÖÊÇ7µÄÔªËØ),²¢É¾³ıÖ¸¶¨ÔªËØ"<<std::endl;
+        std::cout<<"æŸ¥æ‰¾æŒ‡å®šå…ƒç´ (æ•°å­—æ˜¯7çš„å…ƒç´ ),å¹¶åˆ é™¤æŒ‡å®šå…ƒç´ "<<std::endl;
         lpElement = lst.Begin();
         while(lpElement != lst.End())
         {
@@ -172,52 +172,52 @@ int main()
                 lpElement = lst.Next();
             }
         }
-        std::cout<<"Ã¶¾ÙÁ´±íµ±Ç°µÄÔªËØ"<<std::endl;
+        std::cout<<"æšä¸¾é“¾è¡¨å½“å‰çš„å…ƒç´ "<<std::endl;
         PrintList(lst);
     }
 
     std::cout<<"--------------------------"<<std::endl;
     {
-        /// Á´±íµÄ·´×ª
+        /// é“¾è¡¨çš„åè½¬
         CSingleList lst;
         CElement* lpElement = NULL;
         CreateList(lst);
-        std::cout<<"·´×ª"<<std::endl;
+        std::cout<<"åè½¬"<<std::endl;
         lst.Reverse();
         PrintList(lst);
     }
 
     std::cout<<"--------------------------"<<std::endl;
     {
-        /// ¼ì²â»·
+        /// æ£€æµ‹ç¯
         CSingleList lst;
         CElement* lpElement = NULL;
         CreateList(lst);
-        std::cout<<"¼ì²â»·"<<std::endl;
+        std::cout<<"æ£€æµ‹ç¯"<<std::endl;
         bool bRet = lst.CheckCircle();
         if(bRet){
-            std::cout<<"´æÔÚ»·."<<std::endl;
+            std::cout<<"å­˜åœ¨ç¯."<<std::endl;
         }else{
-            std::cout<<"²»´æÔÚ»·."<<std::endl;
+            std::cout<<"ä¸å­˜åœ¨ç¯."<<std::endl;
         }
     }
 
     std::cout<<"--------------------------"<<std::endl;
     {
-        /// ÓĞĞòÁ´±íºÏ²¢
+        /// æœ‰åºé“¾è¡¨åˆå¹¶
         CSingleList lst,lst2;
         CElement* lpElement = NULL;
-        for(int i=1; i<30;i++)
+        for(int i=1; i<10;i++)
         {
             int* p = new int();
             *p = i;
-            if(i%4){
+            if(i%2){
                 lst2.Insert(p, 4);
             }else{
                 lst.Insert(p, 4);
             }
         }
-        std::cout<<"Ã¶¾ÙÁ´±íµ±Ç°µÄÔªËØ"<<std::endl;
+        std::cout<<"æšä¸¾é“¾è¡¨å½“å‰çš„å…ƒç´ "<<std::endl;
         PrintList(lst);
         std::cout<<"......"<<std::endl;
         PrintList(lst2);
@@ -231,31 +231,31 @@ int main()
             }
             return 0;
         });
-        std::cout<<"ºÏ²¢Ö®ºó£¬´òÓ¡µ±Ç°Á´±í."<<std::endl;
+        std::cout<<"åˆå¹¶ä¹‹åï¼Œæ‰“å°å½“å‰é“¾è¡¨."<<std::endl;
         PrintList(lst);
     }
     std::cout<<"--------------------------"<<std::endl;
     {
-        /// É¾³ıµ¹ÊıµÚK¸ö½áµã,²¢²é¿´ÖĞ¼ä½Úµã
+        /// åˆ é™¤å€’æ•°ç¬¬Kä¸ªç»“ç‚¹,å¹¶æŸ¥çœ‹ä¸­é—´èŠ‚ç‚¹
         CSingleList lst;
         CreateList(lst);
-        std::cout<<"É¾³ıµ¹ÊıµÚ0¸ö½áµã"<<std::endl;
+        std::cout<<"åˆ é™¤å€’æ•°ç¬¬0ä¸ªç»“ç‚¹"<<std::endl;
         lst.DeleteLastKth(0);
         PrintList(lst);
         CElement* lpCenter = lst.Center();
-        std::cout<<"ÖĞ¼ä½Úµã:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
+        std::cout<<"ä¸­é—´èŠ‚ç‚¹:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
 
-        std::cout<<"É¾³ıµ¹ÊıµÚ1¸ö½áµã"<<std::endl;
+        std::cout<<"åˆ é™¤å€’æ•°ç¬¬1ä¸ªç»“ç‚¹"<<std::endl;
         lst.DeleteLastKth(1);
         PrintList(lst);
         lpCenter = lst.Center();
-        std::cout<<"ÖĞ¼ä½Úµã:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
+        std::cout<<"ä¸­é—´èŠ‚ç‚¹:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
 
-        std::cout<<"É¾³ıµ¹ÊıµÚ3¸ö½áµã"<<std::endl;
+        std::cout<<"åˆ é™¤å€’æ•°ç¬¬3ä¸ªç»“ç‚¹"<<std::endl;
         lst.DeleteLastKth(3);
         PrintList(lst);
         lpCenter = lst.Center();
-        std::cout<<"ÖĞ¼ä½Úµã:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
+        std::cout<<"ä¸­é—´èŠ‚ç‚¹:"<<*((int*)lpCenter->GetDataPtr())<<std::endl;
     }
     std::cin.ignore();
 
@@ -316,10 +316,10 @@ CElement* CSingleList::Insert(CElement* lpElement, void* lpData, int iDataSize)
 }
 void CSingleList::Insert(CElement* lpNewElement, CElement* lpCurElement, bool bBack /*= true*/)
 {
-    if(bBack){//²åÈëµ½Ö¸¶¨ÔªËØµÄºóÃæ
+    if(bBack){//æ’å…¥åˆ°æŒ‡å®šå…ƒç´ çš„åé¢
         lpNewElement->m_lpNext = lpCurElement->m_lpNext;
         lpCurElement->m_lpNext = lpNewElement;
-    }else{//²åÈëµ½Ö¸¶¨ÔªËØµÄÇ°Ãæ
+    }else{//æ’å…¥åˆ°æŒ‡å®šå…ƒç´ çš„å‰é¢
         CElement* lpIter = m_lpSentinel;
         while(NULL != lpIter)
         {
@@ -443,13 +443,11 @@ bool CSingleList::CheckCircle()
     return false;
 }
 
-/**
- * ºÏ²¢µÄ2¸öÁ´±í±ØĞëÊÇÓĞĞòµÄ
-*/
 void CSingleList::Merge(CSingleList& lst, std::function<int(void* t1, void* t2)> fnCompare)
 {
     CElement* lpL1 = Begin();
     CElement* lpL2 = lst.Begin();
+    CElement* lpTail = NULL;
 
     if(!fnCompare)
     {
@@ -460,26 +458,7 @@ void CSingleList::Merge(CSingleList& lst, std::function<int(void* t1, void* t2)>
     {
         if(lpL1 != End())
         {
-            /**
-             * ²éÕÒĞèÒª²åÈëµÄÕıÈ·Î»ÖÃ
-             * 
-             * Á´±í1,Á´±í2; Á´±í1 <- Á´±í2, Á´±í2±»ºÏ²¢µ½Á´±í1ÖĞ
-             * 
-             * Èç¹ûÁ´±í1µÄÔªËØĞ¡ÓÚÁ´±í2ÖĞµÄÔªËØ£¬ÔòÑ­»·²éÕÒÁ´±í1ÖĞ´óÓÚÁ´±í2ÖĞµÄµ±Ç°ÔªËØµÄÔªËØ
-             * Èç¹ûÔÚÁ´±í1ÖĞÕÒµ½Âú×ãÉÏÃæÌõ¼şµÄµÄÔªËØÎ»ÖÃ[A]Ê±£¬Ôò°ÑÁ´±í2ÖĞµÄµ±Ç°ÔªËØ²åÈëµ½ÔªËØÎ»ÖÃ[A]µÄÇ°Ãæ;
-             * Èç¹ûÔÚÁ´±í1ÖĞ²»´æÔÚÕâ¸öÎ»ÖÃÔòÔÚÁ´±í1µÄÄ©Î»²åÈëÔªËØ
-            */
             iRet = fnCompare(lpL1->GetDataPtr(), lpL2->GetDataPtr());
-            if(iRet < 0){
-                lpL1 = Next();
-                while(lpL1 != End()){
-                    iRet = fnCompare(lpL1->GetDataPtr(), lpL2->GetDataPtr());
-                    if(iRet > 0){
-                        break;
-                    }
-                    lpL1 = Next();
-                }
-            }
         }else{
             iRet = -1;
         }
@@ -489,13 +468,17 @@ void CSingleList::Merge(CSingleList& lst, std::function<int(void* t1, void* t2)>
             lpNewElement->m_lpData = lpL2->GetDataPtr();
             if(lpL1 != End())
             {
-                Insert(lpNewElement,lpL1, iRet < 0);
+                Insert(lpNewElement,lpL1, iRet <= 0);
             }else{
-                CElement* lpTail = Tail();
+                if(NULL == lpTail)
+                {
+                    lpTail = Tail();
+                }
                 Insert(lpNewElement,lpTail);
             }
         }
         lpL2 = lst.Next();
+        lpL1 = Next();
     }
 }
 

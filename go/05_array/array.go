@@ -32,9 +32,8 @@ func (this *Array) Len() uint {
 	return this.length
 }
 
-//判断索引是否越界
 func (this *Array) isIndexOutOfRange(index uint) bool {
-	if index >= uint(cap(this.data)) {
+	if this.length != 0 && index > this.length {
 		return true
 	}
 	return false
@@ -53,7 +52,7 @@ func (this *Array) Insert(index uint, v int) error {
 	if this.Len() == uint(cap(this.data)) {
 		return errors.New("full array")
 	}
-	if index != this.length && this.isIndexOutOfRange(index) {
+	if this.isIndexOutOfRange(index) {
 		return errors.New("out of index range")
 	}
 
