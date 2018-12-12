@@ -92,7 +92,7 @@ def move_by_gs(j, m, suffix, prefix):
     """
     通过好后缀计算移动值
     需要处理三种情况：
-    1. 整个好后缀能和pattern的剩余字符匹配
+    1. 整个好后缀在pattern仍能找到
     2. 好后缀里存在 *后缀子串* 能和pattern的 *前缀* 匹配
     3. 其他
     :param j:
