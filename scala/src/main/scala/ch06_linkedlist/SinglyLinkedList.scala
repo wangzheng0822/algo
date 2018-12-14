@@ -1,5 +1,7 @@
 package ch06_linkedlist
 
+import scala.util.control.Breaks._
+
 // the model class for the linked list
 class Node(var data: Int, var next: Option[Node])
 
@@ -149,6 +151,57 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
 
     current.get
 
+  }
+
+  def isPalindrome(): Boolean = {
+    headOpt match {
+      case None => false
+      case Some(head) =>
+        var p: Node = head
+        var q: Node = head
+
+        if (p.next.isEmpty) {
+          //we only got 1 element in the chain
+          return true
+        }
+
+        //start to find middle of the chain
+        while (q.next.isDefined && q.next.get.next.isDefined) {
+          p = p.next.get
+          q = q.next.get.next.get
+        }
+        var leftLink: Option[Node] = None
+        var rightLink: Option[Node] = None
+        q.next match {
+          case None =>
+            //p is in the middle of an odd numbers of chain
+            rightLink = p.next
+            leftLink = inverseLink(p).next
+          case Some(_) =>
+            //p and p.next is in the middle of the even numbers of chain
+            rightLink = p.next
+            leftLink = Some(inverseLink(p))
+        }
+
+        compareLinkedNodes(leftLink, rightLink)
+    }
+  }
+
+  def compareLinkedNodes(leftLink: Option[Node], rightLink: Option[Node]): Boolean = {
+    var left = leftLink
+    var right = rightLink
+
+    breakable {
+      while (left.isDefined && right.isDefined) {
+        if (!left.get.data.equals(right.get.data)) {
+          break
+        }
+        left = left.get.next
+        right = right.get.next
+      }
+    }
+    //make sure we have loop until the end of the chain
+    left.isEmpty && right.isEmpty
   }
 
   def mkString(): String = {

@@ -102,7 +102,7 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
   it should "inverseLink to head node" in {
     val list: SinglyLinkedList = new SinglyLinkedList()
 
-    for(i <- 0 to 10){
+    for (i <- 0 to 10) {
       list.insertTail(i)
     }
 
@@ -119,6 +119,48 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     result.append(node.data)
 
     result.mkString should equal("876543210")
+  }
+
+  it should "be isPalindrome for 0123210" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+    for (i <- 0 to 3) {
+      list.insertTail(i)
+    }
+
+    for (i <- 2 to 0 by -1) {
+      list.insertTail(i)
+    }
+
+    list.mkString() should equal("0123210")
+    assert(list.isPalindrome())
+  }
+
+  it should "be isPalindrome for 01233210" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+    for (i <- 0 to 3) {
+      list.insertTail(i)
+    }
+
+    for (i <- 3 to 0 by -1) {
+      list.insertTail(i)
+    }
+
+    list.mkString() should equal("01233210")
+    assert(list.isPalindrome())
+  }
+
+  it should "be isPalindrome for large numbers" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+    val num = 5000
+    for (i <- 0 to num) {
+      list.insertTail(i)
+    }
+
+    for (i <- num to 0 by -1) {
+      list.insertTail(i)
+    }
+
+    assert(list.isPalindrome())
   }
 
 }
