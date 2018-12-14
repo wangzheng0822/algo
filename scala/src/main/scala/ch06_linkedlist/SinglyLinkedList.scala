@@ -1,0 +1,89 @@
+package ch06_linkedlist
+
+// the model class for the linked list
+class Node(var data: Int, var next: Option[Node])
+
+class SinglyLinkedList(var headOpt: Option[Node]) {
+
+  //define constructor without param
+  def this() = this(None)
+
+
+  def findByValue(value: Int): Option[Node] = {
+    None
+  }
+
+  def findByIndex(index: Int): Option[Node] = {
+    None
+  }
+
+  def insertToHead(value: Int): Unit = {
+    val newNode = new Node(value, None)
+    insertToHead(newNode)
+  }
+
+  def insertToHead(newNode: Node): Unit = {
+    headOpt match {
+      case None =>
+        //it's an empty linked list, make new node as head
+        headOpt = Some(newNode)
+      case Some(head) =>
+        newNode.next = Some(head)
+        headOpt = Some(newNode)
+    }
+  }
+
+  def insertTail(value: Int): Unit = {
+    val newNode = new Node(value, None)
+    insertTail(newNode)
+  }
+
+  def insertTail(newNode: Node): Unit = {
+    headOpt match {
+      case None =>
+        //it's an empty linked list, make new node as head
+        headOpt = Some(newNode)
+      case Some(head) =>
+        //need to start to find from head to current tail
+        var node = head
+        while (node.next.nonEmpty) {
+          node = node.next.get
+        }
+        //now node is the tail as node.next is None
+        //add new tail
+        node.next = Some(newNode)
+    }
+  }
+
+  def insertAfter(existNode: Node, value: Int) = {}
+
+  def insertAfter(existNode: Node, newNode: Node) = {}
+
+  def insertBefore(existNode: Node, value: Int) = {}
+
+  def insertBefore(existNode: Node, newNode: Node) = {}
+
+  def deleteByNode(node: Node): Option[Node] = {
+    None
+  }
+
+  def deleteByValue(node: Node): Option[Node] = {
+    None
+  }
+
+  def mkString(): String = {
+    headOpt.map(head => {
+      var node = head
+      val result = new StringBuilder
+
+      while (node.next.nonEmpty) {
+        result.append(node.data)
+        node = node.next.get
+      }
+      result.append(node.data)
+
+      result.mkString
+    }).getOrElse("")
+  }
+
+}
