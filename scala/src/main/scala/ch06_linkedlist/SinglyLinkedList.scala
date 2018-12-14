@@ -14,7 +14,7 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
   def findByValue(value: Int): Option[Node] = {
     headOpt.flatMap(head => {
       var node = head
-      while (!node.data.equals(value) && node.next.nonEmpty) {
+      while (!node.data.equals(value) && node.next.isDefined) {
         node = node.next.get
       }
 
@@ -56,7 +56,7 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
       case Some(head) =>
         //need to start to find from head to current tail
         var node = head
-        while (node.next.nonEmpty) {
+        while (node.next.isDefined) {
           node = node.next.get
         }
         //now node is the tail as node.next is None
@@ -96,7 +96,7 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
           insertToHead(newNode)
         }
         var node = head
-        while (node.next.nonEmpty && !node.next.get.equals(existNode)) {
+        while (node.next.isDefined && !node.next.get.equals(existNode)) {
           node = node.next.get
         }
 
@@ -209,7 +209,7 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
       var node = head
       val result = new StringBuilder
 
-      while (node.next.nonEmpty) {
+      while (node.next.isDefined) {
         result.append(node.data)
         node = node.next.get
       }
