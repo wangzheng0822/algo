@@ -10,11 +10,19 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
 
 
   def findByValue(value: Int): Option[Node] = {
-    None
-  }
+    headOpt.flatMap(head => {
+      var node = head
+      while (!node.data.equals(value) && node.next.nonEmpty) {
+        node = node.next.get
+      }
 
-  def findByIndex(index: Int): Option[Node] = {
-    None
+      if (node.data.equals(value)) {
+        return Some(node)
+      } else {
+        //arrive the end of the chain
+        return None
+      }
+    })
   }
 
   def insertToHead(value: Int): Unit = {
@@ -55,9 +63,22 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
     }
   }
 
-  def insertAfter(existNode: Node, value: Int) = {}
+  def insertAfter(existNode: Node, value: Int): Unit = {
+    val newNode = new Node(value, None)
+    insertAfter(existNode, newNode)
+  }
 
-  def insertAfter(existNode: Node, newNode: Node) = {}
+  def insertAfter(existNode: Node, newNode: Node): Unit = {
+    existNode.next match {
+      case None =>
+        //exist node is tail
+        newNode.next = None
+        existNode.next = Some(newNode)
+      case Some(next) =>
+        newNode.next = Some(next)
+        existNode.next = Some(newNode)
+    }
+  }
 
   def insertBefore(existNode: Node, value: Int) = {}
 
