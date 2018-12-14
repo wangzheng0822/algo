@@ -52,7 +52,7 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     list.insertTail(4)
 
     val node1 = list.findByValue(1).get
-    list.insertAfter(node1,2)
+    list.insertAfter(node1, 2)
 
     list.mkString() should equal("01234")
   }
@@ -66,7 +66,7 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     list.insertTail(4)
 
     val node3 = list.findByValue(3).get
-    list.insertBefore(node3,2)
+    list.insertBefore(node3, 2)
 
     list.mkString() should equal("01234")
   }
@@ -97,6 +97,28 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     list.deleteByNode(node0)
 
     list.mkString() should equal("123")
+  }
+
+  it should "inverseLink to head node" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+
+    for(i <- 0 to 10){
+      list.insertTail(i)
+    }
+
+    val node8 = list.findByValue(8)
+
+    val inverseNode = list.inverseLink(node8.get)
+
+    var node = inverseNode
+    val result = new StringBuilder
+    while (node.next.nonEmpty) {
+      result.append(node.data)
+      node = node.next.get
+    }
+    result.append(node.data)
+
+    result.mkString should equal("876543210")
   }
 
 }

@@ -127,6 +127,30 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
     })
   }
 
+  //inverse the link from given node to head
+  def inverseLink(node: Node): Node = {
+    if (headOpt.isEmpty) {
+      throw new IllegalArgumentException("list is empty")
+    }
+
+    var pre: Option[Node] = None
+    var next: Option[Node] = None
+    var current: Option[Node] = headOpt
+
+    while (current.isDefined && !current.get.equals(node)) {
+      next = current.get.next
+      current.get.next = pre
+
+      pre = current
+      current = next
+    }
+
+    current.get.next = pre
+
+    current.get
+
+  }
+
   def mkString(): String = {
     headOpt.map(head => {
       var node = head
