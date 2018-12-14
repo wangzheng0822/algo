@@ -57,4 +57,46 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     list.mkString() should equal("01234")
   }
 
+  it should "insert before node and can find it back" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+
+    list.insertTail(0)
+    list.insertTail(1)
+    list.insertTail(3)
+    list.insertTail(4)
+
+    val node3 = list.findByValue(3).get
+    list.insertBefore(node3,2)
+
+    list.mkString() should equal("01234")
+  }
+
+  it should "delete desired node" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+
+    list.insertTail(0)
+    list.insertTail(1)
+    list.insertTail(2)
+    list.insertTail(3)
+
+    val node1 = list.findByValue(1).get
+    list.deleteByNode(node1)
+
+    list.mkString() should equal("023")
+  }
+
+  it should "delete head node " in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+
+    list.insertTail(0)
+    list.insertTail(1)
+    list.insertTail(2)
+    list.insertTail(3)
+
+    val node0 = list.findByValue(0).get
+    list.deleteByNode(node0)
+
+    list.mkString() should equal("123")
+  }
+
 }

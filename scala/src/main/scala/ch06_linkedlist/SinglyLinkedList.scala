@@ -80,16 +80,51 @@ class SinglyLinkedList(var headOpt: Option[Node]) {
     }
   }
 
-  def insertBefore(existNode: Node, value: Int) = {}
-
-  def insertBefore(existNode: Node, newNode: Node) = {}
-
-  def deleteByNode(node: Node): Option[Node] = {
-    None
+  def insertBefore(existNode: Node, value: Int): Unit = {
+    val newNode = new Node(value, None)
+    insertBefore(existNode, newNode)
   }
 
-  def deleteByValue(node: Node): Option[Node] = {
-    None
+  def insertBefore(existNode: Node, newNode: Node): Unit = {
+    headOpt match {
+      case None =>
+        throw new IllegalStateException("head node should not be None")
+      case Some(head) =>
+        if (existNode.equals(head)) {
+          insertToHead(newNode)
+        }
+        var node = head
+        while (node.next.nonEmpty && !node.next.get.equals(existNode)) {
+          node = node.next.get
+        }
+
+        if (node.next.isEmpty) {
+          throw new IllegalArgumentException("existNode " + existNode + " does not exist in this chain")
+        }
+
+        newNode.next = node.next
+        node.next = Some(newNode)
+    }
+  }
+
+  def deleteByNode(node: Node): Unit = {
+    headOpt.map(head => {
+      if (head.equals(node)) {
+        //deleting head
+        headOpt = node.next
+      } else {
+        var p: Node = head
+        while (p.next.isDefined && !p.next.get.equals(node)) {
+          p = p.next.get
+        }
+
+        if (p.next.isEmpty) {
+          throw new IllegalArgumentException("could not find given node")
+        }
+        p.next = node.next
+      }
+
+    })
   }
 
   def mkString(): String = {
