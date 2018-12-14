@@ -149,6 +149,22 @@ class SinglyLinkedListTest extends FlatSpec with Matchers {
     assert(list.isPalindrome())
   }
 
+  it should "not be isPalindrome for 012332100" in {
+    val list: SinglyLinkedList = new SinglyLinkedList()
+    for (i <- 0 to 3) {
+      list.insertTail(i)
+    }
+
+    for (i <- 3 to 0 by -1) {
+      list.insertTail(i)
+    }
+
+    list.insertTail(0)
+
+    list.mkString() should equal("012332100")
+    assert(!list.isPalindrome())
+  }
+
   it should "be isPalindrome for large numbers" in {
     val list: SinglyLinkedList = new SinglyLinkedList()
     val num = 5000
