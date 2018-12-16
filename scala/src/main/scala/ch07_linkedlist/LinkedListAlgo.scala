@@ -42,6 +42,53 @@ object LinkedListAlgo {
     false
   }
 
+  //assuming nodeA and nodeB are all sorted list in ascending order
+  def mergeSortedList(nodeA: Option[Node], nodeB: Option[Node]): Option[Node] = {
+    if (nodeA.isEmpty && nodeB.isEmpty) {
+      return None
+    }
+    if (nodeA.isEmpty && nodeB.isDefined) {
+      return nodeB
+    }
+    if (nodeA.isDefined && nodeB.isEmpty) {
+      return nodeA
+    }
+    //now we have both nodeA and nodeB defined
+    var head: Option[Node] = None
+    var leftCursor = nodeA
+    var rightCursor = nodeB
+
+    //calculate head and we are sure both leftCursor and rightCursor has data
+    if (leftCursor.get.data < rightCursor.get.data) {
+      head = leftCursor
+      leftCursor = leftCursor.get.next
+    } else {
+      head = rightCursor
+      rightCursor = rightCursor.get.next
+    }
+
+    var mergedCursor: Option[Node] = head
+    while (leftCursor.isDefined && rightCursor.isDefined) {
+      if (leftCursor.get.data < rightCursor.get.data) {
+        mergedCursor.get.next = leftCursor
+        leftCursor = leftCursor.get.next
+      } else {
+        mergedCursor.get.next = rightCursor
+        rightCursor = rightCursor.get.next
+      }
+      mergedCursor = mergedCursor.get.next
+    }
+    //we have loop over at least one chain
+    //we just put the other chain in to the merged chain
+    if (leftCursor.isDefined) {
+      mergedCursor.get.next = leftCursor
+    } else {
+      mergedCursor.get.next = rightCursor
+    }
+
+    head
+  }
+
   //form all the chain value as string
   def mkStringForChain(node: Node): String = {
     val result = new StringBuilder

@@ -73,4 +73,67 @@ class LinkedListAlgoTest extends FlatSpec with Matchers {
     assert(!LinkedListAlgo.checkCircle(node1))
   }
 
+  it should "merge 2 sorted list into 1" in {
+    val node1 = new Node(1, None)
+    val node2 = new Node(2, None)
+    val node3 = new Node(3, None)
+    val node4 = new Node(4, None)
+    val node5 = new Node(5, None)
+    val node6 = new Node(6, None)
+    //1->2->3->4->5->6->null
+    //node1 is the head
+    node1.next = Some(node2)
+    node2.next = Some(node3)
+    node3.next = Some(node4)
+    node4.next = Some(node5)
+    node5.next = Some(node6)
+
+    val nodeA = new Node(2, None)
+    val nodeB = new Node(4, None)
+    val nodeC = new Node(6, None)
+    val nodeD = new Node(8, None)
+    val nodeE = new Node(10, None)
+    //2->4->6->8->10->null
+    //nodeA is the head
+    nodeA.next = Some(nodeB)
+    nodeB.next = Some(nodeC)
+    nodeC.next = Some(nodeD)
+    nodeD.next = Some(nodeE)
+
+    val node = LinkedListAlgo.mergeSortedList(Some(node1), Some(nodeA))
+
+    assert(node.isDefined)
+
+    LinkedListAlgo.mkStringForChain(node.get) should equal("122344566810")
+  }
+
+  it should "merge empty list into exist list " in {
+    val node1 = new Node(1, None)
+    val node2 = new Node(2, None)
+    val node3 = new Node(3, None)
+    val node4 = new Node(4, None)
+    val node5 = new Node(5, None)
+    val node6 = new Node(6, None)
+    //1->2->3->4->5->6->null
+    //node1 is the head
+    node1.next = Some(node2)
+    node2.next = Some(node3)
+    node3.next = Some(node4)
+    node4.next = Some(node5)
+    node5.next = Some(node6)
+
+    val nodeA = LinkedListAlgo.mergeSortedList(Some(node1), None)
+    assert(nodeA.isDefined)
+    LinkedListAlgo.mkStringForChain(nodeA.get) should equal("123456")
+
+    val nodeB = LinkedListAlgo.mergeSortedList(None, Some(node1))
+    assert(nodeB.isDefined)
+    LinkedListAlgo.mkStringForChain(nodeB.get) should equal("123456")
+  }
+
+  it should "merge 2 empty lists " in {
+    val node = LinkedListAlgo.mergeSortedList(None, None)
+    assert(node.isEmpty)
+  }
+
 }
