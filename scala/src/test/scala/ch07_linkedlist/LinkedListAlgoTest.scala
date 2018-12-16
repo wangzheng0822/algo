@@ -136,4 +136,73 @@ class LinkedListAlgoTest extends FlatSpec with Matchers {
     assert(node.isEmpty)
   }
 
+  it should "delete last 2nd element " in {
+    val list = new SinglyLinkedList()
+
+    for (i <- 0 to 9) {
+      list.insertTail(i)
+    }
+    LinkedListAlgo.mkStringForChain(list.headOpt.get) should equal((0 to 9).toArray.mkString(""))
+
+    val node = LinkedListAlgo.deleteLastKthNode(list.headOpt, 2)
+    assert(node.isDefined)
+    LinkedListAlgo.mkStringForChain(node.get) should equal("012345679")
+  }
+
+  it should "delete last element " in {
+    val list = new SinglyLinkedList()
+
+    for (i <- 0 to 9) {
+      list.insertTail(i)
+    }
+    LinkedListAlgo.mkStringForChain(list.headOpt.get) should equal((0 to 9).toArray.mkString(""))
+
+    val node = LinkedListAlgo.deleteLastKthNode(list.headOpt, 1)
+    assert(node.isDefined)
+    LinkedListAlgo.mkStringForChain(node.get) should equal("012345678")
+  }
+
+  it should "delete first element " in {
+    val list = new SinglyLinkedList()
+
+    for (i <- 0 to 9) {
+      list.insertTail(i)
+    }
+    LinkedListAlgo.mkStringForChain(list.headOpt.get) should equal((0 to 9).toArray.mkString(""))
+
+    val node = LinkedListAlgo.deleteLastKthNode(list.headOpt, 10)
+    assert(node.isDefined)
+    LinkedListAlgo.mkStringForChain(node.get) should equal("123456789")
+  }
+
+  it should "delete firs only element " in {
+    val list = new SinglyLinkedList()
+    list.insertTail(0)
+
+    val node = LinkedListAlgo.deleteLastKthNode(list.headOpt, 1)
+    assert(node.isEmpty)
+  }
+
+  it should "throw exception if k < 0 " in {
+    val list = new SinglyLinkedList()
+
+    for (i <- 0 to 9) {
+      list.insertTail(i)
+    }
+    assertThrows[IllegalArgumentException] {
+      LinkedListAlgo.deleteLastKthNode(list.headOpt, -1)
+    }
+  }
+
+  it should "throw exception if k greater than list length " in {
+    val list = new SinglyLinkedList()
+
+    for (i <- 0 to 9) {
+      list.insertTail(i)
+    }
+    assertThrows[IllegalArgumentException] {
+      LinkedListAlgo.deleteLastKthNode(list.headOpt, 15)
+    }
+  }
+
 }

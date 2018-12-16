@@ -89,6 +89,40 @@ object LinkedListAlgo {
     head
   }
 
+  def deleteLastKthNode(headOpt: Option[Node], k: Int): Option[Node] = {
+    require(k > 0, "k must greater than 0")
+    headOpt match {
+      case None => None
+      case Some(head) =>
+        var index = 0
+        var slow = headOpt
+        var fast = headOpt
+        while (fast.get.next.isDefined && index < k) {
+          //move fast cursor to k
+          fast = fast.get.next
+          index += 1
+        }
+
+        if (fast.get.next.isEmpty && index + 1 == k) {
+          //deleting the head element
+          return head.next
+        }
+
+        require(index.equals(k), "given linked list should contains at least k elements ")
+        while (fast.get.next.isDefined) {
+          fast = fast.get.next
+          slow = slow.get.next
+        }
+
+        //fast cursor is in the end of the chain
+        //slow is the previous pos of k element
+        //do the operation
+        slow.get.next = slow.get.next.get.next
+    }
+
+    headOpt
+  }
+
   //form all the chain value as string
   def mkStringForChain(node: Node): String = {
     val result = new StringBuilder
