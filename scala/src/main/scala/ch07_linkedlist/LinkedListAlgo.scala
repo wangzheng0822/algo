@@ -2,6 +2,8 @@ package ch07_linkedlist
 
 import ch06_linkedlist.Node
 
+import scala.util.control.Breaks._
+
 object LinkedListAlgo {
 
   //reverse a linked list
@@ -27,7 +29,12 @@ object LinkedListAlgo {
     current.get
   }
 
-  def checkCircle(head: Node): Boolean = {
+  /**
+    *
+    * @param head
+    * @return Some(Node) a node in a circle or None
+    */
+  def checkCircle(head: Node): Option[Node] = {
     var fast = head
     var slow = head
 
@@ -36,10 +43,47 @@ object LinkedListAlgo {
       slow = slow.next.get
 
       if (fast.equals(slow)) {
-        return true
+        return Some(slow)
       }
     }
-    false
+    None
+  }
+
+  /**
+    * calculate the length of the circle
+    *
+    * @param node - some node in the circle
+    * @return circle length
+    */
+  def calculateCircleLength(node: Node): Int = {
+    var length = 1
+    var cursor = node.next.get
+
+    while (cursor != node) {
+      length += 1
+      cursor = cursor.next.get
+    }
+
+    length
+  }
+
+  def findCircleEntrance(head: Node): Option[Node] = {
+    checkCircle(head).map(node => {
+      val length = calculateCircleLength(node)
+      var fast = head
+      var slow = head
+      //fast move length steps
+      for (i <- 0 until length) {
+        fast = fast.next.get
+      }
+
+      while (slow != fast) {
+        fast = fast.next.get
+        slow = slow.next.get
+      }
+
+      slow
+    })
   }
 
   //assuming nodeA and nodeB are all sorted list in ascending order

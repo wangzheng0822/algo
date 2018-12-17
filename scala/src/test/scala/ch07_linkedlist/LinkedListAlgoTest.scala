@@ -50,7 +50,7 @@ class LinkedListAlgoTest extends FlatSpec with Matchers {
     node5.next = Some(node6)
     node6.next = Some(node3)
 
-    assert(LinkedListAlgo.checkCircle(node1))
+    assert(LinkedListAlgo.checkCircle(node1).isDefined)
   }
 
   it should "check circle for none circled linked list" in {
@@ -70,7 +70,53 @@ class LinkedListAlgoTest extends FlatSpec with Matchers {
     node4.next = Some(node5)
     node5.next = Some(node6)
 
-    assert(!LinkedListAlgo.checkCircle(node1))
+    assert(LinkedListAlgo.checkCircle(node1).isEmpty)
+  }
+
+  it should "calculate circle length" in {
+    val node1 = new Node(1, None)
+    val node2 = new Node(2, None)
+    val node3 = new Node(3, None)
+    val node4 = new Node(4, None)
+    val node5 = new Node(5, None)
+    val node6 = new Node(6, None)
+
+    //1->2->3->4->5->6->3 it's a circle
+    //node1 is the head
+    node1.next = Some(node2)
+    node2.next = Some(node3)
+    node3.next = Some(node4)
+    node4.next = Some(node5)
+    node5.next = Some(node6)
+    node6.next = Some(node3)
+
+    val node = LinkedListAlgo.checkCircle(node1).get
+
+    val length = LinkedListAlgo.calculateCircleLength(node)
+
+    length should equal(4)
+  }
+
+  it should "find entrance of the  circle" in {
+    val node1 = new Node(1, None)
+    val node2 = new Node(2, None)
+    val node3 = new Node(3, None)
+    val node4 = new Node(4, None)
+    val node5 = new Node(5, None)
+    val node6 = new Node(6, None)
+
+    //1->2->3->4->5->6->3 it's a circle
+    //node1 is the head
+    node1.next = Some(node2)
+    node2.next = Some(node3)
+    node3.next = Some(node4)
+    node4.next = Some(node5)
+    node5.next = Some(node6)
+    node6.next = Some(node3)
+
+    val node = LinkedListAlgo.findCircleEntrance(node1)
+
+    node.get.data should equal(3)
   }
 
   it should "merge 2 sorted list into 1" in {
