@@ -2,8 +2,6 @@ package ch07_linkedlist
 
 import ch06_linkedlist.Node
 
-import scala.util.control.Breaks._
-
 object LinkedListAlgo {
 
   //reverse a linked list
