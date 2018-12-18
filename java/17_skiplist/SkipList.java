@@ -43,19 +43,22 @@ public class SkipList {
       update[i] = head;
     }
 
+    // record every level largest value which smaller than insert value in update[]
     Node p = head;
     for (int i = level - 1; i >= 0; --i) {
       while (p.forwards[i] != null && p.forwards[i].data < value) {
         p = p.forwards[i];
       }
-      update[i] = p;
+      update[i] = p;// use update save node in search path
     }
 
+    // in search path node next node become new node forwords(next)
     for (int i = 0; i < level; ++i) {
       newNode.forwards[i] = update[i].forwards[i];
       update[i].forwards[i] = newNode;
     }
 
+    // update node hight
     if (levelCount < level) levelCount = level;
   }
 
@@ -78,7 +81,8 @@ public class SkipList {
     }
   }
 
-  private int randomLevel() {
+  // 随机 level 次，如果是奇数层数 +1，防止伪随机
+ private int randomLevel() {
     int level = 1;
     for (int i = 1; i < MAX_LEVEL; ++i) {
       if (r.nextInt() % 2 == 1) {
