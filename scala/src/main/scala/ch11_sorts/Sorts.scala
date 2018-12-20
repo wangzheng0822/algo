@@ -1,4 +1,6 @@
-import scala.util.control.Breaks._
+package ch11_sorts
+
+import scala.util.control.Breaks.{break, breakable}
 
 /**
   * 冒泡排序、插入排序、选择排序

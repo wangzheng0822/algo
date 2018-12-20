@@ -1,3 +1,5 @@
+package ch15_bsearch
+
 object BSearch {
     def search(nums: Array[Int], target: Int): Int = {
         var low = 0
@@ -12,7 +14,7 @@ object BSearch {
                 return mid
             }
         }
-        
+
         return -1
     }
 }
