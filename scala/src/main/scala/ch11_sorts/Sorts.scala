@@ -8,42 +8,37 @@ import scala.util.control.Breaks.{break, breakable}
   * Author: yangchuz
   */
 object Sorts {
-  def main(args: Array[String]): Unit ={
-//    println(bubbleSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-//    println(insertSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-    println(selectionSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-  }
 
-  def bubbleSort(arr: Array[Int], n:Int): Array[Int] = {
-    val n = arr.length
+  def bubbleSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
     breakable {
-      for(i <- (n-1) to (1, -1)){
-        var flag = false
-        for(j <- 0 until i){
-          if(arr(j) > arr(j+1)){
-            val tmp = arr(j)
-            arr(j) = arr(j+1)
-            arr(j+1) = tmp
-            flag = true
+      for (i <- Range(0, length)) {
+        var exit = true
+        for (j <- Range(0, length - i - 1)) {
+          if (items(j + 1) < items(j)) {
+            val temp = items(j + 1)
+            items(j + 1) = items(j)
+            items(j) = temp
+            exit = false
           }
         }
-        if(!flag){
+        if (exit) {
           break
         }
       }
     }
-    arr
+    items
   }
 
-  def insertSort(arr: Array[Int], n:Int): Array[Int] = {
-    for(i <- 1 until n){
+  def insertSort(arr: Array[Int], n: Int): Array[Int] = {
+    for (i <- 1 until n) {
       val tmp = arr(i)
-      breakable{
-        for(j <- (i-1) to (0, -1)){
-          if(tmp < arr(j)){
-            arr(j+1) = arr(j)
-          }else{
-            arr(j+1) = tmp
+      breakable {
+        for (j <- (i - 1) to(0, -1)) {
+          if (tmp < arr(j)) {
+            arr(j + 1) = arr(j)
+          } else {
+            arr(j + 1) = tmp
             break
           }
         }
@@ -52,11 +47,11 @@ object Sorts {
     arr
   }
 
-  def selectionSort(arr: Array[Int], n:Int): Array[Int] = {
-    for(i <- 0 until n){
+  def selectionSort(arr: Array[Int], n: Int): Array[Int] = {
+    for (i <- 0 until n) {
       var min = i
-      for(j <- (i + 1) until n){
-        if(arr(j) < arr(min)){
+      for (j <- (i + 1) until n) {
+        if (arr(j) < arr(min)) {
           min = j
         }
       }
