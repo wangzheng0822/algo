@@ -15,16 +15,18 @@ class Node:
         self.children = []
 
     def insert_child(self, c):
+        self._insert_child(Node(c))
+
+    def _insert_child(self, node):
         """
         插入一个子节点
         :param c:
         :return:
         """
-        v = ord(c)
+        v = ord(node.data)
         idx = self._find_insert_idx(v)
         length = len(self.children)
 
-        node = Node(c)
         if idx == length:
             self.children.append(node)
         else:
@@ -32,6 +34,9 @@ class Node:
             for i in range(length, idx, -1):
                 self.children[i] = self.children[i-1]
             self.children[idx] = node
+
+    def has_child(self, c):
+        return True if self.get_child(c) is not None else False
 
     def get_child(self, c):
         """
