@@ -23,7 +23,7 @@ def counting_sort(a: List[int]):
         a_sorted[index] = num
         counts[num] -= 1
     
-    a = a_sorted
+    a[:] = a_sorted
 
 
 if __name__ == "__main__":
