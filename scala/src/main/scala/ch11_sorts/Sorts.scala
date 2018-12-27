@@ -30,36 +30,41 @@ object Sorts {
     items
   }
 
-  def insertSort(arr: Array[Int], n: Int): Array[Int] = {
-    for (i <- 1 until n) {
-      val tmp = arr(i)
+  def insertSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
+    for (i <- Range(1, length)) {
+      val value = items(i)
+      var j = i - 1
       breakable {
-        for (j <- (i - 1) to(0, -1)) {
-          if (tmp < arr(j)) {
-            arr(j + 1) = arr(j)
+        while (j >= 0) {
+          if (items(j) > value) {
+            items(j + 1) = items(j)
           } else {
-            arr(j + 1) = tmp
             break
           }
+          j -= 1
         }
       }
+      items(j + 1) = value
     }
-    arr
+    items
   }
 
-  def selectionSort(arr: Array[Int], n: Int): Array[Int] = {
-    for (i <- 0 until n) {
-      var min = i
-      for (j <- (i + 1) until n) {
-        if (arr(j) < arr(min)) {
-          min = j
+  def selectionSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
+    for (i <- Range(0, length)) {
+      var minIndex = i
+      for (j <- Range(i + 1, length)) {
+        if (items(j) < items(minIndex)) {
+          minIndex = j
         }
       }
 
-      val tmp = arr(i)
-      arr(i) = arr(min)
-      arr(min) = tmp
+      //put the min value to the front
+      val temp = items(i)
+      items(i) = items(minIndex)
+      items(minIndex) = temp
     }
-    arr
+    items
   }
 }
