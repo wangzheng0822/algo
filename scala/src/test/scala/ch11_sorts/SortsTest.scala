@@ -47,15 +47,15 @@ class SortsTest extends FlatSpec with Matchers {
       array(i) = rnd.nextInt()
     }
 
-    timed("bubbleSort", Sorts.bubbleSort(array.clone()))
-    timed("insertSort", Sorts.bubbleSort(array.clone()))
-    timed("selectionSort", Sorts.bubbleSort(array.clone()))
+    timed("bubbleSort", Sorts.bubbleSort, array.clone())
+    timed("insertSort", Sorts.insertSort, array.clone())
+    timed("selectionSort", Sorts.selectionSort, array.clone())
   }
 
   def reportElapsed(name: String, time: Long): Unit = println(name + " takes in " + time + "ms")
 
-  def timed[T](name: String, f: => T): T = {
+  def timed[T](name: String, f: (Array[Int]) => T, array: Array[Int]): T = {
     val start = System.currentTimeMillis()
-    try f finally reportElapsed(name, System.currentTimeMillis - start)
+    try f(array) finally reportElapsed(name, System.currentTimeMillis - start)
   }
 }
