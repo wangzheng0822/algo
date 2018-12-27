@@ -54,7 +54,7 @@ class SortsTest extends FlatSpec with Matchers {
 
   def reportElapsed(name: String, time: Long): Unit = println(name + " takes in " + time + "ms")
 
-  def timed[T](name: String, f: (Array[Int]) => T, array: Array[Int]): T = {
+  def timed(name: String, f: (Array[Int]) => Unit, array: Array[Int]): Unit = {
     val start = System.currentTimeMillis()
     try f(array) finally reportElapsed(name, System.currentTimeMillis - start)
   }
