@@ -1,5 +1,6 @@
 package ch11_sorts
 
+import ch12_sorts.{MergeSort, QuickSort}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.util.Random
@@ -50,6 +51,8 @@ class SortsTest extends FlatSpec with Matchers {
     timed("bubbleSort", Sorts.bubbleSort, array.clone())
     timed("insertSort", Sorts.insertSort, array.clone())
     timed("selectionSort", Sorts.selectionSort, array.clone())
+    timed("mergeSort", MergeSort.mergeSort, array.clone())
+    timed("quickSort", QuickSort.quickSort, array.clone())
   }
 
   def reportElapsed(name: String, time: Long): Unit = println(name + " takes in " + time + "ms")
