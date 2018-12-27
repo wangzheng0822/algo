@@ -6,7 +6,7 @@ import scala.util.Random
 
 class SortsTest extends FlatSpec with Matchers {
 
-  behavior of "SortsTest"
+  behavior of "SortsTest in ch11"
 
   it should "bubbleSort int arrays" in {
     var array = Array(4, 5, 6, 3, 2, 1)
