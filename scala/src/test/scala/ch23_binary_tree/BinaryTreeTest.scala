@@ -12,7 +12,7 @@ class BinaryTreeTest extends FlatSpec with BeforeAndAfterEach with Matchers {
    *     D  E F  G
    *
    */
-  var root:Option[Node[String]] = None
+  var root: Option[Node[String]] = None
   val tree = new BinaryTree[String]
 
   override def beforeEach() {
@@ -44,5 +44,7 @@ class BinaryTreeTest extends FlatSpec with BeforeAndAfterEach with Matchers {
     tree.preOrder(root) should equal("ABDECFG")
   }
 
-
+  it should "levelOrder" in {
+    tree.levelOrder(root) should equal("ABCDEFG")
+  }
 }

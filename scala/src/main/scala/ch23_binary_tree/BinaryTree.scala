@@ -1,5 +1,7 @@
 package ch23_binary_tree
 
+import scala.collection.mutable
+
 class Node[T](var data: T, var left: Option[Node[T]], var right: Option[Node[T]])
 
 class BinaryTree[T] {
@@ -34,6 +36,26 @@ class BinaryTree[T] {
       result.append(postOrder(root.get.right))
       result.append(root.map(_.data.toString).get)
     }
+    result.mkString
+  }
+
+  def levelOrder(root: Option[Node[T]]): String = {
+    val result = new StringBuilder
+    val queue = new mutable.Queue[Node[T]]()
+    if (root.isDefined) {
+      queue += root.get
+      while (!queue.isEmpty) {
+        val node = queue.dequeue()
+        result.append(node.data.toString)
+        if (node.left.isDefined) {
+          queue += node.left.get
+        }
+        if (node.right.isDefined) {
+          queue += node.right.get
+        }
+      }
+    }
+
     result.mkString
   }
 }
