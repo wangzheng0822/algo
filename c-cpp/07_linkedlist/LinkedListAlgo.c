@@ -79,6 +79,8 @@ void test_checkCircle() {
         SinglyLinkedNode* node = malloc(sizeof(SinglyLinkedNode));
         node->data = i;
         current->next = node;
+        //reset current node
+        current = node;
     }
     current->next = h;
     
