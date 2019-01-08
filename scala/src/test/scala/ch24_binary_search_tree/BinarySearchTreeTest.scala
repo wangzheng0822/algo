@@ -52,21 +52,21 @@ class BinarySearchTreeTest extends FlatSpec with Matchers {
     tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size - 1).mkString(""))
   }
 
-  it should "calc hight of a tree -1" in {
+  it should "calc height of a tree -1" in {
     val tree = new BinarySearchTree(None)
     val nums = Array(33, 17, 50, 13, 18, 34, 58, 16, 25, 51, 66, 19, 27, 55)
     nums.foreach(tree.insert)
     tree.height() should equal(5)
   }
 
-  it should "calc hight of a tree -2" in {
+  it should "calc height of a tree -2" in {
     val tree = new BinarySearchTree(None)
     val nums = Array(33, 17, 50, 13, 18, 34, 88).sorted
     nums.foreach(tree.insert)
     tree.height() should equal(7)
   }
 
-  it should "calc hight of a tree -3" in {
+  it should "calc height of a tree -3" in {
     val tree = new BinarySearchTree(None)
     val nums = Array(33).sorted
     nums.foreach(tree.insert)
