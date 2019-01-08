@@ -40,4 +40,16 @@ class BinarySearchTreeTest extends FlatSpec with Matchers {
     assert(tree.find(100).isEmpty)
   }
 
+  it should "delete" in {
+    val tree = new BinarySearchTree(None)
+    val nums = Array(33, 17, 50, 13, 18, 34, 58, 16, 25, 51, 66, 19, 27, 55)
+    nums.foreach(tree.insert)
+    tree.delete(13)
+    tree.inOrder(tree.root) should equal(nums.sorted.tail.mkString(""))
+    tree.delete(18)
+    tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size).mkString(""))
+    tree.delete(66)
+    tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size-1).mkString(""))
+  }
+
 }
