@@ -49,7 +49,21 @@ class BinarySearchTreeTest extends FlatSpec with Matchers {
     tree.delete(18)
     tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size).mkString(""))
     tree.delete(66)
-    tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size-1).mkString(""))
+    tree.inOrder(tree.root) should equal("1617" + nums.sorted.slice(4, nums.size - 1).mkString(""))
+  }
+
+  it should "calc hight of a tree -1" in {
+    val tree = new BinarySearchTree(None)
+    val nums = Array(33, 17, 50, 13, 18, 34, 58, 16, 25, 51, 66, 19, 27, 55)
+    nums.foreach(tree.insert)
+    tree.hight() should equal(5)
+  }
+
+  it should "calc hight of a tree -2" in {
+    val tree = new BinarySearchTree(None)
+    val nums = Array(33, 17, 50, 13, 18, 34, 88).sorted
+    nums.foreach(tree.insert)
+    tree.hight() should equal(7)
   }
 
 }
