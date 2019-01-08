@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from typing import List, IO
+from typing import List, Generator
 import heapq
 
 
@@ -13,7 +13,7 @@ class Graph:
         edge = Edge(s, t, w)
         self.adj[s].append(edge)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.adj)
 
 
@@ -22,10 +22,10 @@ class Vertex:
         self.id = v
         self.dist = dist
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self.dist > other.dist
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str((self.id, self.dist))
 
 
@@ -47,7 +47,7 @@ class VertexPriorityQueue:
         self.vertices.append(v)
         self.update_priority()
 
-    def empty(self):
+    def empty(self) -> bool:
         return len(self.vertices) == 0
 
     def update_priority(self) -> None:
@@ -96,7 +96,7 @@ def dijkstra(g: Graph, s: int, t: int) -> int:
     return vertices[t].dist
 
 
-def print_path(s: int, t: int, p: List[int]) -> IO[str]:
+def print_path(s: int, t: int, p: List[int]) -> Generator[int, None, None]:
     if t == s:
         yield s
     else:
