@@ -129,18 +129,18 @@ class BinarySearchTree(var root: Option[Node[Int]]) extends BinaryTree[Int] {
 
   }
 
-  def hight(): Int = {
-    _hight(root)
+  def height(): Int = {
+    _height(root)
   }
 
-  private[this] def _hight(nodeOpt: Option[Node[Int]]): Int = {
+  private[this] def _height(nodeOpt: Option[Node[Int]]): Int = {
     nodeOpt match {
       case None => 0
       case Some(node) => {
         if (node.left.isEmpty && node.right.isEmpty) {
           1
         } else {
-          scala.math.max(_hight(node.left), _hight(node.right)) + 1
+          scala.math.max(_height(node.left), _height(node.right)) + 1
         }
       }
     }
