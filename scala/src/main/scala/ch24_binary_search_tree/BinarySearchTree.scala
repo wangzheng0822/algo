@@ -119,9 +119,9 @@ class BinarySearchTree(var root: Option[Node[Int]]) extends BinaryTree[Int] {
     pp match {
       case None => root = child
       case Some(parentNode) => {
-        if (parentNode.left.isDefined && (parentNode.left.get.data == p.get.data)) {
+        if (parentNode.left == p) {
           parentNode.left = child
-        } else if (parentNode.right.isDefined && (parentNode.right.get.data == p.get.data)) {
+        } else if (parentNode.right == p) {
           parentNode.right = child
         }
       }
