@@ -4,6 +4,22 @@ import scala.util.control.Breaks._
 
 class Heap(val capacity: Int, var elementCount: Int = 0) {
 
+  def this(arrayParam: Array[Int], bottomUp: Boolean) = {
+    this(arrayParam.length + 1)
+    if (bottomUp) {
+      arrayParam.foreach(this.insert)
+    } else {
+      //copy data into array of heap
+      for (i <- arrayParam.indices) {
+        array(i + 1) = arrayParam(i)
+        elementCount = arrayParam.length
+      }
+      for (i <- elementCount / 2 + 1 to 1 by -1) {
+        heapifyTopDown(i, elementCount - 1)
+      }
+    }
+  }
+
   require(capacity > 0, "capacity should be > 0")
   val array: Array[Int] = new Array[Int](capacity)
 
@@ -41,7 +57,7 @@ class Heap(val capacity: Int, var elementCount: Int = 0) {
   //start from the top to compare with it's child nodes
   //swap if child node > parent node
   //stop at child node <= parent node
-  private[this] def  heapifyTopDown(startIndex: Int, stopIndex: Int) = {
+  private[this] def heapifyTopDown(startIndex: Int, stopIndex: Int) = {
     var pointer = startIndex
     breakable {
       while (true) {
@@ -65,4 +81,15 @@ class Heap(val capacity: Int, var elementCount: Int = 0) {
     }
   }
 
+}
+
+object Heap {
+  def heapSort(array: Array[Int]): Array[Int] = {
+    val result = new Array[Int](array.length)
+    val heap = new Heap(array, true)
+    for (i <- result.length - 1 to 0 by -1) {
+      result(i) = heap.removeMax()
+    }
+    result
+  }
 }
