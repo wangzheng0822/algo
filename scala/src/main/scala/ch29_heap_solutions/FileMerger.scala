@@ -19,7 +19,7 @@ object FileMerger {
     val output = File.createTempFile("merged-file", ".txt")
     val writer = new BufferedWriter(new FileWriter(output))
     //init small top heap
-    val priorityQueue = new mutable.PriorityQueue[Tuple2[Char, Source]]()(Ordering.by((_: (Char, Source))._1).reverse)
+    val priorityQueue = new mutable.PriorityQueue[(Char, Source)]()(Ordering.by((_: (Char, Source))._1).reverse)
     val sources = smallFiles.toArray.map(smallFile => Source.fromFile(smallFile))
     //init fill the priority queue from each file
     sources.foreach(source => priorityQueue.enqueue(Tuple2(source.next(), source)))
