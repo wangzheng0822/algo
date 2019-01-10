@@ -16,7 +16,7 @@
 * deleteLastKth 删除链表倒数第n个结点
 * findMiddleNode 求链表的中间结点
 
-#### 08_stack
+#### stack08
 * 链栈实现
 
 #### 09_stack

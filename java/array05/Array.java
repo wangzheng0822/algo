@@ -83,7 +83,7 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        ArrayOperate array = new ArrayOperate(5);
+        Array array = new Array(5);
         array.printAll();
         array.insert(0, 3);
         array.insert(0, 4);
