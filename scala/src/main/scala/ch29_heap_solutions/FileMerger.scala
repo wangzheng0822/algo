@@ -22,7 +22,7 @@ object FileMerger {
     val priorityQueue = new mutable.PriorityQueue[(Char, Source)]()(Ordering.by((_: (Char, Source))._1).reverse)
     val sources = smallFiles.toArray.map(smallFile => Source.fromFile(smallFile))
     //init fill the priority queue from each file
-    sources.foreach(source => priorityQueue.enqueue(Tuple2(source.next(), source)))
+    sources.foreach(source => priorityQueue.enqueue((source.next(), source)))
 
     breakable {
       while (true) {
@@ -31,10 +31,10 @@ object FileMerger {
         val source = next._2
         writer.append(output)
         if (source.hasNext) {
-          priorityQueue.enqueue(Tuple2(source.next(), source))
+          priorityQueue.enqueue((source.next(), source))
         }
         //determine the end of merge
-        if (sources.forall(!_.hasNext)) {
+        if (sources.forall(!_.hasNext) && priorityQueue.isEmpty) {
           break
         }
       }

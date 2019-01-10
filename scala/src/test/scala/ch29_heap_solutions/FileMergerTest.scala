@@ -33,6 +33,7 @@ class FileMergerTest extends FlatSpec with Matchers {
 
     val raw = Source.fromFile(mergedFile).toArray
     raw should equal(raw.sorted)
+    raw.length should equal(num * contentCount)
 
     println("")
     println("merged file below")
