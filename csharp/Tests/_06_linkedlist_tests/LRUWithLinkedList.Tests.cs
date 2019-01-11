@@ -1,14 +1,15 @@
 using Xunit;
 using Xunit.Abstractions;
+using _06_linked_list;
 
-namespace _06_linked_list
+namespace _06_linkedlist_tests
 {
-    public class LRULinkedListTests : BaseLinkedListTests
+    public class LRUWithLinkedListTests : BaseLinkedListTests
     {
         [Fact]
         public void LRU_Set_Value_When_Not_Existed()
         {
-            var lru = new LRULinkedList();
+            var lru = new LRUWithLinkedList();
 
             lru.Set(1);
             lru.Set(3);
@@ -16,9 +17,9 @@ namespace _06_linked_list
             lru.Set(7);
             lru.Set(9);
 
-            var list = lru.GetCachedList();
+            var list = lru.CachedList;
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal(9, list.First.Value);
         }
@@ -26,7 +27,7 @@ namespace _06_linked_list
         [Fact]
         public void LRU_Set_Value_When_Existed()
         {
-            var lru = new LRULinkedList();
+            var lru = new LRUWithLinkedList();
 
             lru.Set(1);
             lru.Set(3);
@@ -34,9 +35,9 @@ namespace _06_linked_list
             lru.Set(7);
             lru.Set(3);
 
-            var list = lru.GetCachedList();
+            var list = lru.CachedList;
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal(3, list.First.Value);
         }
@@ -44,7 +45,7 @@ namespace _06_linked_list
         [Fact]
         public void LRU_Set_Value_When_Full()
         {
-            var lru = new LRULinkedList(5);
+            var lru = new LRUWithLinkedList(5);
 
             lru.Set(1);
             lru.Set(3);
@@ -53,9 +54,9 @@ namespace _06_linked_list
             lru.Set(9);
             lru.Set(8);
 
-            var list = lru.GetCachedList();
+            var list = lru.CachedList;
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal(8, list.First.Value);
         }

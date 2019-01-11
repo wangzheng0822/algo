@@ -6,4 +6,8 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\05-array\_05_array.csproj" />
+  </ItemGroup>
+
 </Project>

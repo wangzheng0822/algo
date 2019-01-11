@@ -1,10 +1,11 @@
 using System;
+using _06_linked_list;
 
-namespace _06_linked_list
+namespace _06_linkedlist_tests
 {
     public class BaseLinkedListTests
     {
-        protected void PrintList<T> (SingleLinkedList<T> list) where T : IComparable<T>
+        protected void PrintLinkedList<T> (SingleLinkedList<T> list) where T : IComparable<T>
         {
             if (list == null) return;
 

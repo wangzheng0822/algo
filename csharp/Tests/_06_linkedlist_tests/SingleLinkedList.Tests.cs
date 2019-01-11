@@ -1,8 +1,9 @@
 using System;
 using Xunit;
 using Xunit.Abstractions;
+using _06_linked_list;
 
-namespace _06_linked_list
+namespace _06_linkedlist_tests
 {
     public class SingleLinkedListTests : BaseLinkedListTests
     {
@@ -11,7 +12,7 @@ namespace _06_linked_list
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal(3, list.Length);
         }
@@ -33,7 +34,7 @@ namespace _06_linked_list
         }
 
         [Fact]
-        public void Find_Return_Null_When_Postion_LessThan_1()
+        public void Find_Return_Null_When_Position_LessThan_1()
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
@@ -42,7 +43,7 @@ namespace _06_linked_list
         }
 
         [Fact]
-        public void Find_Return_Null_When_Postion_GreaterThan_Length()
+        public void Find_Return_Null_When_Position_GreaterThan_Length()
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
@@ -51,7 +52,7 @@ namespace _06_linked_list
         }
 
         [Fact]
-        public void Find_Return_Correct_When_Postion_Valid()
+        public void Find_Return_Correct_When_Position_Valid()
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
@@ -60,7 +61,7 @@ namespace _06_linked_list
         }
 
         [Fact]
-        public void Delete_Return_Null_When_Postion_LessThan_1()
+        public void Delete_Return_Null_When_Position_LessThan_1()
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
@@ -69,7 +70,7 @@ namespace _06_linked_list
         }
 
         [Fact]
-        public void Delete_Return_Null_When_Postion_GreaterThan_Length()
+        public void Delete_Return_Null_When_Position_GreaterThan_Length()
         {
             var list = new SingleLinkedList<string>("The", "Quick", "Brown");
 
@@ -85,7 +86,7 @@ namespace _06_linked_list
 
             var deletedNode = list.Delete("over");
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal("over", deletedNode.Value);
             Assert.Equal(8, list.Length);
@@ -99,7 +100,7 @@ namespace _06_linked_list
 
             var deletedNode = list.Delete("hello");
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Null(deletedNode);
             Assert.Equal(9, list.Length);
@@ -113,7 +114,7 @@ namespace _06_linked_list
 
             var deletedNode = list.Delete("The");
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal("The", deletedNode.Value);
             Assert.Equal(8, list.Length);
@@ -127,7 +128,7 @@ namespace _06_linked_list
 
             var deletedNode = list.Delete("dog");
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal("dog", deletedNode.Value);
             Assert.Equal(8, list.Length);
@@ -141,7 +142,7 @@ namespace _06_linked_list
 
             var node = list.Delete(3);
 
-            PrintList(list);
+            PrintLinkedList(list);
 
             Assert.Equal("Brown", node.Value);
             Assert.Equal(8, list.Length);
@@ -167,143 +168,5 @@ namespace _06_linked_list
             Assert.Null(list.First);
         }
 
-        [Fact]
-        public void Reverse_When_List_Is_Empty()
-        {
-            var list = new SingleLinkedList<string>();
-
-            list.Reverse();
-
-            PrintList(list);
-
-            Assert.Null(list.First);
-        }
-
-        [Fact]
-        public void Reverse_When_List_Has_Many_Elements()
-        {
-            var list = new SingleLinkedList<string>("The", "Quick", "Brown", "Fox", "jumps", "over", "the", "lazy",
-                "dog");
-
-            list.Reverse();
-
-            PrintList(list);
-
-            Assert.True(list.First.Value == "dog");
-        }
-
-        [Fact]
-        public void HasCycle_List_Empty()
-        {
-            var list = new SingleLinkedList<string>("The", "Quick", "Brown", "Fox", "jumps", "over", "the", "lazy",
-                "dog");
-
-            bool hasCycle = list.HasCycle();
-
-            Assert.False(hasCycle);
-        }
-
-        [Fact]
-        public void HasCycle_False_When_List_Length_1()
-        {
-            var list = new SingleLinkedList<string>("The");
-
-            bool hasCycle = list.HasCycle();
-
-            Assert.False(hasCycle);
-        }
-
-        [Fact]
-        public void HasCycle_False_When_List_Length_2()
-        {
-            var list = new SingleLinkedList<string>("The", "Quick");
-
-            bool hasCycle = list.HasCycle();
-
-            Assert.False(hasCycle);
-        }
-
-        [Fact]
-        public void HasCycle_True_When_List_Length_2()
-        {
-            var list = new SingleLinkedList<string>();
-
-            var firstNode = list.Insert(1, "The");
-            var secondNode = list.Insert(2, "Quick");
-
-            secondNode.Next = firstNode;
-
-            bool hasCycle = list.HasCycle();
-
-            Assert.True(hasCycle);
-        }
-
-        [Fact]
-        public void HasCycle_False()
-        {
-            var linkList =
-                new SingleLinkedList<string>("The", "Quick", "Brown", "fox", "jumps", "over", "the", "lazy", "dog");
-
-            bool hasCycle = linkList.HasCycle();
-
-            Assert.False(hasCycle);
-        }
-
-        [Fact]
-        public void HasCycle_True()
-        {
-            var list = new SingleLinkedList<string>();
-
-            // 初始化一个具有环的链表
-            list.Insert(1, "The");
-            list.Insert(2, "Quick");
-            list.Insert(3, "Brown");
-            var fourthNode = list.Insert(4, "fox");
-            list.Insert(5, "jumps");
-            list.Insert(6, "over");
-            list.Insert(7, "the");
-            list.Insert(8, "lazy");
-            var last = list.Insert(9, "dog");
-
-            last.Next = fourthNode;
-
-            bool hasCycle = list.HasCycle();
-
-            Assert.True(hasCycle);
-        }
-
-        [Fact]
-        public void Merge()
-        {
-            var list1 = new SingleLinkedList<int>(1, 2, 4);
-            var list2 = new SingleLinkedList<int>(1, 3, 4);
-
-            var list3 = list1.Merge(list2);
-
-            PrintList(list3);
-
-            Assert.True(list1.First.Next.Next.Value == 2);
-        }
-
-        [Fact]
-        public void Remove_2th_Node_From_End()
-        {
-            var list = new SingleLinkedList<int>(1, 2, 3, 4, 5);
-            list.RemoveNthNodeFromEnd(2);
-
-            PrintList(list);
-
-            Assert.True(list.First.Next.Next.Next.Value == 5);
-        }
-
-        [Fact]
-        public void FindMiddleNode()
-        {
-            var list = new SingleLinkedList<int>(1, 2, 3, 4, 5);
-
-            LinkedListNode<int> middleNode = list.FindMiddleNode();
-
-            Assert.True(middleNode.Value == 3);
-        }
     }
 }
