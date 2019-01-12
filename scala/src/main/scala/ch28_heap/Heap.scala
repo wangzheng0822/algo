@@ -47,9 +47,9 @@ class Heap(val capacity: Int, var elementCount: Int = 0) {
   def removeMax(): Int = {
     require(elementCount > 0, "heap is empty")
     val result = array(1)
-    elementCount -= 1
     array(1) = array(elementCount)
-    heapifyTopDown(1, elementCount - 1)
+    elementCount -= 1
+    heapifyTopDown(1, elementCount)
     result
   }
 
