@@ -3,7 +3,7 @@ package ch35_tire_tree
 import scala.collection.mutable.ArrayBuffer
 import scala.util.control.Breaks._
 
-class TrieNode(var data: Char, var children: Array[TrieNode], var isLeafNode: Boolean = false) {
+class TrieNode(var data: Char, var children: Array[TrieNode], var isEndNode: Boolean = false) {
 
   def this(data: Char) = this(data, new Array[TrieNode](26))
 
@@ -24,7 +24,7 @@ class TrieTree {
       p = p.children(index)
     }
     //now p is pointing the leaf node
-    p.isLeafNode = true
+    p.isEndNode = true
   }
 
   def find(text: Array[Char]): Boolean = {
@@ -40,7 +40,7 @@ class TrieTree {
       }
     }
 
-    p.isLeafNode
+    p.isEndNode
   }
 
   def prefix(prefix: Array[Char]): Boolean = {
@@ -58,7 +58,7 @@ class TrieTree {
     }
 
     //should not reach leaf node and should have at least 1 matching level
-    !p.isLeafNode && level > -1
+    !p.isEndNode && level > -1
   }
 
   def suggestion(text: Array[Char]): Option[Array[String]] = {
@@ -75,7 +75,7 @@ class TrieTree {
       }
     }
     //have prefix matching
-    if (!p.isLeafNode && level > -1) {
+    if (!p.isEndNode && level > -1) {
       //now the problem becomes print all the children from p
       Some(_children(p).map(str => "%s%s".format(text.slice(0, text.length - 1).mkString(""), str)).toArray)
     } else {
@@ -85,7 +85,7 @@ class TrieTree {
   }
 
   def _children(p: TrieNode): ArrayBuffer[String] = {
-    if (p.isLeafNode) {
+    if (p.isEndNode) {
       return ArrayBuffer(p.data.toString)
     }
 
