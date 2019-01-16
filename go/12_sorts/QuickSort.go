@@ -1,38 +1,35 @@
 package _2_sorts
 
+// QuickSort is quicksort methods for golang
 func QuickSort(arr []int) {
-	arrLen := len(arr)
-	if arrLen <= 1 {
-		return
-	}
-	quickSort(arr, 0, arrLen-1)
+	separateSort(arr, 0, len(arr)-1)
 }
 
-func quickSort(arr []int, start, end int) {
+func separateSort(arr []int, start, end int) {
 	if start >= end {
 		return
 	}
-
-	pivot := partition(arr, start, end)
-	quickSort(arr, start, pivot)
-	quickSort(arr, pivot+1, end)
+	i := partition(arr, start, end)
+	separateSort(arr, start, i-1)
+	separateSort(arr, i+1, end)
 }
 
-func partition(arr []int, low, high int) int {
-	pivotV := arr[low]
-	for low < high {
-		for low < high && arr[high] > pivotV { //指针从右边开始向右找到一个比pivot小的数
-			high--
-		}
-		arr[low] = arr[high] //将这个数放到low位，注意第一次这个位置放的是pivot值，所以不会丢
+func partition(arr []int, start, end int) int {
+	// 选取最后一位当对比数字
+	pivot := arr[end]
 
-		for low < high && arr[low] < pivotV { //指针从左边开始向右找到第一个比pivot大的数
-			low++
+	var i = start
+	for j := start; j < end; j++ {
+		if arr[j] < pivot {
+			if !(i == j) {
+				// 交换位置
+				arr[i], arr[j] = arr[j], arr[i]
+			}
+			i++
 		}
-		arr[high] = arr[low] //将这个数赋值给之前的high指针，因为之前high指针指向的数已经被一定，所以不会丢
 	}
 
-	//最后将pivot的值放入合适位置，此时low与high相等
-	arr[low] = pivotV
-	return low
+	arr[i], arr[end] = arr[end], arr[i]
+
+	return i
 }
