@@ -1,4 +1,18 @@
+package tree24;
+
 public class BinarySearchTree {
+
+  public static void main(String[] args) {
+    Node root = new Node(5, new Node(3, new Node(2), null),
+            new Node(8, new Node(6), new Node(9)));
+
+    BinarySearchTree binarySearchTree = new BinarySearchTree();
+    binarySearchTree.tree = root;
+    binarySearchTree.insert(4);
+
+    System.out.println(binarySearchTree.tree);
+  }
+
   private Node tree;
 
   public Node find(int data) {
@@ -94,6 +108,13 @@ public class BinarySearchTree {
 
     public Node(int data) {
       this.data = data;
+    }
+
+
+    public Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
     }
   }
 }
