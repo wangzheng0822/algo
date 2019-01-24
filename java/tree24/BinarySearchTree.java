@@ -1,19 +1,64 @@
 package tree24;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class BinarySearchTree {
 
   public static void main(String[] args) {
     Node root = new Node(5, new Node(3, new Node(2), null),
-            new Node(8, new Node(6), new Node(9)));
+            new Node(8, new Node(6), new Node(10, new Node(9), null)));
 
     BinarySearchTree binarySearchTree = new BinarySearchTree();
     binarySearchTree.tree = root;
     binarySearchTree.insert(4);
 
     System.out.println(binarySearchTree.tree);
+    System.out.println(binarySearchTree.depth(root));
+    System.out.println(binarySearchTree.getMaxWidth(root));
   }
 
   private Node tree;
+
+    /** 深度
+     * @param root
+     * @return
+     */
+  public int depth(Node root){
+      if(root == null){
+          return 0;
+      }
+
+      int left = depth(root.left);
+      int right = depth(root.right);
+      return 1 + Math.max(left, right);
+  }
+
+    // 获取最大宽度
+    public int getMaxWidth(Node root) {
+        if (root == null)
+            return 0;
+
+        Queue<Node> queue = new ArrayDeque<Node>();
+        int maxWitdth = 1; // 最大宽度
+        queue.add(root); // 入队
+
+        while (true) {
+            int len = queue.size(); // 当前层的节点个数
+            if (len == 0)
+                break;
+            while (len > 0) {// 如果当前层，还有节点
+                Node t = queue.poll();
+                len--;
+                if (t.left != null)
+                    queue.add(t.left); // 下一层节点入队
+                if (t.right != null)
+                    queue.add(t.right);// 下一层节点入队
+            }
+            maxWitdth = Math.max(maxWitdth, queue.size());
+        }
+        return maxWitdth;
+    }
 
   public Node find(int data) {
     Node p = tree;
