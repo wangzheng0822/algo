@@ -11,17 +11,45 @@ public class HeapSot {
     public static void main(String[] args) {
 //        PriorityQueue
         int[] data = new int[]{4, 6, 5, 3, 7, 1, 2};
-        heapSort(data);
+        sort(data, 7);
 
         System.out.println(data);
     }
 
+    // n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。
+    public static void sort(int[] a, int n) {
+        buildHeap(a, n);
+        int k = n;
+        while (k > 1) {
+            swap(a, 1, k);
+            --k;
+            heapify(a, k, 1);
+        }
+    }
+
+    private static void buildHeap(int[] a, int n) {
+        for (int i = n/2; i >= 1; --i) {
+            heapify(a, n, i);
+        }
+    }
+
+    private static void heapify(int[] a, int n, int i) {
+        while (true) {
+            int maxPos = i;
+            if (i*2+1 <= n && a[i] < a[i*2+1]) maxPos = i*2+1;
+            if (i*2+2 <= n && a[maxPos] < a[i*2+2]) maxPos = i*2+2;
+            if (maxPos == i) break;
+            swap(a, i, maxPos);
+            i = maxPos;
+        }
+    }
+
+
     /* 堆排序
- *
-         * 1. 先将初始序列K[1..n]建成一个大顶堆, 那么此时第一个元素K1最大, 此堆为初始的无序区.
- * 2. 再将关键字最大的记录K1 (即堆顶, 第一个元素)和无序区的最后一个记录 Kn 交换, 由此得到新的无序区K[1..n−1]和有序区K[n], 且满足K[1..n−1].keys⩽K[n].key
- * 3. 交换K1 和 Kn 后, 堆顶可能违反堆性质, 因此需将K[1..n−1]调整为堆. 然后重复步骤②, 直到无序区只有一个元素时停止.
- */
+     * 1. 先将初始序列K[1..n]建成一个大顶堆, 那么此时第一个元素K1最大, 此堆为初始的无序区.
+     * 2. 再将关键字最大的记录K1 (即堆顶, 第一个元素)和无序区的最后一个记录 Kn 交换, 由此得到新的无序区K[1..n−1]和有序区K[n], 且满足K[1..n−1].keys⩽K[n].key
+     * 3. 交换K1 和 Kn 后, 堆顶可能违反堆性质, 因此需将K[1..n−1]调整为堆. 然后重复步骤②, 直到无序区只有一个元素时停止.
+     */
     public static void heapSort(int[] arr){
         for(int i = arr.length; i > 0; i--){
             // 把数组中(0,i)之间的索引的数据送入到最大堆函数中实现最大堆
