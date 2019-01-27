@@ -15,18 +15,15 @@ class Sudoku {
     }
   }
 
-  private[this] def resolve(grid: Array[Array[Int]], theRow: Int, theColumn: Int): Boolean = {
-    if (theRow == 8 && theColumn == 9) {
+  private[this] def resolve(grid: Array[Array[Int]], row: Int, column: Int): Boolean = {
+    if (row == 8 && column == 9) {
       //find the result
       return true
     }
 
-    var row = theRow
-    var column = theColumn
-    if (theColumn == 9) {
+    if (column == 9) {
       //move to next line
-      column = 0
-      row += 1
+      return resolve(grid, row + 1, 0)
     }
 
     if (grid(row)(column) != 0) {
