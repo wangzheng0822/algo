@@ -1,6 +1,6 @@
 using System;
 
-namespace _05_array
+namespace algo05_array
 {
     public sealed class Array<T> where T : IComparable<T>
     {

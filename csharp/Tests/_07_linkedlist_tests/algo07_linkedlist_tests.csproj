@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+        <PackageReference Include="xunit" Version="2.4.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\06-linkedlist\algo06_linked_list.csproj" />
+      <ProjectReference Include="..\..\07-linkedlist\_07_linkedlist\algo07_linkedlist.csproj" />
+      <ProjectReference Include="..\_06_linkedlist_tests\algo06_linkedlist_tests.csproj" />
+    </ItemGroup>
+
+</Project>

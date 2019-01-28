@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>_06_linkedlist_tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -14,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\05-array\_05_array.csproj" />
-    <ProjectReference Include="..\..\06-linkedlist\_06_linked_list.csproj" />
+    <ProjectReference Include="..\..\05-array\algo05_array.csproj" />
+    <ProjectReference Include="..\..\06-linkedlist\algo06_linked_list.csproj" />
   </ItemGroup>
 
 </Project>
