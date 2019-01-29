@@ -151,7 +151,7 @@ function isEven(num){
 }
 var num = [1,2,3,4,5,6,7,8];
 var someEven = num.some(isEven);
-if(even){
+if(someEven){
   console.log("有些数字是偶数");
 }else{
   console.log("没有数字是偶数");
