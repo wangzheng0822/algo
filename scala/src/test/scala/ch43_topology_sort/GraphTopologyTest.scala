@@ -42,4 +42,23 @@ class GraphTopologyTest extends FlatSpec with Matchers {
     val seq = graphTopology.topologySortByKahn()
     seq.map(nodes(_)).mkString(",") should equal("a,b,d,e,c")
   }
+
+  /*
+     a -> d <- b
+          |   /|\
+         \|/   |
+          e -> c
+   */
+  it should "topologySortByKahn - 3" in {
+    val nodes = Array("a", "b", "c", "d", "e")
+    val graphTopology = new GraphTopology(nodes.length)
+    graphTopology.addEdge(0, 3)
+    graphTopology.addEdge(3, 4)
+    graphTopology.addEdge(4, 2)
+    graphTopology.addEdge(2, 1)
+    graphTopology.addEdge(1, 3)
+
+    val seq = graphTopology.topologySortByKahn()
+    seq.map(nodes(_)).mkString(",") should equal("a")
+  }
 }
