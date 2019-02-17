@@ -8,8 +8,8 @@ public class BinaryTree {
 
     public static void main(String[] args) {
 
-        Node root = new Node(1, new Node(2, new Node(4), new Node(5)),
-                new Node(3, new Node(6), new Node(7)));
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)),
+                new TreeNode(3, new TreeNode(6), new TreeNode(7)));
         System.out.println(
                 "----------1-------\n" +
                         "----2--------3----\n" +
@@ -26,19 +26,17 @@ public class BinaryTree {
 
     /**
      * 层序遍历
-     * @param root
-     * @return
      */
-    public static ArrayList<Integer> printFromTopToBottom(Node root) {
+    public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
         ArrayList<Integer> list = new ArrayList<>();  //存放结果
-        Queue<Node> queue = new LinkedList<>();   //辅助队列
+        Queue<TreeNode> queue = new LinkedList<>();   //辅助队列
         if (root != null) {
             //根节点入队
             queue.offer(root);
         }
         //队列不为空，执行循环
         while (!queue.isEmpty()) {
-            Node node = queue.poll();
+            TreeNode node = queue.poll();
             list.add(node.data);     //将队列元素输出
 
             //如果有左节点，就把左节点加入
@@ -54,22 +52,78 @@ public class BinaryTree {
         return list;
     }
 
+    /**
+     * 翻转二叉树
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode tmp = root.right;
+        root.right = root.left;
+        root.left = tmp;
+        //翻转下一次层级，判断非空
+        if (root.right != null) {
+            invertTree(root.right);
+        }
+        //翻转下一次层级，判断非空
+        if (root.left != null) {
+            invertTree(root.left);
+        }
+        return root;
+    }
 
-    static void preOrder(Node root) {
+    /**
+     * 求二叉树最大宽度
+     假设满二叉树表示成数组序列, 根节点所在的位置为1, 则任意位于i节点的左右子节点的index为2*i, 2*i+1
+     用一个List保存每层的左端点, 易知二叉树有多少层List的元素就有多少个. 那么可以在dfs的过程中记录每个
+     节点的index及其所在的层level, 如果level > List.size()说明当前节点就是新的一层的最左节点, 将其
+     加入List中, 否则判断当前节点的index减去List中对应层的最左节点的index的宽度是否大于最大宽度并更新
+     **/
+    private int maxW = 0;
+    public int widthOfBinaryTree(TreeNode root) {
+        dfs(root, 1,1,new ArrayList<Integer>());
+        return maxW;
+    }
+
+    private void dfs(TreeNode r, int level , int index, ArrayList<Integer> left){
+
+        if(r == null){
+            return;
+        }
+        if(level > left.size()){
+            left.add(index);
+        }
+        maxW = Math.max(maxW, index - left.get(level - 1) +1);
+
+        dfs(r.left,level+1,index*2,left);
+        dfs(r.right,level+1,index*2+1,left);
+    }
+
+    /**
+     * 前序遍历
+     */
+    static void preOrder(TreeNode root) {
         if (root == null) return;
         System.out.print(root.data);
         preOrder(root.left);
         preOrder(root.right);
     }
 
-    static void inOrder(Node root) {
+    /**
+     * 中序遍历
+     */
+    static void inOrder(TreeNode root) {
         if (root == null) return;
         inOrder(root.left);
         System.out.print(root.data);
         inOrder(root.right);
     }
 
-    static void postOrder(Node root) {
+    /**
+     * 后序遍历
+     */
+    static void postOrder(TreeNode root) {
         if (root == null) return;
         postOrder(root.left);
         postOrder(root.right);
@@ -77,22 +131,22 @@ public class BinaryTree {
     }
 
     //二叉树节点
-    static class Node {
+    static class TreeNode {
         private int data;
-        private Node left;
-        private Node right;
+        private TreeNode left;
+        private TreeNode right;
 
-        public Node() {
+        public TreeNode() {
         }
 
-        public Node(int data, Node left, Node right) {
+        public TreeNode(int data, TreeNode left, TreeNode right) {
             super();
             this.data = data;
             this.left = left;
             this.right = right;
         }
 
-        public Node(int data) {
+        public TreeNode(int data) {
             super();
             this.data = data;
         }

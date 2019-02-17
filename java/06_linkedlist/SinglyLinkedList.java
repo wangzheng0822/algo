@@ -147,7 +147,7 @@ public class SinglyLinkedList {
            head = head.next;
            }
 
-           Node pNode = head;
+           TreeNode pNode = head;
            while (pNode != null) {
            if (pNode.next.data == data) {
            pNode.next = pNode.next.next;
@@ -318,7 +318,7 @@ public class SinglyLinkedList {
             link.insertTail(data[i]);
         }
        // link.printAll();
-       // Node p = link.inverseLinkList_head(link.head);
+       // TreeNode p = link.inverseLinkList_head(link.head);
        // while(p != null){
        //     System.out.println("aa"+p.data);
        //     p = p.next;
