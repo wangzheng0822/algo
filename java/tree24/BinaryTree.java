@@ -22,6 +22,10 @@ public class BinaryTree {
         postOrder(root);
         System.out.println("\n--------------------");
         printFromTopToBottom(root);
+        System.out.println("\n最大深度---------");
+
+        System.out.println(maxDepth(root));
+        ;
     }
 
     /**
@@ -74,30 +78,44 @@ public class BinaryTree {
     }
 
     /**
+     * 求最大深度
+     */
+    public static int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            int left_height = maxDepth(root.left);
+            int right_height = maxDepth(root.right);
+            return Math.max(left_height, right_height) + 1;
+        }
+    }
+
+    /**
      * 求二叉树最大宽度
-     假设满二叉树表示成数组序列, 根节点所在的位置为1, 则任意位于i节点的左右子节点的index为2*i, 2*i+1
-     用一个List保存每层的左端点, 易知二叉树有多少层List的元素就有多少个. 那么可以在dfs的过程中记录每个
-     节点的index及其所在的层level, 如果level > List.size()说明当前节点就是新的一层的最左节点, 将其
-     加入List中, 否则判断当前节点的index减去List中对应层的最左节点的index的宽度是否大于最大宽度并更新
+     * 假设满二叉树表示成数组序列, 根节点所在的位置为1, 则任意位于i节点的左右子节点的index为2*i, 2*i+1
+     * 用一个List保存每层的左端点, 易知二叉树有多少层List的元素就有多少个. 那么可以在dfs的过程中记录每个
+     * 节点的index及其所在的层level, 如果level > List.size()说明当前节点就是新的一层的最左节点, 将其
+     * 加入List中, 否则判断当前节点的index减去List中对应层的最左节点的index的宽度是否大于最大宽度并更新
      **/
     private int maxW = 0;
+
     public int widthOfBinaryTree(TreeNode root) {
-        dfs(root, 1,1,new ArrayList<Integer>());
+        dfs(root, 1, 1, new ArrayList<Integer>());
         return maxW;
     }
 
-    private void dfs(TreeNode r, int level , int index, ArrayList<Integer> left){
+    private void dfs(TreeNode r, int level, int index, ArrayList<Integer> left) {
 
-        if(r == null){
+        if (r == null) {
             return;
         }
-        if(level > left.size()){
+        if (level > left.size()) {
             left.add(index);
         }
-        maxW = Math.max(maxW, index - left.get(level - 1) +1);
+        maxW = Math.max(maxW, index - left.get(level - 1) + 1);
 
-        dfs(r.left,level+1,index*2,left);
-        dfs(r.right,level+1,index*2+1,left);
+        dfs(r.left, level + 1, index * 2, left);
+        dfs(r.right, level + 1, index * 2 + 1, left);
     }
 
     /**
