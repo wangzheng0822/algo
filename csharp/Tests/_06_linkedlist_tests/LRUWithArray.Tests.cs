@@ -1,9 +1,9 @@
+using algo05_array;
+using algo06_linked_list;
 using Xunit;
 using Xunit.Abstractions;
-using _05_array;
-using _06_linked_list;
 
-namespace _06_linkedlist_tests
+namespace algo06_linkedlist_tests
 {
     public class LRUWithArrayTests
     {

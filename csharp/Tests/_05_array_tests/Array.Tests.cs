@@ -1,7 +1,7 @@
 using System;
+using algo05_array;
 using Xunit;
 using Xunit.Abstractions;
-using _05_array;
 
 namespace _05_array_tests
 {

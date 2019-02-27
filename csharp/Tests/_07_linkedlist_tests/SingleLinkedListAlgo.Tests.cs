@@ -1,10 +1,10 @@
 using System;
 using Xunit;
-using _06_linkedlist_tests;
-using _06_linked_list;
-using _07_linkedlist;
+using algo06_linkedlist_tests;
+using algo06_linked_list;
+using algo07_linkedlist;
 
-namespace _07_linkedlist_tests
+namespace algo07_linkedlist_tests
 {
     public class SingleLinkedListAlgoTests : BaseLinkedListTests
     {

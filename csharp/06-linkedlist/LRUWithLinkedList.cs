@@ -1,4 +1,4 @@
-namespace _06_linked_list
+namespace algo06_linked_list
 {
     /// <summary>
     /// 使用单链表实现LRU缓存淘汰算法
