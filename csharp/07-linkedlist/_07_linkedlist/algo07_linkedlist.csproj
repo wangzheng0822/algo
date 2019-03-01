@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\06-linkedlist\_06_linked_list.csproj" />
+      <ProjectReference Include="..\..\06-linkedlist\algo06_linked_list.csproj" />
     </ItemGroup>
 
 </Project>

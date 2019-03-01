@@ -1,7 +1,7 @@
 ﻿using System;
-using _06_linked_list;
+using algo06_linked_list;
 
-namespace _07_linkedlist
+namespace algo07_linkedlist
 {
     /// <summary>
     /// 单链表常用算法操作

@@ -1,8 +1,8 @@
 using Xunit;
 using Xunit.Abstractions;
-using _06_linked_list;
+using algo06_linked_list;
 
-namespace _06_linkedlist_tests
+namespace algo06_linkedlist_tests
 {
     public class LRUWithLinkedListTests : BaseLinkedListTests
     {

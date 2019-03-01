@@ -1,6 +1,6 @@
 using System;
 
-namespace _06_linked_list
+namespace algo06_linked_list
 {
     /// <summary>
     /// 单链表的插入、删除、清空、查找

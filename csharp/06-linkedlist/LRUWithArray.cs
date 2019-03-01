@@ -1,7 +1,6 @@
-using System.Text.RegularExpressions;
-using _05_array;
+using algo05_array;
 
-namespace _06_linked_list
+namespace algo06_linked_list
 {
     /// <summary>
     /// 使用数组实现LRU缓存淘汰算法

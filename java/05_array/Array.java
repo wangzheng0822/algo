@@ -5,7 +5,7 @@ package array;
  * 2）数组中的数据是int类型的；
  *
  * Author: Zheng
- * modify: xing
+ * modify: xing, Gsealy
  */
 public class Array {
     //定义整型数据data保存数据
@@ -71,7 +71,6 @@ public class Array {
         }
         this.data = arr;*/
 
-
         --count;
         return true;
     }
@@ -83,7 +82,7 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        ArrayOperate array = new ArrayOperate(5);
+        Array array = new Array(5);
         array.printAll();
         array.insert(0, 3);
         array.insert(0, 4);
@@ -93,6 +92,4 @@ public class Array {
         //array.insert(3, 11);
         array.printAll();
     }
-
-
 }
