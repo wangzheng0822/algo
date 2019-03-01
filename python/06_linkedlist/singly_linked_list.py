@@ -83,7 +83,7 @@ class SinglyLinkedList:
             current = current._next
         if not current:  # node not in the list
             return
-        current._next = None
+        current._next = node._next
 
     def delete_by_value(self, value: int):
         if not self._head or not value:
