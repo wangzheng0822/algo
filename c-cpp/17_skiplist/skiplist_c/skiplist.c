@@ -68,6 +68,7 @@ void skip_list_destory(skiplist * list)
 		free(tmp);
 	}
 
+    free(list->head);
 	free(list);
 	return;
 }

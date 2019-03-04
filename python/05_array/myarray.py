@@ -1,95 +1,70 @@
-from typing import Optional
 #
 # 1) Insertion, deletion and random access of array
 # 2) Assumes int for element type
 #
 # Author: Wenru
 #
+
+
 class MyArray:
     """A simple wrapper around List.
     You cannot have -1 in the array.
     """
 
     def __init__(self, capacity: int):
-
         self._data = []
-        self._count = 0
         self._capacity = capacity
-    
-    def __getitem__(self, position: int) -> int:
 
-        """Support for subscript.
-        Perhaps better than the find() method below.
-        """
+    def __getitem__(self, position: int) -> object:
         return self._data[position]
 
-    def find(self, index: int) -> Optional[int]:
+    def __setitem__(self, index: int, value: object):
+        self._data[index] = value
 
-        if index >= self._count or index <= -self._count: return None
-        return self._data[index]
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def __iter__(self):
+        for item in self._data:
+            yield item
+
+    def find(self, index: int) -> object:
+        try:
+            return self._data[index]
+        except IndexError:
+            return None
 
     def delete(self, index: int) -> bool:
-        
-        if index >= self._count or index <= -self._count: return False
-        
-        self._data[index:-1] = self._data[index+1:]
-        self._count -= 1
-        # 真正将数据删除并覆盖原来的数据 ，这个需要增加
-        self._data = self._data[0:self._count]
-        print ('delet function',self._data)
-        return True
+        try:
+            self._data.pop(index)
+            return True
+        except IndexError:
+            return False
 
     def insert(self, index: int, value: int) -> bool:
-
-        #if index >= self._count or index <= -self._count: return False
-        if self._capacity == self._count: return False
-        # 如果还有空间，那么插入位置大于当前的元素个数，可以插入最后的位置
-        if index >= self._count:
-            self._data.append(value)
-        # 同上，如果位置小于0 可以插入第０个位置.
-        if index < 0:
-            print (index)
-            self._data.insert(0, value)
-
-        self._count += 1
-        return True
-
-    def insert_to_tail(self, value: int) -> bool:
-
-        if self._count == self._capacity: return False
-        if self._count == len(self._data):
-            self._data.append(value) 
+        if len(self) >= self._capacity:
+            return False
         else:
-            self._data[self._count] = value
-        self._count += 1
-        return True
-    
-    def __repr__(self) -> str:
-
-        return " ".join(str(num) for num in self._data[:self._count])
+            return self._data.insert(index, value)
 
     def print_all(self):
+        for item in self:
+            print(item)
 
-        for num in self._data[:self._count]:
-            print("{num}", end=" ")
-        print("\n", flush=True)
+
+def test_myarray():
+    array = MyArray(5)
+    array.insert(0, 3)
+    array.insert(0, 4)
+    array.insert(1, 5)
+    array.insert(3, 9)
+    array.insert(3, 10)
+    assert array.insert(0, 100) is False
+    assert len(array) == 5
+    assert array.find(1) == 5
+    assert array.delete(4) is True
+    array.print_all()
+
 
 if __name__ == "__main__":
-    a = MyArray(6)
-    for i in range(6):
-        a.insert_to_tail(i)
-    
-<<<<<<< HEAD
-    a.delete(2)
-    print(a)
-    a.insert_to_tail(7)
-    print(a)
-=======
-    print('origin',a)
-    a.delete(4)
-    print ('delete ',a)
-
-    a.insert(100,10000)
-    print (a)
-
->>>>>>> upstream/master
+    test_myarray()

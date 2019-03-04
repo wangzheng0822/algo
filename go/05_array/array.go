@@ -34,7 +34,7 @@ func (this *Array) Len() uint {
 
 //判断索引是否越界
 func (this *Array) isIndexOutOfRange(index uint) bool {
-	if index >= this.length {
+	if index >= uint(cap(this.data)) {
 		return true
 	}
 	return false
