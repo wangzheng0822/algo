@@ -21,11 +21,7 @@ class ArrayQueue:
                 return False
             else:
                 for i in range(0, self._tail - self._head):
-<<<<<<< HEAD
-                    self._data[i] = self._items[i + self._head]
-=======
                     self._items[i] = self._items[i + self._head]
->>>>>>> upstream/master
                 self._tail = self._tail - self._head
                 self._head = 0
         
@@ -38,6 +34,8 @@ class ArrayQueue:
             item = self._items[self._head]
             self._head += 1
             return item
+        else:
+            return None
     
     def __repr__(self) -> str:
         return " ".join(item for item in self._items[self._head : self._tail])
