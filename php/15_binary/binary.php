@@ -86,7 +86,11 @@ function squareRoot($number)
 function getDecimalPlaces($number)
 {
     $temp = explode('.', $number);
-    return strlen($temp[1]);
+    if (isset($temp[1])) {
+        return strlen($temp[1]);
+    }
+
+    return 0;
 }
 
 // 测试二分查找给定值
