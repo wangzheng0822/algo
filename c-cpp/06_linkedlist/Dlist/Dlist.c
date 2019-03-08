@@ -11,7 +11,7 @@
 
 
 
-void dlist_init(stDlistHead *dlist)
+void dlist_init(stDlistHead *dlist)		//链表初始化
 {
 	dlist->size = 0;
 	dlist->head = NULL;
@@ -36,38 +36,38 @@ void dlist_destory(stDlistHead *dlist)
 	return;
 }
 
-int dlist_insert_head(stDlistHead *dlist,stDlistNode *pNode,int data)
+int dlist_insert_head(stDlistHead *dlist,stDlistNode *pNode,int data)		//插入头结点，操作的链表，操作的节点，数据
 {
-   if(pNode == NULL)
+   if(pNode == NULL)		//当只传递一个数据时
    {
-	    pNode = (stDlistNode *)malloc(sizeof(stDlistNode));
+	    pNode = (stDlistNode *)malloc(sizeof(stDlistNode));		//新建节点，为节点分配空间
 	    if (pNode == NULL)
 	    {
 		    return -1;
 	    }
     }
 
-    pNode->data = data;
+    pNode->data = data;			
 	pNode->prev = NULL;
 	pNode->next = NULL;
 
-	if (dlist->size == 0)
+	if (dlist->size == 0)		//如果链表长度为0，即链表当前无节点，
 	{
 		dlist->head = pNode;
 		dlist->tail = pNode;
 	}
-	else
+	else                           //如果链表已有节点，则令新插入节点为头节点
 	{
 		pNode->next = dlist->head;
 		dlist->head->prev = pNode;
 		dlist->head = pNode;			
 	}
 
-	dlist->size++;
+	dlist->size++;		//每成功调用一次，链表长度+1
 	return 0;
 }
 
-stDlistNode * dlist_remove_tail(stDlistHead *dlist)
+stDlistNode * dlist_remove_tail(stDlistHead *dlist)		//删除尾部节点
 {
 	stDlistNode *pNode = NULL;
 
@@ -139,14 +139,14 @@ stDlistNode * dlist_search(stDlistHead * dlist,int data)
 	return NULL;
 }
 
-void dlist_dump(stDlistHead *dlist)
+void dlist_dump(stDlistHead *dlist)		//显示链表中的数据
 {
 	int no = 0;
 	stDlistNode *pNode = dlist->head;
-	while(pNode != NULL)
+	while(pNode != NULL)		
 	{
 		printf("\r\n [%d] = %d",no++,pNode->data);
-		pNode = pNode->next;
+		pNode = pNode->next;		//将pNode的下一个节点赋值给pNode，推进循环
 	}
 
 	return;
