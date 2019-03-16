@@ -2,6 +2,12 @@ package Stack;
 
 import java.util.Iterator;
 
+/**
+ * 顺序栈的动态扩容
+ * Author: PeiJiaNi
+ * @param <T>  顺序栈元素类型
+ */
+
 public class DynamicStackBaseArray<T> implements Iterable<T> {
     private T[] items;   // 数组
     private int count;   // 栈中的元素个数
