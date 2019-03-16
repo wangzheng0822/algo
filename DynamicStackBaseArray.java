@@ -25,7 +25,7 @@ public class DynamicStackBaseArray<T> implements Iterable<T> {
     }
 
     /**
-     * 入栈操作 平均时间复杂度O(1)s
+     * 入栈操作 平均时间复杂度O(1)
      *
      * @param item 入栈元素
      */
