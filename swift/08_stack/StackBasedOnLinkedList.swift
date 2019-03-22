@@ -14,8 +14,10 @@ struct StackBasedOnLinkedList<Element>: Stack {
     
     var size: Int {
         var count = 0
-        while head.next != nil {
+        var cur = head.next
+        while cur != nil {
             count += 1
+            cur = cur?.next
         }
         return count
     }

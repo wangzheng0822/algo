@@ -151,7 +151,7 @@ function isEven(num){
 }
 var num = [1,2,3,4,5,6,7,8];
 var someEven = num.some(isEven);
-if(even){
+if(someEven){
   console.log("有些数字是偶数");
 }else{
   console.log("没有数字是偶数");
@@ -208,14 +208,24 @@ console.log(pass)；
 #### 二维数组
 JavaScript 可以通过在数组里在嵌套一个数组来形成二维数组。
 ```
-var grades = [[88,86,82],[91,82,83],[77,72,79]];
+var grades = [
+  [88,86,82],
+  [91,82,83],
+  [77,72,79],
+  [86,80,82]
+];
 console.log(grades[1][2]);    // 83
 ```
 #### 处理二维数组
 对于二维数组的处理可以分为两种，一种按列访问，一种是按行访问。
-按列访问，外层循环对应行，内层循环对应列。例如，上述的数组，每一行对应一个学生的成绩记录，可以通过相加所有成绩，然后除以科目数来得到该生的平均成绩。
+按列访问，外层循环对应行，内层循环对应列。例如，上述的数组，每一行对应一个学生三门科目的成绩记录，可以通过相加所有成绩，然后除以科目数来得到该生的平均成绩。
 ```
-var grades = [[88,86,82],[91,82,83],[77,72,79]];
+var grades = [
+  [88,86,82],
+  [91,82,83],
+  [77,72,79],
+  [86,80,82]
+];
 var total = 0;
 var average = 0.0;
 for(var row = 0;row<grades.length;++row){
@@ -232,27 +242,34 @@ for(var row = 0;row<grades.length;++row){
 > student 1 average: 85.33
 student 2 average: 85.33
 student 3 average: 76.00
+student 4 average: 82.67
 
 
-对于按行访问，则外层循环对应列，内城循环对应行，例如还是上述数组，现在的数组表示一个学生各科的分数，我们来求其平均成绩
+对于按行访问，则外层循环对应列，内层循环对应行，例如还是上述数组，现在的数组表示一个学生三场考试四门科目的各科分数，我们来求每场考试的平均成绩
 ```
-var grades = [[88,86,82],[91,82,83],[77,72,79]];
+var grades = [
+  [88,86,82],
+  [91,82,83],
+  [77,72,79],
+  [86,80,82]
+];
 var total = 0;
 var average = 0.0;
-for(var col = 0;col <grades.length;++col ){
-  for(var row= 0;row<grades[col ].length;++row){
+//这里假设每场考试的科目都一样，所以可以通过grades[0].length来获取考试数量
+for(var col = 0;col <grades[0].length;++col ){
+  for(var row= 0;row<grades.length;++row){
     total += grades[row][col];
   }
-  average = total/grades[col ].length;
+  average = total/grades.length;
   console.log("exam "+parseInt(col +1)+" average: "+average.toFixed(2));
   total = 0;
   average = 0.0;
 }
 ```
 输出结果为：
-> exam 1 average: 85.33
+> exam 1 average: 85.50
 exam 2 average: 80.00
-exam 3 average: 81.33
+exam 3 average: 81.50
 
 其实只要调整 for 循环的顺序就可以控制是按行还是按列来输出，此外，JavaScript 还可以处理一些参差不齐的数组，比如一个二维数组中的数组，有的是两个元素，有的是四个元素，并不是都相同，在这种情况下，JavaScript 依然可以处理运行而不报错，这是因为不管多或少，都可以通过 length 属性来计算。
 #### 对象数组
