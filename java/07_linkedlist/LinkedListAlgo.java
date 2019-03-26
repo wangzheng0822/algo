@@ -20,12 +20,7 @@ public class LinkedListAlgo {
       pre = curr;
       curr = next;
     }
-    //我的比教程更加简洁
-    if (pre == null) {
-      return list;
-    } else {
-      return pre;
-    }
+    return pre;
   }
 
   // 检测环
