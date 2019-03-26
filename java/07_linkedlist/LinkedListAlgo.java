@@ -13,21 +13,19 @@ public class LinkedListAlgo {
 
   // 单链表反转
   public static Node reverse(Node list) {
-    Node headNode = null;
-
-    Node previousNode = null;
-    Node currentNode = list;
-    while (currentNode != null) {
-      Node nextNode = currentNode.next;
-      if (nextNode == null) {
-        headNode = currentNode;
-      }
-      currentNode.next = previousNode;
-      previousNode = currentNode;
-      currentNode = nextNode;
+    Node curr = list, pre = null;
+    while (curr != null) {
+      Node next = curr.next;
+      curr.next = pre;
+      pre = curr;
+      curr = next;
     }
-
-    return headNode;
+    //我的比教程更加简洁
+    if (pre == null) {
+      return list;
+    } else {
+      return pre;
+    }
   }
 
   // 检测环
