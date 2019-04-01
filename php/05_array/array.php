@@ -52,8 +52,8 @@ class MyArray
      */
     private function checkOutOfRange($index)
     {
-        if ($index >= $this->length) {
-            return true;
+        if($index >= $this->length) {
+           return true;
         }
         return false;
     }
