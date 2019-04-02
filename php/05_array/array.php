@@ -52,7 +52,7 @@ class MyArray
      */
     private function checkOutOfRange($index)
     {
-        if($index > $this->length+1) {
+        if($index >= $this->length) {
            return true;
         }
         return false;
@@ -74,7 +74,7 @@ class MyArray
         if($this->checkIfFull()) {
             return 2;
         }
-        if($this->checkOutOfRange($index)) {
+        if($index != $this-length && $this->checkOutOfRange($index)) {
             return 3;
         }
 
