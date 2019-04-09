@@ -13,7 +13,7 @@ function expression($str)
     $operStack[] = NULL;
 
     for ($i = 0; $i < count($arr); $i++){
-        if (ord($arr[$i]) >= 48 && ord($arr[$i] <= 57)){
+        if (ord($arr[$i]) >= 48 && ord($arr[$i]) <= 57){
             array_push($numStack, $arr[$i]);
             continue;
         }
