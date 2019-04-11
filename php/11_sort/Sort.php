@@ -5,7 +5,7 @@ function insertSort(&$arr)
     $i = 0;
     $len = count($arr);
 
-    while($i < $len){
+    while(($i+1) < $len){
         $data = $arr[$i+1];
         for ($j = $i;$j >=0 ;$j-- ){
             if ($data >= $arr[$j]){
