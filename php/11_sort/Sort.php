@@ -1,24 +1,25 @@
 <?php
 
-function insertSort(&$arr)
+function insertionSort(&$arr)
 {
-    $i = 0;
-    $len = count($arr);
+    $n = count($arr);
+    if ($n <= 1) return;
 
-    while($i < $len){
-        $data = $arr[$i+1];
-        for ($j = $i;$j >=0 ;$j-- ){
-            if ($data >= $arr[$j]){
-                array_splice($arr, $i+1, 1);
-                array_splice($arr, ++$j, 0, $data);
+    for ($i = 1; $i < $n; ++$i) {
+        $value = $arr[$i];
+        $j = $i - 1;
+        // 查找插入的位置
+        for (; $j >= 0; --$j) {
+            if ($arr[$j] > $value) {
+                $arr[$j + 1] = $arr[$j];  // 数据移动
+            } else {
                 break;
             }
         }
-        
-        $i++;
+        $arr[$j + 1] = $value; // 插入数据
     }
 }
 
 $arr = [1,4,6,2,3,5,4];
-insertSort($arr);
+insertionSort($arr);
 var_dump($arr);
