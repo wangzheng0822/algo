@@ -1,5 +1,7 @@
 # 数据结构和算法必知必会的50个代码实现
-## (关注“小争哥”公众号，获取我的更多技术、非技术分享)
+### 微信搜索我的公众号“小争哥”，或者微信扫描下面二维码, 获取更多压箱底的干货分享
+
+![t2](https://github.com/wangzheng0822/markdownphotos/blob/master/pics/qrcode_for_gh_9b0e7afdff20_258.jpg)
 
 ## 数组
 * 实现一个支持动态扩容的数组

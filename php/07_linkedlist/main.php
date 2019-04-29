@@ -191,7 +191,7 @@ Class SingleLinkedListAlgo
             ++$i;
         }
 
-        if ($fast == null) {
+        if (null == $fast) {
             return true;
         }
 
