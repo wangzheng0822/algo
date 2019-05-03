@@ -48,11 +48,19 @@ func postOrderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
-	if root.Left == nil && root.Right == nil {
-		return []int{root.Val}
+	var res []int
+	if root.Left != nil {
+		lres := postOrderTraversal(root.Left)
+		if len(lres) > 0 {
+			res = append(res, lres...)
+		}
 	}
-	res := postOrderTraversal(root.Left)
-	res = append(res, postOrderTraversal(root.Right)...)
+	if root.Right != nil {
+		rres := postOrderTraversal(root.Right)
+		if len(rres) > 0 {
+			res = append(res, rres...)
+		}
+	}
 	res = append(res, root.Val)
 	return res
 }
