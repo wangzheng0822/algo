@@ -11,13 +11,9 @@ from typing import List
 def bubble_sort(a: List[int]):
     if len(a) <= 1: return
     
-<<<<<<< HEAD
-    made_swap = False
-    for i in range(len(a)):
-=======
     for i in range(len(a)):
         made_swap = False
->>>>>>> upstream/master
+
         for j in range(len(a) - i - 1):
             if a[j] > a[j+1]:
                 a[j], a[j+1] = a[j+1], a[j]
@@ -42,10 +38,11 @@ def selection_sort(a: List[int]):
     
     for i in range(len(a)):
         min_index = i
-        min_val = a[i]
+        # 此value没有必要，可直接拿掉
+        # min_val = a[i]
         for j in range(i, len(a)):
-            if a[j] < min_val:
-                min_val = a[j]
+            if a[j] < a[j+1]:
+                # min_val = a[j]
                 min_index = j
         a[i], a[min_index] = a[min_index], a[i]
 
