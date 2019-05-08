@@ -29,7 +29,10 @@ public class Sorts {
         }
     }
 
-    //冒泡排序改进
+    /**
+     * 冒泡排序改进:在每一轮排序后记录最后一次元素交换的位置,作为下次比较的边界,
+     * 对于边界外的元素在下次循环中无需比较.
+     */ 
     public static void bubbleSort2(int[] a, int n) {
         if (n <= 1) return;
 
