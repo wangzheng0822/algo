@@ -81,7 +81,7 @@ class LinkedList {
   
   // 遍历显示所有节点
   display () {
-    let currentNode = this.head.next
+    let currentNode = this.head.next // 忽略头指针的值
     while (currentNode !== null) {
       console.log(currentNode.element)
       currentNode = currentNode.next
@@ -100,7 +100,7 @@ LList.insert('zhou', 'zhao') // 尾元素后插入
 LList.display() // chen -> qian -> curry -> sang -> zhao -> zhou
 console.log('-------------remove item------------')
 LList.remove('curry')
-LList.display()
+LList.display() // chen -> qian -> sang -> zhao -> zhou
 console.log('-------------find by item------------')
 LList.findByValue('chen')
 console.log('-------------find by index------------')
