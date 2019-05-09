@@ -100,7 +100,7 @@ LList.insert('zhou', 'zhao') // 尾元素后插入
 LList.display() // chen -> qian -> curry -> sang -> zhao -> zhou
 console.log('-------------remove item------------')
 LList.remove('curry')
-LList.display()
+LList.display() // chen -> qian -> sang -> zhao -> zhou
 console.log('-------------find by item------------')
 LList.findByValue('chen')
 console.log('-------------find by index------------')
