@@ -105,3 +105,9 @@ console.log('-------------find by item------------')
 LList.findByValue('chen')
 console.log('-------------find by index------------')
 LList.findByIndex(2)
+console.log('-------------与头结点同值元素测试------------')
+LList.insert('head', 'sang')
+LList.display() // chen -> qian -> sang -> head -> zhao -> zhou
+LList.findPrev('head') // sang
+LList.remove('head')
+LList.display() // chen -> qian -> sang -> zhao -> zhou
