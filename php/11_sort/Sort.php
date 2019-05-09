@@ -8,7 +8,7 @@ function bubbleSort(&$arr)
     for ($i = 0; $i < $length; $i++) {
         $flag = false;
         for ($j = 0; $j < $length - $i - 1; $j++) {
-            if ($arr[$i] > $arr[$j + 1]) {
+            if ($arr[$j] > $arr[$j + 1]) {
                 $tmp = $arr[$j];
                 $arr[$j] = $arr[$j + 1];
                 $arr[$j + 1] = $tmp;
