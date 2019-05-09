@@ -61,14 +61,13 @@ class LinkedList {
   
   // 根据值删除
   remove (item) {
-    const desNode = this.findByValue(item)
-    if (desNode === -1) {
+    const prevNode = this.findPrev(item)
+    if (prevNode === -1) {
       console.log('未找到元素')
       return
     }
-    const prevNode = this.findPrev(item)
-    prevNode.next = desNode.next
-  } 
+    prevNode.next = prevNode.next.next
+  }
   
   // 遍历显示所有节点
   display () {
