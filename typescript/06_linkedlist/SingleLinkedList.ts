@@ -103,8 +103,8 @@ class SingleLinkedList<T> implements List<T> {
 }
 
 class SingleNode<T> {
-  value: T
-  next: SingleNode<T> | null
+  public value: T
+  public next: SingleNode<T> | null
 
   constructor(value: T, next: SingleNode<T> | null = null) {
     this.value = value
