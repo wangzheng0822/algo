@@ -15,7 +15,7 @@ class LinkedList {
   }
   // 根据value查找节点
   findByValue (item) {
-    let currentNode = this.head
+    let currentNode = this.head.next
     while (currentNode !== null && currentNode.element !== item) {
       currentNode = currentNode.next
     }
@@ -23,9 +23,9 @@ class LinkedList {
     return currentNode === null ? -1 : currentNode
   } 
   
-  // 根据index查找节点
+  // 根据index查找节点，下标从0开始
   findByIndex (index) {
-    let currentNode = this.head
+    let currentNode = this.head.next
     let pos = 0
     while (currentNode !== null && pos !== index) {
       currentNode = currentNode.next
@@ -33,7 +33,17 @@ class LinkedList {
     }
     console.log(currentNode)
     return currentNode === null ? -1 : currentNode
-  } 
+  }
+
+  // 向链表末尾追加节点
+  append(newElement) {
+    const newNode = new Node(newElement)
+    let currentNode = this.head
+    while(currentNode.next) {
+      currentNode = currentNode.next
+    }
+    currentNode.next = newNode
+  }
   
   // 指定元素向后插入
   insert (newElement, element) {
@@ -61,18 +71,17 @@ class LinkedList {
   
   // 根据值删除
   remove (item) {
-    const desNode = this.findByValue(item)
-    if (desNode === -1) {
+    const prevNode = this.findPrev(item)
+    if (prevNode === -1) {
       console.log('未找到元素')
       return
     }
-    const prevNode = this.findPrev(item)
-    prevNode.next = desNode.next
-  } 
+    prevNode.next = prevNode.next.next
+  }
   
   // 遍历显示所有节点
   display () {
-    let currentNode = this.head
+    let currentNode = this.head.next // 忽略头指针的值
     while (currentNode !== null) {
       console.log(currentNode.element)
       currentNode = currentNode.next
@@ -81,14 +90,24 @@ class LinkedList {
 }
 // Test
 const LList = new LinkedList()
-LList.insert('chen', 'head')
-LList.insert('curry', 'chen')
-LList.insert('sang', 'head')
-LList.insert('zhao', 'head')
+LList.append('chen')
+LList.append('curry')
+LList.append('sang')
+LList.append('zhao') // chen -> curry -> sang -> zhao
+console.log('-------------insert item------------')
+LList.insert('qian', 'chen') // 首元素后插入
+LList.insert('zhou', 'zhao') // 尾元素后插入
+LList.display() // chen -> qian -> curry -> sang -> zhao -> zhou
 console.log('-------------remove item------------')
 LList.remove('curry')
-LList.display()
+LList.display() // chen -> qian -> sang -> zhao -> zhou
 console.log('-------------find by item------------')
 LList.findByValue('chen')
 console.log('-------------find by index------------')
 LList.findByIndex(2)
+console.log('-------------与头结点同值元素测试------------')
+LList.insert('head', 'sang')
+LList.display() // chen -> qian -> sang -> head -> zhao -> zhou
+LList.findPrev('head') // sang
+LList.remove('head')
+LList.display() // chen -> qian -> sang -> zhao -> zhou
