@@ -33,7 +33,7 @@ class LinkedListAlog {
     let slow: SingleNode<T> | null = list
     while (fast && fast.next) {
       fast = fast.next.next
-      slow = slow!!.next
+      slow = slow!.next
       if (fast === slow) return true
     }
     return false
@@ -68,7 +68,7 @@ class LinkedListAlog {
     let slow = list
     while (fast && fast.next) {
       fast = fast.next.next
-      slow = slow.next!!
+      slow = slow.next!
     }
     return slow
   }
@@ -120,7 +120,6 @@ class SingleNode<T> {
     this.next = next
   }
 }
-
 
 const node1 = new SingleNode(1)
 node1.next = new SingleNode(3)
