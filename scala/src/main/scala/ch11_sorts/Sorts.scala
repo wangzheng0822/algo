@@ -8,63 +8,63 @@ import scala.util.control.Breaks.{break, breakable}
   * Author: yangchuz
   */
 object Sorts {
-  def main(args: Array[String]): Unit ={
-//    println(bubbleSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-//    println(insertSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-    println(selectionSort(Array(0, 6, 2, 3, 8, 5, 6, 7), 8).mkString(", "))
-  }
 
-  def bubbleSort(arr: Array[Int], n:Int): Array[Int] = {
-    val n = arr.length
+  def bubbleSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
     breakable {
-      for(i <- (n-1) to (1, -1)){
-        var flag = false
-        for(j <- 0 until i){
-          if(arr(j) > arr(j+1)){
-            val tmp = arr(j)
-            arr(j) = arr(j+1)
-            arr(j+1) = tmp
-            flag = true
+      for (i <- Range(0, length)) {
+        var exit = true
+        for (j <- Range(0, length - i - 1)) {
+          if (items(j + 1) < items(j)) {
+            val temp = items(j + 1)
+            items(j + 1) = items(j)
+            items(j) = temp
+            exit = false
           }
         }
-        if(!flag){
+        if (exit) {
           break
         }
       }
     }
-    arr
+    items
   }
 
-  def insertSort(arr: Array[Int], n:Int): Array[Int] = {
-    for(i <- 1 until n){
-      val tmp = arr(i)
-      breakable{
-        for(j <- (i-1) to (0, -1)){
-          if(tmp < arr(j)){
-            arr(j+1) = arr(j)
-          }else{
-            arr(j+1) = tmp
+  def insertSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
+    for (i <- Range(1, length)) {
+      val value = items(i)
+      var j = i - 1
+      breakable {
+        while (j >= 0) {
+          if (items(j) > value) {
+            items(j + 1) = items(j)
+          } else {
             break
           }
+          j -= 1
         }
       }
+      items(j + 1) = value
     }
-    arr
+    items
   }
 
-  def selectionSort(arr: Array[Int], n:Int): Array[Int] = {
-    for(i <- 0 until n){
-      var min = i
-      for(j <- (i + 1) until n){
-        if(arr(j) < arr(min)){
-          min = j
+  def selectionSort(items: Array[Int]): Array[Int] = {
+    val length = items.length
+    for (i <- Range(0, length)) {
+      var minIndex = i
+      for (j <- Range(i + 1, length)) {
+        if (items(j) < items(minIndex)) {
+          minIndex = j
         }
       }
 
-      val tmp = arr(i)
-      arr(i) = arr(min)
-      arr(min) = tmp
+      //put the min value to the front
+      val temp = items(i)
+      items(i) = items(minIndex)
+      items(minIndex) = temp
     }
-    arr
+    items
   }
 }

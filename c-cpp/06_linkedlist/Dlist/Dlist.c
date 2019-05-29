@@ -11,7 +11,7 @@
 
 
 
-void dlist_init(stDlistHead *dlist)
+void dlist_init(stDlistHead *dlist)		//链表初始化
 {
 	dlist->size = 0;
 	dlist->head = NULL;
@@ -19,7 +19,7 @@ void dlist_init(stDlistHead *dlist)
 	return;
 }
 
-void dlist_destory(stDlistHead *dlist)
+void dlist_destory(stDlistHead *dlist)		//删除链表
 {
 	stDlistNode *pNode = NULL;
 	
@@ -36,38 +36,38 @@ void dlist_destory(stDlistHead *dlist)
 	return;
 }
 
-int dlist_insert_head(stDlistHead *dlist,stDlistNode *pNode,int data)
+int dlist_insert_head(stDlistHead *dlist,stDlistNode *pNode,int data)		//插入头结点，操作的链表，操作的节点，数据
 {
-   if(pNode == NULL)
+   if(pNode == NULL)		//当只传递一个数据时
    {
-	    pNode = (stDlistNode *)malloc(sizeof(stDlistNode));
+	    pNode = (stDlistNode *)malloc(sizeof(stDlistNode));		//新建节点，为节点分配空间（malloc（）可能需要#include<malloc.h>）
 	    if (pNode == NULL)
 	    {
 		    return -1;
 	    }
     }
 
-    pNode->data = data;
+    pNode->data = data;			
 	pNode->prev = NULL;
 	pNode->next = NULL;
 
-	if (dlist->size == 0)
+	if (dlist->size == 0)		//如果链表长度为0，即链表当前无节点，
 	{
 		dlist->head = pNode;
 		dlist->tail = pNode;
 	}
-	else
+	else                           //如果链表已有节点，则令新插入节点为头节点
 	{
 		pNode->next = dlist->head;
 		dlist->head->prev = pNode;
 		dlist->head = pNode;			
 	}
 
-	dlist->size++;
+	dlist->size++;		//每成功调用一次，链表长度+1
 	return 0;
 }
 
-stDlistNode * dlist_remove_tail(stDlistHead *dlist)
+stDlistNode * dlist_remove_tail(stDlistHead *dlist)		//删除尾部节点,并返回删除节点
 {
 	stDlistNode *pNode = NULL;
 
@@ -91,7 +91,7 @@ stDlistNode * dlist_remove_tail(stDlistHead *dlist)
 	return pNode;
 }
 
-void dlist_remove_node(stDlistHead * dlist,stDlistNode *pNode)
+void dlist_remove_node(stDlistHead * dlist,stDlistNode *pNode) 		//删除指定节点
 {
 	if ((dlist == NULL)||(pNode == NULL))
 	{
@@ -119,12 +119,12 @@ void dlist_remove_node(stDlistHead * dlist,stDlistNode *pNode)
 	
 	if (dlist->size == 0)
 	{
-		memset(dlist,0,sizeof(stDlistHead));
+		memset(dlist,0,sizeof(stDlistHead)); 		//将dlist占用内存块的所有值置为0，也就是清空head,tail指针内容
 	}
 
 	return;
 }
-stDlistNode * dlist_search(stDlistHead * dlist,int data)
+stDlistNode * dlist_search(stDlistHead * dlist,int data) 		//根据值搜索节点，并返回
 {
 	stDlistNode *pNode = dlist->head;
 	while(pNode != NULL)
@@ -139,30 +139,30 @@ stDlistNode * dlist_search(stDlistHead * dlist,int data)
 	return NULL;
 }
 
-void dlist_dump(stDlistHead *dlist)
+void dlist_dump(stDlistHead *dlist)		//显示链表中的数据
 {
 	int no = 0;
 	stDlistNode *pNode = dlist->head;
-	while(pNode != NULL)
+	while(pNode != NULL)		
 	{
 		printf("\r\n [%d] = %d",no++,pNode->data);
-		pNode = pNode->next;
+		pNode = pNode->next;		//将pNode的下一个节点赋值给pNode，推进循环
 	}
 
 	return;
 }
 
 
-void Lru_dlist(stDlistHead *dlist,int data)
+void Lru_dlist(stDlistHead *dlist,int data) 		//LRU（最近最少使用）缓存淘汰算法
 {
 	stDlistNode *pNode = NULL;
 
-	pNode = dlist_search(dlist,data);
-	if (pNode != NULL)
+	pNode = dlist_search(dlist,data);		
+	if (pNode != NULL) 				//如果在链表中找到这个值，则删除储存这个值的节点，之后吧这个节点放在头部
 	{
 		dlist_remove_node(dlist,pNode);
 	}
-	else if(dlist->size >= 4)
+	else if(dlist->size >= 4)			//没在链表中找到，且链表长度大于4，则从链表中删除尾部节点，将新数据放在头部
 	{
 		pNode = dlist_remove_tail(dlist);
 

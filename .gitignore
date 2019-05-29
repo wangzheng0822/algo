@@ -19,6 +19,7 @@
 *.tar.gz
 *.rar
 *.DS_Store
+*.exe
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -29,3 +30,22 @@ hs_err_pid*
 
 # WebStorm
 .idea/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
+**/*.idea
+**/*.iml
+**/*out
