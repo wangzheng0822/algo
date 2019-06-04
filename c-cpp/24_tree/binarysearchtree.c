@@ -95,18 +95,26 @@ Status Delete(BTreePtr T, ElemType e) {
     }
 
     //有一个节点
-    if ((p->lchild != NULL) || (p->rchild != NULL)) {
+    if ((p->lchild != NULL) || (p->rchild != NULL)) { //应该将原有的pp同child连接在一起
 
         if (p->lchild) {
             child = p->lchild;
         } else {
            child = p->rchild;
         }
+        if(pp->data>p->data)
+        {
+            pp->lchild=child;
+        } else
+        {
+            pp->rchild=child;
+        }
         free(p);
+        return TRUE;
     }
 
     //没有节点
-    if (pp->lchild == p) {
+    if (pp->lchild == p) {//这里面临pp除p以外的节点为null的情况
         pp->lchild = child;
     } else {
         pp->rchild = child;
