@@ -3,24 +3,19 @@
  * 原地排序，空间复杂度O（1），比归并排序使用更广泛
  * 平均复杂度基本接近O(nlg(n))
  */
-interface ArraySort {
-  sort(array: number[]): void
-}
 
-class QuickSort implements ArraySort {
-  sort(array: number[]): void {
+export class QuickSort {
+  static sort(array: number[]): void {
     this.sortInternally(array, 0, array.length - 1)
   }
-
-  private sortInternally(array: number[], p: number, r: number) {
+  private static sortInternally(array: number[], p: number, r: number) {
     if (p >= r) return
     // 获取分界点
     const q: number = this.partition(array, p, r)
     this.sortInternally(array, p, q - 1)
     this.sortInternally(array, q + 1, r)
   }
-
-  private partition(array: number[], p: number, r: number): number {
+  private static partition(array: number[], p: number, r: number): number {
     /**
      * 参考值pivot，小于pivot的放在左边，大于pivot的在右边，最后再把分界点的值和它做交换
      * 这样返回的index一定是值在中间的下标
@@ -39,7 +34,7 @@ class QuickSort implements ArraySort {
     return index - 1
   }
 
-  private swap(array: number[], p: number, q: number) {
+  private static swap(array: number[], p: number, q: number) {
     const temp = array[p]
     array[p] = array[q]
     array[q] = temp
@@ -47,6 +42,5 @@ class QuickSort implements ArraySort {
 }
 
 const testSort = [1, 3, 2, 3, 10, 9, 7, 6, 0, -12]
-const quickSort: ArraySort = new QuickSort()
-quickSort.sort(testSort)
+QuickSort.sort(testSort)
 console.log(testSort)
