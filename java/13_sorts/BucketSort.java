@@ -14,7 +14,7 @@ public class BucketSort {
      * @param bucketSize 桶容量
      */
     public static void bucketSort(int[] arr, int bucketSize) {
-        if (arr.length == 0) {
+        if (arr.length < 2) {
             return;
         }
 
