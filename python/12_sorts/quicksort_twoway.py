@@ -1,3 +1,6 @@
+import random
+
+
 def QuickSort(arr):
     # 双向排序: 提高非随机输入的性能
     # 不需要额外的空间,在待排序数组本身内部进行排序
