@@ -68,10 +68,10 @@ const biaryFindLastSmall = (sortedArr, target) => {
     let high = sortedArr.length - 1
     while (low <= high) {
         const mid = Math.floor((low + high) / 2)
-        if (sortedArr[mid] > target) {
+        if (target < sortedArr[mid]) {
             high = mid - 1
         } else {
-            if (mid === sortedArr.length - 1 || sortedArr[mid + 1] > target) return mid
+            if (mid === sortedArr.length - 1 || sortedArr[mid + 1] >= target) return mid
             low = mid + 1
         }
     }
