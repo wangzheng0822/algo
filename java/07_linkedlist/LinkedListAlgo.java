@@ -88,7 +88,7 @@ public class LinkedListAlgo {
  	*     ListNode(int x) { val = x; }
  	* }
 	*/
- 	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+   public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode soldier = new ListNode(0); //利用哨兵结点简化实现难度 技巧三
         ListNode p = soldier;
         
