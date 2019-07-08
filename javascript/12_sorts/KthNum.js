@@ -23,7 +23,7 @@ function partition(arr, start, end) {
   let i = start;
   let pivot = arr[end];
   for (let j = start; j < end; j++) {
-    if (arr[j] > pivot) {
+    if (arr[j] < pivot) {
       swap(arr, i, j);
       i += 1;
     }
