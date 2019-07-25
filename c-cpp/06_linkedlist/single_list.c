@@ -47,7 +47,8 @@ struct single_list* del(struct single_list **prev)
 
 	if (!prev)
 		return NULL;
-
+	if (*prev == null)
+		return NULL;
 	tmp = *prev;
 	*prev = (*prev)->next;
 	tmp->next = NULL;
