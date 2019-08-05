@@ -21,9 +21,6 @@ public class CountingSort {
 
     // 申请一个计数数组c，下标大小[0,max]
     int[] c = new int[max + 1];
-    for (int i = 0; i < max + 1; ++i) {
-      c[i] = 0;
-    }
 
     // 计算每个元素的个数，放入c中
     for (int i = 0; i < n; ++i) {

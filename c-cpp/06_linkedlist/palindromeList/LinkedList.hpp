@@ -58,7 +58,7 @@ LinkedList::~LinkedList() {
 
 ListNode* LinkedList::FindElem(int elemVal) {
     ListNode *p;
-    for (p = this -> head; p != nullptr; p = p -> next) {
+    for (p = this -> head -> next; p != nullptr; p = p -> next) {
         if (p -> val == elemVal) {
             return p;
         }
