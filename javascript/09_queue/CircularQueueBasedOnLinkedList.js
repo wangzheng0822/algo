@@ -34,18 +34,18 @@ class CircularQueue {
     }
 
     dequeue() {
+        if(this.head == null) return -1
+
         if (this.head === this.tail) {
             const value = this.head.element
             this.head = null
             return value
-        } else if (this.head !== null) {
+        } else {
             const value = this.head.element
             this.head = this.head.next
             this.tail.next = this.head
             return value
-        } else {
-            return -1
-        }
+        } 
     }
 
     display() {
