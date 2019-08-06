@@ -219,7 +219,7 @@ public class SinglyLinkedList {
            if(q.next == null){
                //　p 一定为整个链表的中点，且节点数目为奇数
                rightLink = p.next;
-               leftLink = inverseLinkList(p).next;
+               leftLink = inverseLinkList(p.next);
                System.out.println("左边第一个节点"+leftLink.data);
                System.out.println("右边第一个节点"+rightLink.data);
 
