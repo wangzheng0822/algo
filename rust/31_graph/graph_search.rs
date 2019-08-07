@@ -56,7 +56,12 @@ impl Graph {
         self.draw(&prev, s, t);
     }
 
-    fn recur_dfs(&self, s: i32, t: i32, visited: &mut Vec<bool>, prev: &mut Vec<i32>, found: &mut bool) {
+    fn recur_dfs(&self,
+                 s:       i32,
+                 t:       i32,
+                 visited: &mut Vec<bool>,
+                 prev:    &mut Vec<i32>,
+                 found:   &mut bool) {
         if *found == true { return; }
         visited[s as usize] = true;
         if s == t {
