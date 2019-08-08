@@ -144,7 +144,7 @@ public class LinkedListAlgo {
     Node fast = list;
     Node slow = list;
 
-    while (fast.next != null && fast.next.next != null) {
+    while (fast != null && fast.next != null) {
       fast = fast.next.next;
       slow = slow.next;
     }
