@@ -5,7 +5,7 @@
  * @Modified By:
  * @Modified Date:
  */
-public class MyHashTable<K, V> {
+public class HashTable<K, V> {
 
     /**
      * 散列表默认长度
@@ -32,7 +32,7 @@ public class MyHashTable<K, V> {
      */
     private int use = 0;
 
-    public MyHashTable() {
+    public HashTable() {
         table = (Entry<K, V>[]) new Entry[DEFAULT_INITAL_CAPACITY];
     }
 
