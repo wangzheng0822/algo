@@ -52,7 +52,7 @@ class MyArray
      */
     private function checkOutOfRange($index)
     {
-        if($index > $this->length+1) {
+        if($index >= $this->length) {
            return true;
         }
         return false;
@@ -68,18 +68,16 @@ class MyArray
     {
         $index = intval($index);
         $value = intval($value);
-        if($index < 0) {
+        if ($index < 0) {
             return 1;
         }
-        if($this->checkIfFull()) {
+
+        if ($this->checkIfFull()) {
             return 2;
         }
-        if($this->checkOutOfRange($index)) {
-            return 3;
-        }
 
-        for($i=$this->length-1;$i>=$index;$i--) {
-            $this->data[$i+1] = $this->data[$i];
+        for ($i = $this->length - 1; $i >= $index; $i--) {
+            $this->data[$i + 1] = $this->data[$i];
         }
 
         $this->data[$index] = $value;
@@ -96,22 +94,21 @@ class MyArray
     {
         $value = 0;
         $index = intval($index);
-        if($index < 0) {
+        if ($index < 0) {
             $code = 1;
-            return array($code, $value);
+            return [$code, $value];
         }
-        if($index != $this->length+1 && $this->checkOutOfRange($index)) {
+        if ($this->checkOutOfRange($index)) {
             $code = 2;
-            return array($code, $value);
+            return [$code, $value];
         }
 
         $value = $this->data[$index];
-        for($i=$index;$i<$this->length-1;$i++) {
-            $this->data[$i] = $this->data[$i+1];
+        for ($i = $index; $i < $this->length - 1; $i++) {
+            $this->data[$i] = $this->data[$i + 1];
         }
-
         $this->length--;
-        return array(0, $value);
+        return [0, $value];
     }
 
     /**
@@ -123,23 +120,23 @@ class MyArray
     {
         $value = 0;
         $index = intval($index);
-        if($index < 0) {
+        if ($index < 0) {
             $code = 1;
-            return array($code, $value);
+            return [$code, $value];
         }
-        if($this->checkOutOfRange($index)) {
+        if ($this->checkOutOfRange($index)) {
             $code = 2;
-            return array($code, $value);
+            return [$code, $value];
         }
-        return array(0, $this->data[$index]);
+        return [0, $this->data[$index]];
     }
 
     public function printData()
     {
         $format = "";
-        for($i=0;$i<$this->length;$i++) {
-            $format .= "|".$this->data[$i];
+        for ($i = 0; $i < $this->length; $i++) {
+            $format .= "|" . $this->data[$i];
         }
-        print($format."\n");
+        print($format . "\n");
     }
 }
