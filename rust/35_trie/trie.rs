@@ -14,7 +14,7 @@ impl Trie {
     fn insert(&mut self, word: &str) {
         let mut curr = self;
         for i in word.chars().map(|c| (c as usize - 'a' as usize) as usize) {
-            curr = curr.nodes[i].get_or_insert_with(Box::new(Trie::new()));
+            curr = curr.nodes[i].get_or_insert_with(|| Box::new(Trie::new()));
         }
         curr.is_ending = true;
     }
