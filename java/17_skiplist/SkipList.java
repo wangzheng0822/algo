@@ -79,6 +79,11 @@ public class SkipList {
         }
       }
     }
+
+    while (levelCount>1&&head.forwards[levelCount]==null){
+      levelCount--;
+    }
+
   }
 
   // 随机 level 次，如果是奇数层数 +1，防止伪随机
