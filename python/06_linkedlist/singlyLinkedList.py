@@ -146,7 +146,7 @@ class SinglyLinkedList():
         not_found = False  # 如果在整个链表中都没有找到指定删除的Node节点，则该标记量设置为True
         while pro.next != node:
             if pro.next == None:  # 如果已经到链表的最后一个节点，则表明该链表中没有找到指定删除的Node节点
-                not_found == True
+                not_found = True
                 break
             else:
                 pro = pro.next
@@ -169,7 +169,7 @@ class SinglyLinkedList():
         not_found = False
         while node.data != value:
             if node.next == None:  # 如果已经到链表的最后一个节点，则表明该链表中没有找到执行Value值的Node节点
-                not_found == True
+                not_found = True
                 break
             else:
                 pro = node
