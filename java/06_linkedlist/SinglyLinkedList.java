@@ -301,6 +301,7 @@ public class SinglyLinkedList {
             return data;
         }
     }
+    
     public static void main(String[]args){
 
         SinglyLinkedList link = new SinglyLinkedList(); 
