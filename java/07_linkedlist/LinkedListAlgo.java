@@ -13,21 +13,14 @@ public class LinkedListAlgo {
 
   // 单链表反转
   public static Node reverse(Node list) {
-    Node headNode = null;
-
-    Node previousNode = null;
-    Node currentNode = list;
-    while (currentNode != null) {
-      Node nextNode = currentNode.next;
-      if (nextNode == null) {
-        headNode = currentNode;
-      }
-      currentNode.next = previousNode;
-      previousNode = currentNode;
-      currentNode = nextNode;
+    Node curr = list, pre = null;
+    while (curr != null) {
+      Node next = curr.next;
+      curr.next = pre;
+      pre = curr;
+      curr = next;
     }
-
-    return headNode;
+    return pre;
   }
 
   // 检测环
@@ -48,41 +41,74 @@ public class LinkedListAlgo {
   }
 
   // 有序链表合并
-  public static Node mergeSortedLists(Node la, Node lb) {
-    if (la == null) return lb;
-    if (lb == null) return la;
+  // public static Node mergeSortedLists(Node la, Node lb) {
+    // if (la == null) return lb;
+    // if (lb == null) return la;
 
-    Node p = la;
-    Node q = lb;
-    Node head;
-    if (p.data < q.data) {
-      head = p;
-      p = p.next;
-    } else {
-      head = q;
-      q = q.next;
+    // Node p = la;
+    // Node q = lb;
+    // Node head;
+    // if (p.data < q.data) {
+    //   head = p;
+    //   p = p.next;
+    // } else {
+    //   head = q;
+    //   q = q.next;
+    // }
+    // Node r = head;
+
+    // while (p != null && q != null) {
+    //   if (p.data < q.data) {
+    //     r.next = p;
+    //     p = p.next;
+    //   } else {
+    //     r.next = q;
+    //     q = q.next;
+    //   }
+    //   r = r.next;
+    // }
+
+    // if (p != null) {
+    //   r.next = p;
+    // } else {
+    //   r.next = q;
+    // }
+
+    // return head;
+   //}
+  	
+  	//-----------------------------------------
+
+    // 有序链表合并 Leetcode 21 
+    /**
+ 	* Definition for singly-linked list.
+ 	* public class ListNode {
+ 	*     int val;
+ 	*     ListNode next;
+ 	*     ListNode(int x) { val = x; }
+ 	* }
+	*/
+   public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode soldier = new ListNode(0); //利用哨兵结点简化实现难度 技巧三
+        ListNode p = soldier;
+        
+        while ( l1 != null && l2 != null ){
+            if ( l1.val < l2.val ){
+                p.next = l1;
+                l1 = l1.next;
+            }
+            else{
+                p.next = l2;
+                l2 = l2.next;
+            }
+            p = p.next;
+        }
+        
+        if (l1 != null) { p.next = l1; }
+        if (l2 != null) { p.next = l2; }
+        return soldier.next;   
     }
-    Node r = head;
 
-    while (p != null && q != null) {
-      if (p.data < q.data) {
-        r.next = p;
-        p = p.next;
-      } else {
-        r.next = q;
-        q = q.next;
-      }
-      r = r.next;
-    }
-
-    if (p != null) {
-      r.next = p;
-    } else {
-      r.next = q;
-    }
-
-    return head;
-  }
 
   // 删除倒数第K个结点
   public static Node deleteLastKth(Node list, int k) {
@@ -118,7 +144,7 @@ public class LinkedListAlgo {
     Node fast = list;
     Node slow = list;
 
-    while (fast.next != null && fast.next.next != null) {
+    while (fast != null && fast.next != null) {
       fast = fast.next.next;
       slow = slow.next;
     }

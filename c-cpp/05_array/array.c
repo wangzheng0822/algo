@@ -33,7 +33,7 @@ int insert(struct array *array, int elem)
 	}
 
 	if (idx < array->used)
-		memmove(&array->arr[array->used], &array->arr[idx],
+		memmove(&array->arr[idx+1], &array->arr[idx],
 			(array->used - idx) * sizeof(int));
 
 	array->arr[idx] = elem;
@@ -47,7 +47,7 @@ int delete(struct array *array, int idx)
 		return -1;
 
 	memmove(&array->arr[idx], &array->arr[idx+1],
-		(array->used - idx) * sizeof(int));
+		(array->used - idx - 1) * sizeof(int));
 	array->used--;
 	return 0;
 }

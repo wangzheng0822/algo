@@ -133,7 +133,7 @@ class SingleLinkedList
         $preNode = $this->head;
         // 遍历找到前置节点 要用全等判断是否是同一个对象
         // http://php.net/manual/zh/language.oop5.object-comparison.php
-        while ($curNode !== $node) {
+        while ($curNode !== $node && $curNode != null) {
             $preNode = $curNode;
             $curNode = $curNode->next;
         }

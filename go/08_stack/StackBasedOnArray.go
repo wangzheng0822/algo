@@ -28,11 +28,16 @@ func (this *ArrayStack) IsEmpty() bool {
 }
 
 func (this *ArrayStack) Push(v interface{}) {
-	this.data = append(this.data, v)
 	if this.top < 0 {
 		this.top = 0
 	} else {
 		this.top += 1
+	}
+
+	if this.top > len(this.data)-1 {
+		this.data = append(this.data, v)
+	} else {
+		this.data[this.top] = v
 	}
 }
 

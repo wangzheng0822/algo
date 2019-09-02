@@ -16,9 +16,16 @@ class ArrayQueue:
         self._tail = 0
 
     def enqueue(self, item: str) -> bool:
-        if self._tail == self._capacity: return False
+        if self._tail == self._capacity:
+            if self._head == 0:
+                return False
+            else:
+                for i in range(0, self._tail - self._head):
+                    self._items[i] = self._items[i + self._head]
+                self._tail = self._tail - self._head
+                self._head = 0
         
-        self._items.append(item)
+        self._items.insert(self._tail, item)
         self._tail += 1
         return True
     
@@ -27,6 +34,8 @@ class ArrayQueue:
             item = self._items[self._head]
             self._head += 1
             return item
+        else:
+            return None
     
     def __repr__(self) -> str:
         return " ".join(item for item in self._items[self._head : self._tail])
