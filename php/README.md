@@ -21,3 +21,7 @@
 
 #### 09_stack
 * 队列链表实现
+#### 10_heap
+* main 堆的基本操作,堆排序
+* findmiddle  动态数据流求中位数
+* topn 动态数据流求top k
