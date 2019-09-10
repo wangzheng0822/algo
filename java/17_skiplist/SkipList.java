@@ -1,6 +1,5 @@
 package skiplist;
 
-import java.util.Random;
 
 /**
  * 跳表的一种实现方法。
@@ -10,13 +9,12 @@ import java.util.Random;
  */
 public class SkipList {
 
+  private static final float SKIPLIST_P = 0.5f;
   private static final int MAX_LEVEL = 16;
 
   private int levelCount = 1;
 
   private Node head = new Node();  // 带头链表
-
-  private Random r = new Random();
 
   public Node find(int value) {
     Node p = head;
@@ -86,15 +84,13 @@ public class SkipList {
 
   }
 
-  // 随机 level 次，如果是奇数层数 +1，防止伪随机
- private int randomLevel() {
+  // 随机函数期望的目标是 50% 的 Level1，25% 的 Level2，12.5% 的 Level3
+  // 一直到最顶层，因为这里每一层的晋升概率是 SKIPLIST_P = 50%，可以通过 SKIPLIST_P 来修改晋升概率
+  private int randomLevel() {
     int level = 1;
-    for (int i = 1; i < MAX_LEVEL; ++i) {
-      if (r.nextInt() % 2 == 1) {
-        level++;
-      }
-    }
 
+    while (Math.random() < SKIPLIST_P && level < MAX_LEVEL)
+      level += 1;
     return level;
   }
 
