@@ -25,8 +25,8 @@ $tree->insert(18);
 $tree->insert(21);
 $tree->insert(38);
 
-$q=[$tree->head];
-$tree->levelOrder($q);
+
+$q=$tree->levelOrder([$tree->head]);
 
 foreach ($q as $n){
     echo $n->data." ";

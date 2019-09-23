@@ -185,22 +185,23 @@ class Tree
      * 开始遍历数组queue(从index开始,子节点已经入队列的节点元素不再处理)，把左右子节点放入queue,index++
      * 持续上述过程，当节点没有子节点时，入队列过程结束，queue里节点的顺序即为层级遍历元素节点的顺序
      */
-    public function levelOrder(&$queue,$index=0){
-        $len=count($queue);
-        for($i=$index;$i<$len;$i++){
-            $node=$queue[$i];
-            if($node->left){
-                $queue[]=$node->left;
-            }else{
-                return;
+    public function levelOrder($queue, $index = 0)
+    {
+        for ($i = $index; $i < count($queue); $i++) {
+            $node = $queue[$i];
+            if ($node->left) {
+                $queue[] = $node->left;
+            } else {
+                return $queue;
             }
-            if($node->right){
-                $queue[]=$node->right;
-            }else{
-                return ;
+            if ($node->right) {
+                $queue[] = $node->right;
+            } else {
+                return $queue;
             }
             $index++;
         }
-        $this->levelOrder($queue,$index);
+        return $queue;
+
     }
 }
