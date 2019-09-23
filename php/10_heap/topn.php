@@ -1,6 +1,9 @@
 <?php
 /**
- *2.动态数据集合求top n
+ * Created by PhpStorm.
+ * User: 764432054@qq.com
+
+ *动态数据集合求top n
  */
 namespace Algo_10;
 
