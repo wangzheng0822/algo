@@ -184,6 +184,8 @@ class Tree
      * 首先把节点放入数组，记录放入数组的根节点个数index，把节点的左右子放入数组
      * 开始遍历数组queue(从index开始,子节点已经入队列的节点元素不再处理)，把左右子节点放入queue,index++
      * 持续上述过程，当节点没有子节点时，入队列过程结束，queue里节点的顺序即为层级遍历元素节点的顺序
+     *
+     * 完全二叉树
      */
     public function levelOrder($queue, $index = 0)
     {
