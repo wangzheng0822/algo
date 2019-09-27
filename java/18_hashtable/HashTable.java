@@ -142,12 +142,14 @@ public class HashTable<K, V> {
         }
 
         Entry pre;
+        Entry<K, V> headNode = table[index];
         do {
             pre = e;
             e = e.next;
             if (key == e.key) {
                 pre.next = e.next;
                 size--;
+                if (headNode.next == null) use--;
                 return;
             }
         } while (e.next != null);
