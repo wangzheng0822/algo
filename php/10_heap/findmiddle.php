@@ -1,4 +1,9 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: 764432054@qq.com
+ * 动态数据流实时获取中位数
+ */
 namespace Algo_10;
 
 require_once '../vendor/autoload.php';

@@ -149,4 +149,61 @@ class Tree
         $this->preOrder($node->left);
         $this->preOrder($node->right);
     }
+
+    /**中序遍历
+     * @param $node
+     *
+     */
+    public function inOrder($node){
+        if(empty($node)){
+            return;
+        }
+        $this->inOrder($node->left);
+        echo $node->data . ' ';
+        $this->inOrder($node->right);
+
+    }
+
+    /**
+     * @param $node
+     * 后续遍历
+     */
+    public function postOrder($node){
+        if(empty($node)){
+            return;
+        }
+        $this->postOrder($node->left);
+        $this->postOrder($node->right);
+        echo $node->data . ' ';
+
+    }
+    /**
+     * @param $queue
+     * @param int $index 从队列(数组)的那个位置开始处理
+     * 层级遍历
+     * 首先把节点放入数组，记录放入数组的根节点个数index，把节点的左右子放入数组
+     * 开始遍历数组queue(从index开始,子节点已经入队列的节点元素不再处理)，把左右子节点放入queue,index++
+     * 持续上述过程，当节点没有子节点时，入队列过程结束，queue里节点的顺序即为层级遍历元素节点的顺序
+     *
+     * 完全二叉树
+     */
+    public function levelOrder($queue, $index = 0)
+    {
+        for ($i = $index; $i < count($queue); $i++) {
+            $node = $queue[$i];
+            if ($node->left) {
+                $queue[] = $node->left;
+            } else {
+                return $queue;
+            }
+            if ($node->right) {
+                $queue[] = $node->right;
+            } else {
+                return $queue;
+            }
+            $index++;
+        }
+        return $queue;
+
+    }
 }
