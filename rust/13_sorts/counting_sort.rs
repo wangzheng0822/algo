@@ -7,13 +7,14 @@ pub fn counting_sort(mut nums: Vec<i32>) -> Vec<i32> {
     let nums_len = nums.len();
     // 获取最大数
     let mut max = nums[0];
-    // 申请一个长度为 max + 1 的新数组
-    let mut bucket = vec![0; (max+1) as usize];
+    
     let mut tmp = vec![0; nums_len];
 
     for i in 1..nums_len {
         if max < nums[i] { max = nums[i]; }
     }
+    // 申请一个长度为 max + 1 的新数组
+    let mut bucket = vec![0; (max+1) as usize];
 
     for i in 0..nums_len {
         bucket[nums[i] as usize] += 1;
