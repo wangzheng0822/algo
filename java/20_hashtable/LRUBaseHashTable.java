@@ -182,6 +182,7 @@ public class LRUBaseHashTable<K, V> {
         }
         removeNode(node);
         length--;
+        table.remove(node.key);
     }
 
     private void printAll() {
