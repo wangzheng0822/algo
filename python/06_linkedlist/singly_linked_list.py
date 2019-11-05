@@ -83,7 +83,7 @@ class SinglyLinkedList:
             current = current._next
         if not current:  # node not in the list
             return
-        current._next = None
+        current._next = node._next
 
     def delete_by_value(self, value: int):
         if not self._head or not value:
@@ -106,10 +106,7 @@ class SinglyLinkedList:
         while current:
             nums.append(current.data)
             current = current._next
-        if len(nums) > 0:
-            return "->".join(str(num) for num in nums)
-        else:
-            return ""
+        return "->".join(str(num) for num in nums)
 
     # 重写__iter__方法，方便for关键字调用打印值
     def __iter__(self):

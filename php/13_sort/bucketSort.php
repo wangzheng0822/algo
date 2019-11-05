@@ -5,7 +5,7 @@ require_once '../12_sort/quickSort.php';
 
 $numbers = [11,23,45,67,88,99,22,34,56,78,90,12,34,5,6,91,92,93,93,94,95,94,95,96,97,98,99,100];
 $size = 10;
-var_dump(bucketSort($numbers,10));//加在了quickSort文件，请忽略前几个打印
+var_dump(bucketSort($numbers));//加载了quickSort文件，请忽略前几个打印
 
 
 /**
@@ -39,7 +39,7 @@ function bucketSort(array $numbers) {
             continue;
         }
         if( $length > 10) {
-            $bucket = bucketSort($bucket,$length);
+            $bucket = bucketSort($bucket);
         }
 
        quickSort($bucket,0,count($bucket)-1);

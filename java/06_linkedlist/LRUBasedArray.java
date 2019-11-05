@@ -81,7 +81,8 @@ public class LRUBasedArray<T> {
      * @param object
      */
     public void removeAndCache(T object) {
-        value[--count] = null;
+        T key = value[--count];
+        holder.remove(key);
         cache(object, count);
     }
 
