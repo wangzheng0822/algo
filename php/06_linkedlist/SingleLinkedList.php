@@ -86,6 +86,9 @@ class SingleLinkedList
 
         // 获取待删除节点的前置节点
         $preNode = $this->getPreNode($node);
+        if (empty($preNode)) {
+            return false;
+        }
 
         // 修改指针指向
         $preNode->next = $node->next;
@@ -121,7 +124,7 @@ class SingleLinkedList
      *
      * @param SingleLinkedListNode $node
      *
-     * @return SingleLinkedListNode|bool
+     * @return SingleLinkedListNode|bool|null
      */
     public function getPreNode(SingleLinkedListNode $node)
     {
@@ -133,7 +136,10 @@ class SingleLinkedList
         $preNode = $this->head;
         // 遍历找到前置节点 要用全等判断是否是同一个对象
         // http://php.net/manual/zh/language.oop5.object-comparison.php
-        while ($curNode !== $node && $curNode != null) {
+        while ($curNode !== $node) {
+            if ($curNode == null) {
+                return null;
+            }
             $preNode = $curNode;
             $curNode = $curNode->next;
         }
