@@ -20,10 +20,7 @@ func NewLinkedListStack() *LinkedListStack {
 }
 
 func (this *LinkedListStack) IsEmpty() bool {
-	if this.topNode == nil {
-		return true
-	}
-	return false
+	return this.topNode == nil
 }
 
 func (this *LinkedListStack) Push(v interface{}) {
