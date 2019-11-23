@@ -1,4 +1,4 @@
-# Definition for singly-linked list.
+# Definition for doubly-linked list.
 class DbListNode(object):
     def __init__(self, x, y):
         self.key = x
