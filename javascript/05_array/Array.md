@@ -4,16 +4,16 @@
 ```
 // 字面量方式,常用
 var num = [1,5,6,10];
-print(num.length);   // 4
+console.log(num.length);   // 4
 
 // 构造函数方式
 var num = new Array(1,5,6,10);
-print(num.length);    // 4
+console.log(num.length);    // 4
 ```
 值得注意的是，JavaScript 中的数组数据可以是不同类型，它的语法相对宽松，例如可以指定不同类型数据`var example = [1,"Mike",true,null];`另外，可以通过`Array.isArray()`来判断一个对象是否是数组，例如：
 ```
 var num = [1,5,6,10];
-print(Array.isArray(num));        // true
+console.log(Array.isArray(num));        // true
 ```
 如何读写数组呢？可以使用循环。
 ```
