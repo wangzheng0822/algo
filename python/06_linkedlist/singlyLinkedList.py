@@ -272,13 +272,13 @@ class SinglyLinkedList(object):
             True:有环
             False:没有环
         """
-        fast = self.__head
+        fast = self.__head.next_node
         slow = self.__head
 
-        while (fast.next_node is not None) and (fast is not None):
-            fast = fast.next_node
-            slow = slow.next_node
+        while (fast is not None) and (fast.next_node is not None):
             if fast == slow:
                 return True
+            fast = fast.next_node.next_node
+            slow = slow.next_node
 
         return False
