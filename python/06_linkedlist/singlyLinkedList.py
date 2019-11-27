@@ -242,11 +242,11 @@ class SinglyLinkedList(object):
             return
 
         pre = self.__head
-        node = self.__head.next
+        node = self.__head.next_node
         while node is not None:
             pre, node = self.__reversed_with_two_node(pre, node)
 
-        self.__head.next = None
+        self.__head.next_node = None
         self.__head = pre
 
     def __reversed_with_two_node(self, pre, node):
