@@ -47,12 +47,15 @@ def selection_sort(a: List[int]):
 
     for i in range(length):
         min_index = i
-        min_val = a[i]
-        for j in range(i, length):
-            if a[j] < min_val:
-                min_val = a[j]
+        transfer = False
+        for j in range(i+1, length):
+            if a[j] < a[min_index]:
                 min_index = j
-        a[i], a[min_index] = a[min_index], a[i]
+                transfer = True
+        if transfer:
+            a[i], a[min_index] = a[min_index], a[i]
+        else:
+            break
 
 
 def test_bubble_sort():
