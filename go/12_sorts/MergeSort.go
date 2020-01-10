@@ -27,7 +27,7 @@ func merge(arr []int, start, mid, end int) {
 	j := mid + 1
 	k := 0
 	for ; i <= mid && j <= end; k++ {
-		if arr[i] < arr[j] {
+		if arr[i] <= arr[j] {
 			tmpArr[k] = arr[i]
 			i++
 		} else {

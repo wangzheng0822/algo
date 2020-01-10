@@ -63,7 +63,7 @@ public class GenericArray<T> {
 
     // 在 index 位置，插入元素e, 时间复杂度 O(m+n)
     public void add(int index, T e) {
-        checkIndex(index);
+        checkIndexForAdd(index);
         // 如果当前元素个数等于数组容量，则将数组扩容为原来的2倍
         if (size == data.length) {
             resize(2 * data.length);
@@ -88,7 +88,7 @@ public class GenericArray<T> {
 
     // 删除 index 位置的元素，并返回
     public T remove(int index) {
-        checkIndexForRemove(index);
+        checkIndex(index);
 
         T ret = data[index];
         for (int i = index + 1; i < size; i++) {
@@ -150,14 +150,14 @@ public class GenericArray<T> {
     }
 
     private void checkIndex(int index) {
-        if (index < 0 || index > size) {
-            throw new IllegalArgumentException("Add failed! Require index >=0 and index <= size.");
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Add failed! Require index >=0 and index < size.");
         }
     }
 
-    private void checkIndexForRemove(int index) {
-        if(index < 0 || index >= size) {
-            throw new IllegalArgumentException("remove failed! Require index >=0 and index < size.");
+    private void checkIndexForAdd(int index) {
+        if(index < 0 || index > size) {
+            throw new IllegalArgumentException("remove failed! Require index >=0 and index <= size.");
         }
     }
 }

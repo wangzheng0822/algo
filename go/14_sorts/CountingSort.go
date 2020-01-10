@@ -23,7 +23,7 @@ func CountingSort(a []int, n int) {
 	}
 
 	r := make([]int, n)
-	for i := range a {
+	for i := n - 1; i >= 0; i-- {
 		index := c[a[i]] - 1
 		r[index] = a[i]
 		c[a[i]]--

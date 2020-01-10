@@ -172,6 +172,7 @@ public class SinglyLinkedList {
         Node l = left;
         Node r = right;
 
+        boolean flag=true;
         System.out.println("left_:"+l.data);
         System.out.println("right_:"+r.data);
         while(l != null && r != null){
@@ -180,18 +181,20 @@ public class SinglyLinkedList {
                r = r.next;
                continue;
            }else{
+               flag=false;
                break;
            }
 
         }
 
         System.out.println("什么结果");
-        if (l==null && r==null){
+        return flag;
+       /* if (l==null && r==null){
            System.out.println("什么结果");
            return true;
         }else{
            return false;
-        }
+        }*/
     }
     //　判断是否为回文 
 
