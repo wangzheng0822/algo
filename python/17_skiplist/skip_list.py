@@ -39,10 +39,10 @@ class SkipList:
         if self._level_count < level: self._level_count = level
         new_node = ListNode(value)
         new_node._forwards = [None] * level
-        update = [self._head] * level     # update is like a list of prevs
+        update = [self._head] * self._level_count     # update is like a list of prevs
 
         p = self._head
-        for i in range(level - 1, -1, -1):
+        for i in range(self._level_count - 1, -1, -1): 
             while p._forwards[i] and p._forwards[i]._data < value:
                 p = p._forwards[i]
             
@@ -65,6 +65,9 @@ class SkipList:
                 if update[i]._forwards[i] and update[i]._forwards[i]._data == value:
                     update[i]._forwards[i] = update[i]._forwards[i]._forwards[i]     # Similar to prev.next = prev.next.next
 
+        while self._level_count > 1 and not self._head._forwards[self._level_count]:
+            self._level_count -= 1
+            
     def _random_level(self, p: float = 0.5) -> int:
         level = 1
         while random.random() < p and level < type(self)._MAX_LEVEL:
