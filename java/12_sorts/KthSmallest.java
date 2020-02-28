@@ -7,7 +7,7 @@ package sort;
 public class KthSmallest {
 
     public static int kthSmallest(int[] arr, int k) {
-        if (arr == null || arr.length < k) {
+        if (arr == null || arr.length < k || k==0) {
             return -1;
         }
 
