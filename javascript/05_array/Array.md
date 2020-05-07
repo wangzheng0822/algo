@@ -161,7 +161,7 @@ if(someEven){
 /*
 reduce() 有两个功能，一是可以对数组元素进行求和，二是将数组元素连接成字符串。
 */
-fucntion add(num1,num2){
+function add(num1,num2){
   return num1 + num2;
 }
 var num = [1,2,3,4];
@@ -275,7 +275,7 @@ exam 3 average: 81.50
 #### 对象数组
 如果你有阅读到这里，你应该可以发现上面的所有例子里数据类型都是基本数据类型，不是数字就是字符串。对象数组，顾名思义，就是数组里面的元素可以是对象，这个与 java 的语法很相似，基本上所有的编程语言都是相通的。看看下面这个例子：
 ```
-function point(x,y){
+function Point(x,y){
   this.x = x;
   this.y = y;
 }
@@ -289,7 +289,7 @@ var p2 = new Point(2,4);
 var p3 = new Point(8,1);
 var p4 = new Point(2,9);
 var point = [p1,p2,p3,p4];
-for(var i=0;i<point.lengh;i++){
+for(var i=0;i<point.length;i++){
   console.log("Point "+parseInt(i+1)+": "+point[i].x+", "+point[i].y);
 }
 ```
