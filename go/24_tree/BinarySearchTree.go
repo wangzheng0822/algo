@@ -52,9 +52,12 @@ func (this *BST) Insert(v interface{}) bool {
 }
 
 func (this *BST) Delete(v interface{}) bool {
+	//要删除节点的父节点
 	var pp *Node = nil
+	//要删除的节点
 	p := this.root
 	deleteLeft := false
+	//查找要删除的节点
 	for nil != p {
 		compareResult := this.compareFunc(v, p.data)
 		if compareResult > 0 {
@@ -83,17 +86,19 @@ func (this *BST) Delete(v interface{}) bool {
 			this.root = nil
 		}
 	} else if nil != p.right { //删除的是一个有右孩子，不一定有左孩子的节点
-		//找到p节点右孩子的最小节点
+		//p节点右孩子的最小子节点的父节点
 		pq := p
-		q := p.right //向右走一步
+		//p节点右孩子的最小子节点
+		q := p.right
 		fromRight := true
+		//找到p节点右孩子的最小节点
 		for nil != q.left { //向左走到底
 			pq = q
 			q = q.left
 			fromRight = false
 		}
 		if fromRight {
-			pq.right = nil
+			pq.right = p.right
 		} else {
 			pq.left = nil
 		}
@@ -103,9 +108,9 @@ func (this *BST) Delete(v interface{}) bool {
 			this.root = q
 		} else {
 			if deleteLeft {
-				pq.left = q
+				pp.left = q
 			} else {
-				pq.right = q
+				pp.right = q
 			}
 		}
 	} else { //删除的是一个只有左孩子的节点
