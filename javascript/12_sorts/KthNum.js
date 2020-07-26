@@ -8,11 +8,15 @@ function kthNum(arr, k) {
   if (k > len) {
     return -1;
   }
-  let p = partition(arr, 0, len - 1);
+  let start = 0;
+  let end = len - 1;
+  let p = partition(arr, start, end);
   while (p + 1 !== k) {
     if (p + 1 > k) {
-      p = partition(arr, 0, p - 1);
+      end = p - 1
+      p = partition(arr, start, p - 1);
     } else {
+      start = p + 1
       p = partition(arr, p + 1, len - 1);
     }
   }
