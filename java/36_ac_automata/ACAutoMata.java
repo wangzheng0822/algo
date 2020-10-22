@@ -82,7 +82,7 @@ public class ACAutoMata {
             ACNode tmp = p;
             while ( tmp != root) {
                 if (tmp.isEndingChar == true) {
-                    System.out.println("Start from " + (i - p.length + 1));
+                    System.out.println("Start from " + (i - tmp.length + 1));
                     return true;
                 }
                 tmp = tmp.fail;
