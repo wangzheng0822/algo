@@ -36,6 +36,9 @@ func (this *LinkedListQueue) DeQueue() interface{} {
 	v := this.head.val
 	this.head = this.head.next
 	this.length--
+	if this.length == 0 {
+		this.tail = nil
+	}
 	return v
 }
 
