@@ -55,7 +55,7 @@ public class Sorts {
                 }
             }
             sortBorder = lastExchange;
-            if (!flag) break;    // 没有数据交换，提前退出
+            if (!flag || lastExchange == 0) break;    // 没有数据交换，提前退出，或者最后一位直接退出
         }
     }
 
