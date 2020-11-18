@@ -77,7 +77,5 @@ func heapifyUpToDown(a []int, count int) {
 
 //swap two elements
 func swap(a []int, i int, j int) {
-	tmp := a[i]
-	a[i] = a[j]
-	a[j] = tmp
+	a[i],a[j]=a[j],a[i]
 }
