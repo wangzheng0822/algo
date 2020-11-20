@@ -19,7 +19,7 @@ func NewLinkedListQueue() *LinkedListQueue {
 
 func (this *LinkedListQueue) EnQueue(v interface{}) {
 	node := &ListNode{v, nil}
-	if nil == this.tail {
+	if nil == this.head {
 		this.tail = node
 		this.head = node
 	} else {
