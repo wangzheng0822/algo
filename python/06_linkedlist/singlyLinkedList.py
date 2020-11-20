@@ -242,11 +242,11 @@ class SinglyLinkedList(object):
             return
 
         pre = self.__head
-        node = self.__head.next
+        node = self.__head.next_node
         while node is not None:
             pre, node = self.__reversed_with_two_node(pre, node)
 
-        self.__head.next = None
+        self.__head.next_node = None
         self.__head = pre
 
     def __reversed_with_two_node(self, pre, node):
@@ -272,13 +272,13 @@ class SinglyLinkedList(object):
             True:有环
             False:没有环
         """
-        fast = self.__head
+        fast = self.__head.next_node
         slow = self.__head
 
-        while (fast.next_node is not None) and (fast is not None):
-            fast = fast.next_node
-            slow = slow.next_node
+        while (fast is not None) and (fast.next_node is not None):
             if fast == slow:
                 return True
+            fast = fast.next_node.next_node
+            slow = slow.next_node
 
         return False
