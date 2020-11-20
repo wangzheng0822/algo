@@ -12,12 +12,18 @@ class CircularQueue:
         self._capacity = capacity + 1
         self._head = 0
         self._tail = 0
+        self._full = False
     
     def enqueue(self, item: str) -> bool:
         if (self._tail + 1) % self._capacity == self._head:
             return False
-        
-        self._items.append(item)
+
+        if not self._full:
+            self._items.append(item)
+            if len(self._items) == self._capacity:
+                self._full = True
+        else:
+            self._items[self._tail] = item
         self._tail = (self._tail + 1) % self._capacity
         return True
     
