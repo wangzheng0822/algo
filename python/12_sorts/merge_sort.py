@@ -32,6 +32,12 @@ def _merge(a: List[int], low: int, mid: int, high: int):
     start = i if i <= mid else j
     end = mid if i <= mid else high
     tmp.extend(a[start:end + 1])
+    """
+    if i <= mid:
+        tmp.extend(s[i:mid + 1])
+    else:
+        tmp.extend(s[j:high + 1])
+    """
     a[low:high + 1] = tmp
 
 
