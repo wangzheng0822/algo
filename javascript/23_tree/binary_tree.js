@@ -34,7 +34,7 @@ class SearchTree {
         let tree = this;
 
         let res = null;
-        while (true) {
+        while (find) {
             if (point.left) {
                 if (num < point.left.value || num < point.value) {
                     prent = point;
