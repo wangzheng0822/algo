@@ -1,92 +1,81 @@
 package _5_array
 
 import (
-	"errors"
-	"fmt"
+    "errors"
+    "fmt"
 )
 
 /**
  * 1) 数组的插入、删除、按照下标随机访问操作；
  * 2）数组中的数据是int类型的；
  *
- * Author: leo
  */
 
+
 type Array struct {
-	data   []int
-	length uint
+    data []int
 }
 
-//为数组初始化内存
-func NewArray(capacity uint) *Array {
-	if capacity == 0 {
-		return nil
-	}
-	return &Array{
-		data:   make([]int, capacity, capacity),
-		length: 0,
-	}
+func NewArray(capacity uint) *Array{
+    if capacity == 0 {
+        return nil
+    }
+    return &Array{
+        data:make([]int, 0, capacity),
+    }
 }
 
-func (this *Array) Len() uint {
-	return this.length
+// 判断下标是否越界
+func (a *Array)IsIndexOutOfRange(index uint) bool {
+    return index >= uint(cap(a.data))
 }
 
-//判断索引是否越界
-func (this *Array) isIndexOutOfRange(index uint) bool {
-	if index >= uint(cap(this.data)) {
-		return true
-	}
-	return false
+// 通过下标查找值，索引范围[0, n-1]
+func (a *Array)Find(index uint)(int, error) {
+    if a.IsIndexOutOfRange(index) {
+        return 0, errors.New("out of index range")
+    }
+    return a.data[index], nil
 }
 
-//通过索引查找数组，索引范围[0,n-1]
-func (this *Array) Find(index uint) (int, error) {
-	if this.isIndexOutOfRange(index) {
-		return 0, errors.New("out of index range")
-	}
-	return this.data[index], nil
+// 插入数据到索引index上
+func (a *Array)Insert(index uint, val int) error {
+    if len(a.data) == cap(a.data) {
+        return errors.New("array is full")
+    }
+
+    if a.IsIndexOutOfRange(index) {
+        return errors.New("out of index range")
+    }
+
+    if index == uint(len(a.data)) {
+        a.data = append(a.data, val)
+        return nil
+    }
+
+    copy(a.data[index+1:], a.data[index:])
+    a.data[index] = val
+    return nil
 }
 
-//插入数值到索引index上
-func (this *Array) Insert(index uint, v int) error {
-	if this.Len() == uint(cap(this.data)) {
-		return errors.New("full array")
-	}
-	if index != this.length && this.isIndexOutOfRange(index) {
-		return errors.New("out of index range")
-	}
-
-	for i := this.length; i > index; i-- {
-		this.data[i] = this.data[i-1]
-	}
-	this.data[index] = v
-	this.length++
-	return nil
+// 插入数据到数组尾部
+func (a *Array)InsertToTail(val int) error {
+    return a.Insert(uint(len(a.data)), val)
 }
 
-func (this *Array) InsertToTail(v int) error {
-	return this.Insert(this.Len(), v)
+func (a *Array)Delete(index uint)(int, error)  {
+    if a.IsIndexOutOfRange(index) {
+        return 0, errors.New("out of index range")
+    }
+    val := a.data[index]
+    a.data = append(a.data[:index], a.data[index+1:]...)
+    return val, nil
 }
 
-//删除索引index上的值
-func (this *Array) Delete(index uint) (int, error) {
-	if this.isIndexOutOfRange(index) {
-		return 0, errors.New("out of index range")
-	}
-	v := this.data[index]
-	for i := index; i < this.Len()-1; i++ {
-		this.data[i] = this.data[i+1]
-	}
-	this.length--
-	return v, nil
-}
-
-//打印数列
-func (this *Array) Print() {
-	var format string
-	for i := uint(0); i < this.Len(); i++ {
-		format += fmt.Sprintf("|%+v", this.data[i])
-	}
-	fmt.Println(format)
+func (a *Array)Print()  {
+    var format string
+    for _, num := range a.data {
+        format += fmt.Sprintf("|%+v", num)
+    }
+    fmt.Println(format)
 }
