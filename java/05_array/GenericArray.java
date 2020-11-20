@@ -151,13 +151,13 @@ public class GenericArray<T> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("Add failed! Require index >=0 and index < size.");
+            throw new IllegalArgumentException("Operation failed! Require index >= 0 and index < size.");
         }
     }
 
     private void checkIndexForAdd(int index) {
         if(index < 0 || index > size) {
-            throw new IllegalArgumentException("remove failed! Require index >=0 and index <= size.");
+            throw new IllegalArgumentException("Add failed! Require index >= 0 and index <= size.");
         }
     }
 }
