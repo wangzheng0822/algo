@@ -34,9 +34,8 @@ public class QuickSort {
       }
     }
 
-    int tmp = a[i];
-    a[i] = a[r];
-    a[r] = tmp;
+    a[r] = a[i];
+    a[i] = pivot;
 
     System.out.println("i=" + i);
     return i;
