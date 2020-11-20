@@ -149,7 +149,7 @@ public class SinglyLinkedList {
 
            Node pNode = head;
            while (pNode != null) {
-           if (pNode.next.data == data) {
+           if (pNode.next != null && pNode.next.data == value) {
            pNode.next = pNode.next.next;
            continue;
            }
