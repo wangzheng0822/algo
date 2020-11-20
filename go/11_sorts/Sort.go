@@ -2,7 +2,7 @@ package _1_sorts
 
 /*
 冒泡排序、插入排序、选择排序
- */
+*/
 
 //冒泡排序，a是数组，n表示数组大小
 func BubbleSort(a []int, n int) {
@@ -60,7 +60,8 @@ func SelectionSort(a []int, n int) {
 			}
 		}
 		// 交换
-		a[i], a[minIndex] = a[minIndex],a[i]
-
+		if i != minIndex {
+			a[i], a[minIndex] = a[minIndex], a[i]
+		}
 	}
 }
