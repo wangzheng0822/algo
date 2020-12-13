@@ -42,7 +42,7 @@ class InsertSort implements SortAlgo {
       let j = i - 1
       const temp = array[i]
       for (; j >= 0; j--) {
-        if (array[j] > array[j + 1]) {
+        if (array[j] > temp) {
           array[j + 1] = array[j]
         } else {
           // 这个说明之前的已经排好了，没必要继续比较
