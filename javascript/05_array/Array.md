@@ -161,7 +161,7 @@ if(someEven){
 /*
 reduce() 有两个功能，一是可以对数组元素进行求和，二是将数组元素连接成字符串。
 */
-fucntion add(num1,num2){
+function add(num1,num2){
   return num1 + num2;
 }
 var num = [1,2,3,4];
@@ -192,13 +192,13 @@ function passing(num){
 }
 var grades = [];
 for(var i = 0;i < 11;i++){
-  grade[i] = Math.floor(Math.random() * 101);
+  grades[i] = Math.floor(Math.random() * 101);
 }
 var pass = grades.filter(passing);
 console.log("随机产生的 10 个同学的分数为：");
-console.log(grades)；
+console.log(grades);
 console.log("及格的分数有：");
-console.log(pass)；
+console.log(pass);
 ```
 上述代码的输出结果为
 > 随机产生的 10 个同学的分数为：
