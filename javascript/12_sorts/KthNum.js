@@ -8,8 +8,12 @@ function kthNum(arr, k) {
   if (k > len) {
     return -1;
   }
+  k = len - (k - 1)
   let p = partition(arr, 0, len - 1);
   while (p + 1 !== k) {
+    if (p === 0 || p === arr.length - 1) {
+      return arr[k - 1]
+    }
     if (p + 1 > k) {
       p = partition(arr, 0, p - 1);
     } else {
