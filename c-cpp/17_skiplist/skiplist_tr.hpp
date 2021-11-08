@@ -43,6 +43,11 @@ class random_level {
   public:
     random_level(IntType max_level, double prob) : dist(max_level - 1, prob) {}
     inline IntType operator()() const { return dist(gen); }
+    void reInit(IntType max_level,double prob){
+        typename std::binomial_distribution<IntType>::param_type newParm(max_level - 1, prob);
+        dist.param(newParm);
+        dist.reset();
+    }
 };
 }  // namespace skiplist_detail
 
@@ -246,7 +251,8 @@ class skiplist {
             iterator head = cont_.begin();
             auto beg_head = head->forwards.end();
             head->forwards.resize(max_lv_, tail);
-
+            
+            rl_.reInit(max_lv_, prob_);
             return;
         } else {
 #ifdef LIAM_UT_DEBUG_
