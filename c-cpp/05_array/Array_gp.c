@@ -276,3 +276,16 @@ void arrayDelIndex(Array *array, size_t pos)
 
     --array->len;
 }
+//要将指针array的值置为0，应该用二级指针
+void arrayEmpty(Array** array)
+{
+	if (NULL == array)
+	{
+		return;
+	}
+
+	free((*array)->p);
+	(*array)->p = NULL;
+	free(*array);
+	*array = NULL;
+}
