@@ -49,6 +49,7 @@ public class SinglyLinkedList {
 
     //顺序插入
     //链表尾部插入
+    
     public void insertTail(int value){
 
         Node newNode = new Node(value, null);
@@ -143,12 +144,12 @@ public class SinglyLinkedList {
 
         // 可重复删除指定value的代码
         /*
-           if (head != null && head.data == value) {
+           while (head != null && head.data == value) {
            head = head.next;
            }
 
            Node pNode = head;
-           while (pNode != null) {
+           while (pNode != null && pNode.next!=null) {
            if (pNode.next.data == data) {
            pNode.next = pNode.next.next;
            continue;
