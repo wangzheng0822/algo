@@ -156,6 +156,9 @@ public class GenericArray<T> {
     }
 
     private void checkIndexForRemove(int index) {
+         if (size ==0){
+            throw new IndexOutOfBoundsException("remove failed! Require size>0");
+        }
         if(index < 0 || index >= size) {
             throw new IllegalArgumentException("remove failed! Require index >=0 and index < size.");
         }
