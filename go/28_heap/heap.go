@@ -51,6 +51,27 @@ func (heap *Heap) removeMax() {
 	heapifyUpToDown(heap.a, heap.count)
 }
 
+//get max
+func (heap *Heap) getMax() int {
+	if heap.count==0 {
+		return -1
+	}
+	return heap.a[1]
+}
+
+//get and remove
+func (heap *Heap) getAndRemoveMax() int {
+	var max int
+	if heap.count == 0 {
+		return -1
+	}
+	max=heap.a[1]
+	swap(heap.a, 1, heap.count)
+	heap.count--
+	heapifyUpToDown(heap.a, heap.count)
+	return max
+}
+
 //heapify
 func heapifyUpToDown(a []int, count int) {
 
