@@ -27,6 +27,32 @@ list_queue *list_queue_create()
 
 	return queue;
 }
+
+/*出队*/
+int list_queue_dequeue(list_queue *queue,int *data)
+{
+	queue_node * ptmp = NULL;
+
+	if ((queue == NULL) || (data == NULL) || list_queue_is_empty(queue))
+	{
+		return -1;
+	}
+
+	*data = queue->head->data;
+    ptmp = queue->head;
+	queue->head = queue->head->next;
+	queue->num--;
+
+	if (queue->head == NULL)
+	{
+		queue->tail = NULL;
+	}
+
+	
+	free(ptmp);
+	return 0;
+}
+
 void list_queue_destroy(list_queue*queue)
 {
 	int i = 0;
@@ -39,6 +65,7 @@ void list_queue_destroy(list_queue*queue)
 
 	while(!list_queue_is_empty(queue))
 	{
+		/*因为这里需要用到出队函数，所以应当在使用前声明或定义出队函数*/
 		(void)list_queue_dequeue(queue,&data);
 	}
 
@@ -77,30 +104,6 @@ int list_queue_enqueue(list_queue *queue,int data)
 	return 0;
 }
 
-/*出队*/
-int list_queue_dequeue(list_queue *queue,int *data)
-{
-	queue_node * ptmp = NULL;
-
-	if ((queue == NULL) || (data == NULL) || list_queue_is_empty(queue))
-	{
-		return -1;
-	}
-
-	*data = queue->head->data;
-    ptmp = queue->head;
-	queue->head = queue->head->next;
-	queue->num--;
-
-	if (queue->head == NULL)
-	{
-		queue->tail = NULL;
-	}
-
-	
-	free(ptmp);
-	return 0;
-}
 void list_queue_dump(list_queue*queue)
 {
 	int i = 0;
