@@ -1,5 +1,7 @@
 package sorts;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Created by wangzheng on 2018/10/16.
  */
@@ -20,25 +22,27 @@ public class QuickSort {
   }
 
   private static int partition(int[] a, int p, int r) {
+    int pos = ThreadLocalRandom.current().nextInt(l, r + 1);
+    swap(a, pos, r);
     int pivot = a[r];
     int i = p;
     for(int j = p; j < r; ++j) {
       if (a[j] < pivot) {
-        if (i == j) {
-          ++i;
-        } else {
-          int tmp = a[i];
-          a[i++] = a[j];
-          a[j] = tmp;
+        if (i != j) {
+          swap(a,i,j);
         }
+        ++i;
       }
     }
 
-    int tmp = a[i];
-    a[i] = a[r];
-    a[r] = tmp;
+    swap(a,i,r);
 
     System.out.println("i=" + i);
     return i;
+  }
+  private static void swap(int[] a, int i, int j) {
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
   }
 }
