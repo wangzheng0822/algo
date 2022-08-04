@@ -71,4 +71,10 @@ public class HeapSort {
         }
     }
 
+	private static void swap(int[] arr, int i, int maxPos) {
+        int tmp = arr[i];
+        arr[i] = arr[maxPos];
+        arr[maxPos] = tmp;
+    }
+
 }
