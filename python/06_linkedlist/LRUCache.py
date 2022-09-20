@@ -1,4 +1,3 @@
-# Definition for singly-linked list.
 class DbListNode(object):
     def __init__(self, x, y):
         self.key = x
@@ -8,72 +7,37 @@ class DbListNode(object):
 
 
 class LRUCache:
-    '''
-    leet code: 146
-        运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。
-        它应该支持以下操作： 获取数据 get 和 写入数据 put 。
-        获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。
-        写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。
-            当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间
-
-    哈希表+双向链表
-    哈希表: 查询 O(1)
-    双向链表: 有序, 增删操作 O(1)
-
-    Author: Ben
-    '''
-
     def __init__(self, capacity: int):
         self.cap = capacity
         self.hkeys = {}
         # self.top和self.tail作为哨兵节点, 避免越界
-        self.top = DbListNode(None, -1)
-        self.tail = DbListNode(None, -1)
+        self.top = DbListNode(None, -1)   # top节点的下一个节点是真正的headnode(第一个节点, 头结点)
+        self.tail = DbListNode(None, -1)  # tail一开始充当的是headnode
         self.top.next = self.tail
         self.tail.prev = self.top
 
     def get(self, key: int) -> int:
-
-        if key in self.hkeys.keys():
-            # 更新结点顺序
-            cur = self.hkeys[key]
+        cur = self.hkeys.get(key,None)
+        if cur:
             # 跳出原位置
-            cur.next.prev = cur.prev
-            cur.prev.next = cur.next
+            delete_cur_node(cur)
             # 最近用过的置于链表首部
-            top_node = self.top.next
-            self.top.next = cur
-            cur.prev = self.top
-            cur.next = top_node
-            top_node.prev = cur
-
+            replace_headnode(self, cur)
             return self.hkeys[key].val
         return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self.hkeys.keys():
-            cur = self.hkeys[key]
+        cur = self.hkeys.get(key,None)
+        if cur:
             cur.val = value
             # 跳出原位置
-            cur.prev.next = cur.next
-            cur.next.prev = cur.prev
-
-            # 最近用过的置于链表首部
-            top_node = self.top.next
-            self.top.next = cur
-            cur.prev = self.top
-            cur.next = top_node
-            top_node.prev = cur
+            delete_cur_node(cur)
+            replace_headnode(self, cur)
         else:
             # 增加新结点至首部
             cur = DbListNode(key, value)
-            self.hkeys[key] = cur
-            # 最近用过的置于链表首部
-            top_node = self.top.next
-            self.top.next = cur
-            cur.prev = self.top
-            cur.next = top_node
-            top_node.prev = cur
+            self.hkeys[key] = cur   # {1 : node}
+            replace_headnode(self, cur)
             if len(self.hkeys.keys()) > self.cap:
                 self.hkeys.pop(self.tail.prev.key)
                 # 去掉原尾结点
@@ -88,6 +52,26 @@ class LRUCache:
             p = p.next
         return '->'.join(vals)
 
+
+def delete_cur_node(cur):
+    '''
+    删除当前节点
+    '''
+    cur.next.prev = cur.prev
+    cur.prev.next = cur.next
+
+
+def replace_headnode(self, cur):
+    """
+    将第一个head node替换为当前节点
+
+    cur: 当前节点
+    """
+    top_node = self.top.next   # 一开始的是tail
+    self.top.next = cur        # 变成cur
+    cur.prev = self.top        #  
+    cur.next = top_node        # top cur tail
+    top_node.prev = cur        # 最开始的headnode的前一个变成了cur
 
 if __name__ == '__main__':
     cache = LRUCache(2)
