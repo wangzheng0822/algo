@@ -354,10 +354,8 @@ int GetRandom()
 int CSkipList::RandomLevel()
 {
     int level = 1;
-    for(int i=1; i<MAX_LEVEL; ++i){
-        if(1 == (GetRandom()%3)){
-            level++;
-        }
+    for(int i=1; i<MAX_LEVEL && GetRandom()%3; ++i){
+        level++;
     }
     return level;
 }

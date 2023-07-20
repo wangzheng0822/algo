@@ -1,213 +1,159 @@
+// https://www.youtube.com/watch?v=2g9OSRKJuzM&t=17s
+// note: 层数从0开始算，非空跳表的最低level是0，空跳表的level是-1。
+// note: 因为randomization的关系，跳表允许的最大层数需要事先设定，
+// 当n足够大时，跳表的层数（即节点索引的最大层数）将约等于log2(n)。
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
 
-// https://www.youtube.com/watch?v=2g9OSRKJuzM&t=17s
+#define SKIPLIST_P 0.5
+#define INVALID_KEY -1
 
-#define MAX_LEVEL 15
+typedef int ktype;
 
-struct node {
-	int val;
-	int max_level;
-	struct node *forward[MAX_LEVEL];
-};
-
-struct skip_list {
-	struct node head;
-	int max_level;
-	int max_level_nodes;
-};
-
-void node_init(struct node* node)
+typedef struct node_
 {
-	memset(node, 0, sizeof(struct node));
+	// dtype data;
+	ktype key;
+	int level;
+	struct node_ **forward;
+} node;
+
+typedef struct
+{
+	node *head;
+	int level; // 跳表的当前层数，允许的最大层数是head->level
+	int nodes;
+} skip_list;
+
+skip_list *make_skip_list(int max_level)
+{
+	skip_list *sl = (skip_list *)malloc(sizeof(skip_list));
+	sl->level = -1;
+	sl->head = (node *)malloc(sizeof(node));
+	sl->head->key = INVALID_KEY;
+	sl->head->level = max_level;
+	sl->head->forward = (node **)malloc(sizeof(node *) * max_level); // 注意头节点的指针数量不等于sl的max_level
+	memset(sl->head->forward, 0, sizeof(node *) * max_level);
+	return sl;
 }
 
-void skip_list_init(struct skip_list* sl)
+int random_level(int max_level)
 {
-	node_init(&sl->head);
-	sl->max_level = 0;
-	sl->max_level_nodes = 0;
+	static const int threshold = SKIPLIST_P * RAND_MAX;
+	int level = 0;
+	while (random() < threshold) //在0.5概率下循环平均执行次数趋于2，因此max_level的比较放外面会更快
+		level++;
+	return (level < max_level) ? level : max_level;
 }
 
-void random_init()
+node *search(skip_list *sl, ktype key)
 {
-	static bool done = false;
-
-	if (done)
-		return;
-
-	srandom(time(NULL));
-	done = true;
-}
-
-int random_level(void)
-{
-    int i, level = 1;
-
-    random_init();
-
-    for (i = 1; i < MAX_LEVEL; i++)
-	    if (random() % 2 == 1)
-		    level++;
-
-    return level;
-}
-
-void random_level_test()
-{
-	printf("random level %d\n", random_level());
-	printf("random level %d\n", random_level());
-	printf("random level %d\n", random_level());
-	printf("random level %d\n", random_level());
-	printf("random level %d\n", random_level());
-}
-
-void insert(struct skip_list *sl, int val)
-{
-	int level = random_level();
-	struct node *update[MAX_LEVEL];
-	struct node *new, *p;
-	int i;
-
-	new = (struct node*)malloc(sizeof(struct node));
-	if (!new)
-		return;
-
-	new->max_level = level;
-	new->val = val;
-
-	for (int i = 0; i < MAX_LEVEL; i++)
-		update[i] = &sl->head;
-
-	p = &sl->head;
-	for (i = level - 1; i >= 0; i--) {
-		while(p->forward[i] && p->forward[i]->val < val)
-			p = p->forward[i];
-
-		update[i] = p;
+	node *cur = sl->head;
+	for (int i = sl->level; i >= 0; i--)
+	{
+		while (cur->forward[i] != NULL && cur->forward[i]->key <= key)
+			cur = cur->forward[i];
+		if (cur->key == key)
+			return cur;
 	}
-
-	for (i = 0; i < level; i++) {
-		new->forward[i] = update[i]->forward[i];
-		update[i]->forward[i] = new;
-	}
-
-	if (sl->max_level < level) {
-		sl->max_level = level;
-		sl->max_level_nodes = 1;
-	} else if (sl->max_level == level)
-		sl->max_level_nodes++;
+	return NULL;
 }
 
-struct node *find(struct skip_list* sl, int val)
+node *insert(skip_list *sl, ktype key)
 {
-	struct node *node = &sl->head;
-	int i;
-
-	for (i = sl->max_level - 1; i >= 0; i--) {
-		while (node->forward[i] && node->forward[i]->val < val)
-			node = node->forward[i];
-	}
-
-	if (node->forward[0] && node->forward[0]->val == val) {
-		return node->forward[0];
-	}
-	else
-		return NULL;
-}
-
-void delete(struct skip_list* sl, int val)
-{
-	struct node *update[MAX_LEVEL];
-	struct node *p;
-	int i;
-
-	p = &sl->head;
-
-	for (i = sl->max_level; i >= 0; i--) {
-		while (p->forward[i] && p->forward[i]->val < val)
-			p = p->forward[i];
-
-		update[i] = p;
-	}
-
-	if (p->forward[0] == NULL || p->forward[0]->val != val)
-		return;
-
-	if (p->forward[0]->max_level == sl->max_level)
-		sl->max_level_nodes--;
-
-	for (i = sl->max_level-1; i >= 0; i--) {
-		if (update[i]->forward[i] && update[i]->forward[i]->val == val)
-			update[i]->forward[i] = update[i]->forward[i]->forward[i]; 
-	}
-
-	// fixup max_level and max_level_nodes
-	if (sl->max_level_nodes == 0) {
-		//sl->max_level--;
-		p = &sl->head;
-		// skip (max_level - 1), direct test (max_level - 2)
-		// since no nodes on (max_level - 1)
-		for (i = sl->max_level - 2; i >= 0; i--) {
-			while (p->forward[i]) {
-				sl->max_level_nodes++;
-				p = p->forward[i];
-			}
-
-			if (sl->max_level_nodes) {
-				sl->max_level = i + 1;
-				break;
-			} else
-				sl->max_level = i;
+	// 构造新节点
+	int level = random_level(sl->head->level);
+	if (level > sl->level)
+		sl->level = level;
+	node *new_node = (node *)malloc(sizeof(node));
+	new_node->key = key;
+	new_node->level = level;
+	new_node->forward = (node **)malloc(sizeof(node *) * level);
+	// 插入
+	node *cur = sl->head;
+	for (int i = sl->level; i >= 0; i--)
+	{
+		while (cur->forward[i] != NULL && cur->forward[i]->key <= key) //同样键值的情况插入到后面
+			cur = cur->forward[i];
+		if (level >= i)
+		{
+			new_node->forward[i] = cur->forward[i];
+			cur->forward[i] = new_node;
 		}
 	}
+	sl->nodes++;
+	return new_node;
 }
 
-
-void print_sl(struct skip_list* sl)
+void delete(skip_list *sl, ktype key)
 {
-	struct node *node;
-	int level;
+	node *cur = sl->head;
+	node *target = NULL;
+	for (int i = sl->level; i >= 0; i--)
+	{
+		while (cur->forward[i] != NULL && cur->forward[i]->key < key) //同样键值的情况删除最前面者
+			cur = cur->forward[i];
+		if (cur->forward[i] != NULL && cur->forward[i]->key == key) //删除该层的链接
+		{
+			target = cur->forward[i];
+			cur->forward[i] = target->forward[i];
+		}
+	}
+	if (target != NULL)
+	{
+		if (target->level == sl->level)
+		{
+			while (sl->head->forward[sl->level] == NULL)
+				sl->level--;
+		}
+		free(target->forward);
+		free(target);
+		sl->nodes--;
+	}
+}
 
-	printf("%d level skip list with %d nodes on top\n",
-		sl->max_level, sl->max_level_nodes);
-	
-	for (level = sl->max_level - 1; level >= 0; level--) {
-		node = &sl->head;
-		printf("Level[%02d]:", level);
-		while (node->forward[level]) {
-			printf("%4d", node->forward[level]->val);
-			node = node->forward[level];
+void print_sl(skip_list *sl)
+{
+	printf("%d level skip list with %d nodes\n", sl->level, sl->nodes);
+	for (int i = sl->level; i >= 0; i--)
+	{
+		node *cur = sl->head;
+		printf("Level[%02d]:", i);
+		while (cur->forward[i])
+		{
+			cur = cur->forward[i];
+			printf("%4d", cur->key);
 		}
 		printf("\n");
 	}
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	struct skip_list sl;
-	struct node *node = NULL;
-	int i;
+	srandom(1689859321);
+	skip_list *sl = make_skip_list(15);
+	print_sl(sl);
 
-	skip_list_init(&sl);
-	print_sl(&sl);
+	ktype a[] = {4, 3, 6, 9, 7, 1, 2, 5, 8};
+	const int n = sizeof(a) / sizeof(ktype);
+	for (int i = 0; i < n; i++)
+		insert(sl, a[i]);
+	print_sl(sl);
 
-	for (i = 0; i < 10; i++)
-		insert(&sl, i);
-	print_sl(&sl);
-
-	node = find(&sl, 8);
-	if (node)
-		printf("find 8 in sl %d\n", node->val);
+	node *cur = search(sl, 8);
+	if (cur)
+		printf("find 8 in sl: %d\n", cur->key);
 	else
 		printf("8 not in sl\n");
 
-	for (i = 0; i < 10; i++) {
-		delete(&sl, i);
-		print_sl(&sl);
+	for (int i = 0; i < n; i++)
+	{
+		delete(sl, a[i]);
+		printf("delete %d\n", a[i]);
+		print_sl(sl);
 	}
 
 	return 0;

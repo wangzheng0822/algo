@@ -78,13 +78,8 @@ int skip_list_level(skiplist * list)
 {
 	int i = 0;
 	int level = 1;
-	for (i = 1; i < list->head->max_level; i++)
-	{
-		if ((rand()%2) == 1)
-		{
-			level++;
-		}
-	}
+	for (i = 1; i < list->head->max_level && rand() % 2; i++)
+		level++;
 
 	return level;
 }
@@ -152,6 +147,7 @@ int skip_list_insert(skiplist *list,int key,int value)
 	}
 
     list->count++;
+	free(update);
 	return 0;
 }
 
@@ -221,6 +217,7 @@ int skip_list_delete(skiplist * list, int key ,int *value)
 		return 3;/*未找到节点*/
 	}
 
+	free(update);
     return 0 ;
 }
 
