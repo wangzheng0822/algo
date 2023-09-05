@@ -169,7 +169,7 @@ class LinkedList {
     findMiddleNode() {
         let fast = this.head
         let slow = this.head
-        while (fast.next !== null && fast.next.next !== null) {
+        while (fast.next !== null && fast.next !== null && fast.next.next !== null) {
             fast = fast.next.next
             slow = slow.next
         }
