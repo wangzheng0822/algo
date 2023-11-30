@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-//bc: pattern char index hash mapping
+// bc: pattern char index hash mapping
 func generateBC(pattern string) []int {
 
 	bc := make([]int, 256)
@@ -21,7 +21,7 @@ func generateBC(pattern string) []int {
 	return bc
 }
 
-//generate suffix and prefix array for pattern
+// generate suffix and prefix array for pattern
 func generateGS(pattern string) ([]int, []bool) {
 	m := len(pattern)
 	suffix := make([]int, m)
@@ -50,7 +50,7 @@ func generateGS(pattern string) ([]int, []bool) {
 	return suffix, prefix
 }
 
-//todo
+// todo
 func moveByGS(patternLength int, badCharStartIndex int, suffix []int, prefix []bool) int {
 
 	//length of good suffix
@@ -61,13 +61,12 @@ func moveByGS(patternLength int, badCharStartIndex int, suffix []int, prefix []b
 		return badCharStartIndex + 1 - suffix[k]
 	}
 
-	//partial match
-	for t := patternLength - 1; t > badCharStartIndex+1; t-- {
-		if prefix[t] {
-			return t
+	//search prefix
+	for ; k > 0; k-- {
+		if prefix[k] {
+			return patternLength - k
 		}
 	}
-
 	//no match
 	return patternLength
 
