@@ -62,7 +62,7 @@ func moveByGS(patternLength int, badCharStartIndex int, suffix []int, prefix []b
 	}
 
 	//search prefix
-	for ; k > 0; k-- {
+	for k--; k > 0; k-- {
 		if prefix[k] {
 			return patternLength - k
 		}
