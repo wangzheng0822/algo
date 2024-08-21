@@ -78,10 +78,9 @@ public class SkipList {
       }
     }
 
-    while (levelCount>1&&head.forwards[levelCount]==null){
+    while (levelCount > 1 && head.forwards[levelCount - 1] == null) {
       levelCount--;
     }
-
   }
 
   // 理论来讲，一级索引中元素个数应该占原始数据的 50%，二级索引中元素个数占 25%，三级索引12.5% ，一直到最顶层。
