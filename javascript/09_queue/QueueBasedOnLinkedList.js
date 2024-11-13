@@ -31,6 +31,9 @@ class QueueBasedOnLinkedList {
         if (this.head !== null) {
             const value = this.head.element
             this.head = this.head.next
+            if (this.head === null) {
+                this.tail = null
+            }
             return value
         } else {
             return -1
