@@ -21,6 +21,14 @@ void alloc(struct array *array)
 	array->arr = (int *)malloc(array->size * sizeof(int));
 }
 
+void cleanup(struct array *array)
+{
+	if (array->arr) {
+		free(array->arr);
+		array->arr = NULL;
+	}
+}
+
 int insert(struct array *array, int elem)
 {
 	int idx;
@@ -91,5 +99,7 @@ int main()
 	printf("=== delete [0] element \n");
 	delete(&ten_int, 0);
 	dump(&ten_int);
+
+	cleanup(&ten_int);
 	return 0;
 }
